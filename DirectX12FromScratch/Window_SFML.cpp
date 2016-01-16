@@ -30,4 +30,21 @@ bool Window_SFML::isOpen() const
 Window_SFML::Window_SFML()
 {
 	_window = nullptr;
+	_map[sf::Keyboard::Escape] = ESCAPE;
+}
+
+void Window_SFML::close()
+{
+	_window->close();
+}
+
+IWindow::EVENT_TYPE Window_SFML::getEvent()// const
+{
+	sf::Event event;
+
+	if (_window->pollEvent(event))
+	{
+		return (_map.find(event.key.code) != _map.end() ? _map[event.key.code] : IWindow::EVENT_TYPE::UNDEFINED);
+	}
+	return IWindow::EVENT_TYPE::UNDEFINED;
 }

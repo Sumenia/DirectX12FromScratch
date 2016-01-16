@@ -130,6 +130,7 @@
     <ClCompile Include="Window_SFML.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Event_SFML.h" />
     <ClInclude Include="Window_SFML.h" />
     <ClInclude Include="IWindow.h" />
   </ItemGroup>

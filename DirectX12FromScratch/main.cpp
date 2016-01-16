@@ -84,8 +84,19 @@ int	main()
 
 	win->createWindow(800, 600);
 
-	while (win->isOpen());
+	while (win->isOpen())
+	{
+//		IWindow::EVENT_TYPE event;
 
+//		while (event = )
+		//IEvent::EVENT_TYPE Window_SFML::getEvent() const
+//		if ((IEvent*)win->getEvent() == IEvent::EVENT_TYPE::ESCAPE)
+//		if (reinterpret_cast<Window_SFML*>(win)->getEvent() == IEvent::EVENT_TYPE::ESCAPE)
+		if (win->getEvent() == IWindow::EVENT_TYPE::ESCAPE)
+		{
+			win->close();
+		}
+	}
 	delete (win);
 
 	return (EXIT_SUCCESS);
