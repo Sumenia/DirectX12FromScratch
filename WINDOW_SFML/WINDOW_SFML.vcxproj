@@ -38,7 +38,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -126,11 +126,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\DirectX12FromScratch\Window_SFML.cpp" />
+    <ClCompile Include="DynamicLibrary.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Window_SFML.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\DirectX12FromScratch\IWindow.h" />
-    <ClInclude Include="..\DirectX12FromScratch\Window_SFML.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="DynamicLibrary.h" />
+    <ClInclude Include="IWindow.h" />
+    <ClInclude Include="Window_SFML.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
