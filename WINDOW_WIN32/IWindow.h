@@ -1,6 +1,6 @@
 #pragma once
-#include <Windows.h>
-class IWindow 
+
+class IWindow
 {
 public:
 	enum EVENT_TYPE
@@ -13,11 +13,11 @@ public:
 		UNDEFINED
 	};
 	virtual ~IWindow() {}
-	virtual bool createWindow(unsigned int heigth, unsigned int width, HINSTANCE hInstance) = 0;
+	virtual bool createWindow(unsigned int heigth, unsigned int width, HINSTANCE) = 0;
 	virtual	void *getHandle() = 0;
 	virtual	bool	isOpen() const = 0;
 	virtual void close() = 0;
-	virtual IWindow::EVENT_TYPE getEvent() = 0 ;
+	virtual IWindow::EVENT_TYPE getEvent() = 0;
 private:
 };
 

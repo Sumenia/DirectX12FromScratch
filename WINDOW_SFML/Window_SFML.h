@@ -7,7 +7,7 @@
 class Window_SFML : public IWindow
 {
 public:
-	virtual bool createWindow(unsigned int, unsigned int);
+	virtual bool createWindow(unsigned int, unsigned int, HINSTANCE hInstance);
 
 	virtual ~Window_SFML();
 

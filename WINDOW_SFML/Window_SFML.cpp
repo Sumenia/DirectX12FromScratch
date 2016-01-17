@@ -1,6 +1,7 @@
 #include "Window_SFML.h"
+#include "Config.h"
 
-bool Window_SFML::createWindow(unsigned int h, unsigned int w)
+bool Window_SFML::createWindow(unsigned int h, unsigned int w, HINSTANCE hInstance = nullptr)
 {
 	_window = new sf::Window(sf::VideoMode(h, w), "My window");
 	if (_window)

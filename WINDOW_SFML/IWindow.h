@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 class IWindow
 {
 public:
@@ -12,7 +13,7 @@ public:
 		UNDEFINED
 	};
 	virtual ~IWindow() {}
-	virtual bool createWindow(unsigned int heigth, unsigned int width) = 0;
+	virtual bool createWindow(unsigned int heigth, unsigned int width, HINSTANCE hInstance) = 0;
 	virtual	void *getHandle() = 0;
 	virtual	bool	isOpen() const = 0;
 	virtual void close() = 0;

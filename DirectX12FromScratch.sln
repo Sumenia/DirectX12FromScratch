@@ -4,11 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX12FromScratch", "DirectX12FromScratch\DirectX12FromScratch.vcxproj", "{CD1E3FAC-98C1-4172-8CEB-B41CAB92CCC6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3} = {BDBB47E0-544D-4290-BDE4-BA40663D1CA3}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WINDOW_SFML", "WINDOW_SFML\WINDOW_SFML.vcxproj", "{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WINDOW_WIN32", "WINDOW_WIN32\WINDOW_WIN32.vcxproj", "{9F766DAA-EA83-436A-B6A0-9ED837780C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +39,16 @@ Global
 		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}.Release|x64.Build.0 = Release|x64
 		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}.Release|x86.ActiveCfg = Release|Win32
 		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}.Release|x86.Build.0 = Release|Win32
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Debug|ARM.ActiveCfg = Debug|Win32
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Debug|x64.ActiveCfg = Debug|x64
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Debug|x64.Build.0 = Debug|x64
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Debug|x86.ActiveCfg = Debug|Win32
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Debug|x86.Build.0 = Debug|Win32
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Release|ARM.ActiveCfg = Release|Win32
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Release|x64.ActiveCfg = Release|x64
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Release|x64.Build.0 = Release|x64
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Release|x86.ActiveCfg = Release|Win32
+		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
