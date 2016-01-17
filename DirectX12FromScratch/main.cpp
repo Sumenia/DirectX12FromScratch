@@ -1,52 +1,58 @@
 
 #include <iostream>
-#include <d3d12.h>
-#include <dxgi1_4.h>
-
 #include "IWindow.h"
-#include <iostream>
-//#include "Window_SFML.h"
-#include "Graphics_DX12.h"
 #include "DynamicLibrary.h"
-//#include <D3Dcompiler.h>
-//#include <DirectXMath.h>
+
+#include "Graphics_DX12.h"
+
 
 int	main()
 {
-//	const char * dll = "WINDOW_SFML.dll";
-
 	DynamicLibrary  dllClient;
 
 	if (!dllClient.load("./" + DynamicLibrary::buildName("WINDOW_SFML")))
 	{
-		std::cout << "Can't load dll client" << std::endl;
-		return (-1);
+		std::cerr << "Can't load dll client" << std::endl;
+		return (EXIT_FAILURE);
 	}
-	std::function<IWindow*(void)> toto = (IWindow*(*)(void))dllClient.loadSymbol("entry");
+	std::function<IWindow*(void)> dll_window = (IWindow*(*)(void))dllClient.loadSymbol("entry");
 
 
-	IWindow *win = toto();
+	IWindow *win = dll_window();
 
-	win->createWindow(800, 600);
+	if (!win)
+	{
+		std::cerr << "Can't instantiation dll_window" << std::endl;
+		return (EXIT_FAILURE);
+	}
+
+	if (!win->createWindow(800, 600))
+	{
+		std::cerr << "Can't create window" << std::endl;
+		delete (win);
+		return (EXIT_FAILURE);
+	}
+
 	IGraphics *grph = new Graphics_DX12();
 
-	win->createWindow(800, 600);
-	grph->Init(800, 600, win->getHandle());
+	if (!grph->Init(800, 600, win->getHandle()))
+	{
+		std::cerr << "Can't init DX12" << std::endl;
+		win->close();
+		delete (win);
+		return (EXIT_FAILURE);
+	}
 
 	while (win->isOpen())
 	{
-//		IWindow::EVENT_TYPE event;
-
 		grph->Display();
-//		while (event = )
-		//IEvent::EVENT_TYPE Window_SFML::getEvent() const
-//		if ((IEvent*)win->getEvent() == IEvent::EVENT_TYPE::ESCAPE)
-//		if (reinterpret_cast<Window_SFML*>(win)->getEvent() == IEvent::EVENT_TYPE::ESCAPE)
+
 		if (win->getEvent() == IWindow::EVENT_TYPE::ESCAPE)
 		{
 			win->close();
 		}
 	}
+
 	grph->Quit();
 	delete (grph);
 	delete (win);

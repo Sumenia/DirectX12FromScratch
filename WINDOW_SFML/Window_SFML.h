@@ -1,8 +1,8 @@
 #pragma once
 
+# include <map>
+# include <SFML/Window.hpp>
 # include "IWindow.h"
-#include <SFML/Window.hpp>
-#include <map>
 
 class Window_SFML : public IWindow
 {

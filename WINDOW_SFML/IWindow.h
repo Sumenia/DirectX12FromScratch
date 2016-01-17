@@ -1,5 +1,5 @@
 #pragma once
-class IWindow 
+class IWindow
 {
 public:
 	enum EVENT_TYPE
@@ -16,7 +16,7 @@ public:
 	virtual	void *getHandle() = 0;
 	virtual	bool	isOpen() const = 0;
 	virtual void close() = 0;
-	virtual IWindow::EVENT_TYPE getEvent() = 0 ;
+	virtual IWindow::EVENT_TYPE getEvent() = 0;
 private:
 };
 

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX12FromScratch", "DirectX12FromScratch\DirectX12FromScratch.vcxproj", "{CD1E3FAC-98C1-4172-8CEB-B41CAB92CCC6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3} = {BDBB47E0-544D-4290-BDE4-BA40663D1CA3}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WINDOW_SFML", "WINDOW_SFML\WINDOW_SFML.vcxproj", "{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}"
 EndProject

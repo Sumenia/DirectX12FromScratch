@@ -3,6 +3,8 @@
 bool Window_SFML::createWindow(unsigned int h, unsigned int w)
 {
 	_window = new sf::Window(sf::VideoMode(h, w), "My window");
+	if (_window && _window->isOpen())
+		_window->close();
 	if (_window)
 		return (true);
 	return (false);

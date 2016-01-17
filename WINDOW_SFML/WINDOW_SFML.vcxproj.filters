@@ -26,10 +26,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IWindow.h">
+    <ClInclude Include="Window_SFML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Window_SFML.h">
+    <ClInclude Include="IWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Config.h">

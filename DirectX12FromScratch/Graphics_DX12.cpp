@@ -154,6 +154,8 @@ bool Graphics_DX12::Init(unsigned int width, unsigned int height, void* hwnd)
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	// C'est ici qu'on spécifie la fenêtre à utiliser
 	swapChainDesc.OutputWindow = (HWND)hwnd;
+		swapChainDesc.Windowed = true;
+
 	// V-sync : cette config ne la prend pas en compte.
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = 0;
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
