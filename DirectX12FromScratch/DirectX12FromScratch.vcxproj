@@ -126,11 +126,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics_DX12.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Window_SFML.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Event_SFML.h" />
+    <ClInclude Include="Graphics_DX12.h" />
+    <ClInclude Include="IGraphics.h" />
     <ClInclude Include="Window_SFML.h" />
     <ClInclude Include="IWindow.h" />
   </ItemGroup>

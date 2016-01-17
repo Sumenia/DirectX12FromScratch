@@ -1,7 +1,6 @@
 #pragma once
 
 # include "IWindow.h"
-#include "IEvent.h"
 #include <SFML/Window.hpp>
 #include <map>
 
