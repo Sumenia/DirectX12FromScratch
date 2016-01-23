@@ -7,24 +7,19 @@
 class Window_SFML : public IWindow
 {
 public:
-	virtual bool createWindow(unsigned int, unsigned int, HINSTANCE hInstance);
+    Window_SFML();
+    virtual ~Window_SFML();
 
-	virtual ~Window_SFML();
-
-	virtual void *getHandle();
-
-	virtual bool isOpen() const;
-
-	Window_SFML();
-
-	virtual void close();
+	virtual bool                create(unsigned int, unsigned int, HINSTANCE hInstance = nullptr);
+    virtual void                *getHandle();
+	virtual bool                isOpen() const;
+	virtual void                destroy();
 
 	// Inherited via IEvent
 	virtual IWindow::EVENT_TYPE getEvent();
 
-
 private:
-	sf::Window			*_window;
-	std::map<sf::Keyboard::Key, IWindow::EVENT_TYPE> _map;
+	sf::Window			                                *_window;
+	std::map<sf::Keyboard::Key, IWindow::EVENT_TYPE>    _map;
 
 };

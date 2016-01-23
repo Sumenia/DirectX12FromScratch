@@ -79,6 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)x64\Debug\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../DirectX12FromScratch</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,14 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DynamicLibrary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Window_SFML.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Config.h" />
-    <ClInclude Include="DynamicLibrary.h" />
-    <ClInclude Include="IWindow.h" />
+    <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h" />
+    <ClInclude Include="..\DirectX12FromScratch\IWindow.h" />
     <ClInclude Include="Window_SFML.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -10,9 +10,8 @@ Window_Win32::~Window_Win32()
 {
 }
 
-bool Window_Win32::createWindow(unsigned int height, unsigned int width, HINSTANCE hInstance)
+bool Window_Win32::create(unsigned int height, unsigned int width, HINSTANCE hInstance)
 {
-
 	WNDCLASSEX wc;
 
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -86,7 +85,7 @@ bool Window_Win32::isOpen() const
 	return (_isOpen);
 }
 
-void Window_Win32::close()
+void Window_Win32::destroy()
 {
 	if (_handle)
 		DestroyWindow(_handle);

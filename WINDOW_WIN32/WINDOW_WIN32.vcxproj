@@ -19,14 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DynamicLibrary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Window_Win32.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Config.h" />
-    <ClInclude Include="DynamicLibrary.h" />
-    <ClInclude Include="IWindow.h" />
+    <ClInclude Include="..\DirectX12FromScratch\Config.h" />
+    <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h" />
+    <ClInclude Include="..\DirectX12FromScratch\IWindow.h" />
     <ClInclude Include="Window_Win32.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -79,7 +78,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../DirectX12FromScratch</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

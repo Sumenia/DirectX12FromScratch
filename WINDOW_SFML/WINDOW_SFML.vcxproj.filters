@@ -21,21 +21,15 @@
     <ClCompile Include="Window_SFML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DynamicLibrary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window_SFML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IWindow.h">
+    <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DynamicLibrary.h">
+    <ClInclude Include="..\DirectX12FromScratch\IWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
