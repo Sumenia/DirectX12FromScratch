@@ -130,16 +130,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="Graphics_DX12.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DynamicLibrary.cpp" />
+    <ClCompile Include="MainApplication.cpp" />
+    <ClCompile Include="Root.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application.h" />
     <ClInclude Include="Graphics_DX12.h" />
     <ClInclude Include="DynamicLibrary.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="IGraphics.h" />
-    <ClInclude Include="IWindow.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="MainApplication.h" />
+    <ClInclude Include="Root.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

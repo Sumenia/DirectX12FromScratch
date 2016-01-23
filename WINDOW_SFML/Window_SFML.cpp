@@ -46,14 +46,14 @@ void Window_SFML::destroy()
 	_window->close();
 }
 
-IWindow::EVENT_TYPE Window_SFML::getEvent()
+Window::EVENT_TYPE Window_SFML::getEvent()
 {
 	sf::Event event;
 
 	if (_window->pollEvent(event))
 	{
-		return (_map.find(event.key.code) != _map.end() ? _map.at(event.key.code) : IWindow::EVENT_TYPE::UNDEFINED);
+		return (_map.find(event.key.code) != _map.end() ? _map.at(event.key.code) : Window::EVENT_TYPE::UNDEFINED);
 	}
 
-	return IWindow::EVENT_TYPE::UNDEFINED;
+	return Window::EVENT_TYPE::UNDEFINED;
 }

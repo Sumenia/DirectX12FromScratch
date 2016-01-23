@@ -5,9 +5,9 @@
 # endif
 
 # include <windows.h>
-# include "IWindow.h"
+# include "Window.h"
 
-class Window_Win32 : public IWindow
+class Window_Win32 : public Window
 {
 public:
 	Window_Win32();
@@ -18,7 +18,7 @@ public:
 	virtual bool                isOpen() const;
 	virtual void                destroy();
 
-	virtual IWindow::EVENT_TYPE getEvent();
+	virtual Window::EVENT_TYPE getEvent();
 
 private:
 	HWND        _handle;

@@ -29,10 +29,10 @@
     <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectX12FromScratch\IWindow.h">
+    <ClInclude Include="..\DirectX12FromScratch\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectX12FromScratch\Config.h">
+    <ClInclude Include="..\DirectX12FromScratch\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

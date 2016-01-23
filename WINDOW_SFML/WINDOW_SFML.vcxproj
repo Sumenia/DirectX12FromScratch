@@ -142,8 +142,9 @@
     <ClCompile Include="Window_SFML.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\DirectX12FromScratch\Config.h" />
     <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h" />
-    <ClInclude Include="..\DirectX12FromScratch\IWindow.h" />
+    <ClInclude Include="..\DirectX12FromScratch\Window.h" />
     <ClInclude Include="Window_SFML.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

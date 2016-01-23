@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 
-class IWindow 
+class Window 
 {
 public:
 	enum EVENT_TYPE
@@ -15,14 +15,14 @@ public:
 		UNDEFINED
 	};
 
-    virtual ~IWindow() {}
+    virtual ~Window() {}
 
 	virtual bool                create(unsigned int heigth, unsigned int width, HINSTANCE hInstance = nullptr) = 0;
 	virtual	void                *getHandle() = 0;
 	virtual	bool	            isOpen() const = 0;
 	virtual void                destroy() = 0;
 
-	virtual IWindow::EVENT_TYPE getEvent() = 0;
+	virtual Window::EVENT_TYPE getEvent() = 0;
 
 private:
 };

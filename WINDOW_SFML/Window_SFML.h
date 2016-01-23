@@ -2,9 +2,9 @@
 
 # include <map>
 # include <SFML/Window.hpp>
-# include "IWindow.h"
+# include "Window.h"
 
-class Window_SFML : public IWindow
+class Window_SFML : public Window
 {
 public:
     Window_SFML();
@@ -16,10 +16,10 @@ public:
 	virtual void                destroy();
 
 	// Inherited via IEvent
-	virtual IWindow::EVENT_TYPE getEvent();
+	virtual Window::EVENT_TYPE getEvent();
 
 private:
 	sf::Window			                                *_window;
-	std::map<sf::Keyboard::Key, IWindow::EVENT_TYPE>    _map;
+	std::map<sf::Keyboard::Key, Window::EVENT_TYPE>    _map;
 
 };

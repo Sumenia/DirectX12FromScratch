@@ -25,7 +25,7 @@
   <ItemGroup>
     <ClInclude Include="..\DirectX12FromScratch\Config.h" />
     <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h" />
-    <ClInclude Include="..\DirectX12FromScratch\IWindow.h" />
+    <ClInclude Include="..\DirectX12FromScratch\Window.h" />
     <ClInclude Include="Window_Win32.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

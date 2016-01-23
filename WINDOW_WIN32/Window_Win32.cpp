@@ -91,7 +91,7 @@ void Window_Win32::destroy()
 		DestroyWindow(_handle);
 }
 
-IWindow::EVENT_TYPE Window_Win32::getEvent()
+Window::EVENT_TYPE Window_Win32::getEvent()
 {
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
@@ -101,12 +101,12 @@ IWindow::EVENT_TYPE Window_Win32::getEvent()
 		if (msg.message == WM_QUIT)
 		{
 			_isOpen = false;
-			return (IWindow::EVENT_TYPE::ESCAPE);
+			return (Window::EVENT_TYPE::ESCAPE);
 		}
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	return IWindow::EVENT_TYPE::UNDEFINED;
+	return Window::EVENT_TYPE::UNDEFINED;
 }
 
 LRESULT Window_Win32::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
