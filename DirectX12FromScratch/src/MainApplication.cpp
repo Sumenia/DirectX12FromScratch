@@ -1,7 +1,7 @@
 #include <iostream>
 #include "MainApplication.h"
-#include "D3D12RenderSystem.h"
-#include "D3D12RenderWindow.h"
+#include "MiniEngine/D3D12/D3D12RenderSystem.h"
+#include "MiniEngine/D3D12/D3D12RenderWindow.h"
 
 MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
 {

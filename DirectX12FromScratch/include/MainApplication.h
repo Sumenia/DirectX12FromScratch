@@ -2,7 +2,7 @@
 
 # include <string>
 # include "Window.h"
-# include "Application.h"
+# include "MiniEngine/Application.h"
 # include "DynamicLibrary.h"
 
 class MainApplication : public MiniEngine::Application

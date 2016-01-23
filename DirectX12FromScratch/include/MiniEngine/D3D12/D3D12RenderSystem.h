@@ -1,7 +1,7 @@
 #pragma once
 
-# include "RenderSystem.h"
-# include "D3D12Device.h"
+# include "MiniEngine/RenderSystem.h"
+# include "MiniEngine/D3D12/D3D12Device.h"
 
 namespace MiniEngine
 {

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Application.h"
+#include "MiniEngine/Application.h"
 
 using namespace MiniEngine;
 

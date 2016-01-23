@@ -27,79 +27,79 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics_DX12.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="DynamicLibrary.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Fichiers sources\MiniEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Root.cpp">
-      <Filter>Fichiers sources\MiniEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="MainApplication.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderSystem.cpp">
-      <Filter>Fichiers sources\MiniEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderTarget.cpp">
-      <Filter>Fichiers sources\MiniEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D12RenderSystem.cpp">
-      <Filter>Fichiers sources\MiniEngine\D3D12</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D12RenderWindow.cpp">
-      <Filter>Fichiers sources\MiniEngine\D3D12</Filter>
-    </ClCompile>
-    <ClCompile Include="D3D12Device.cpp">
-      <Filter>Fichiers sources\MiniEngine\D3D12</Filter>
-    </ClCompile>
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\Application.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\RenderSystem.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\RenderTarget.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\Root.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Config.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DynamicLibrary.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics_DX12.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\IGraphics.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MainApplication.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IGraphics.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics_DX12.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="DynamicLibrary.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Root.h">
-      <Filter>Fichiers d%27en-tête\MiniEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Fichiers d%27en-tête\MiniEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="MainApplication.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderSystem.h">
-      <Filter>Fichiers d%27en-tête\MiniEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderTarget.h">
-      <Filter>Fichiers d%27en-tête\MiniEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D12RenderSystem.h">
-      <Filter>Fichiers d%27en-tête\MiniEngine\D3D12</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D12RenderWindow.h">
-      <Filter>Fichiers d%27en-tête\MiniEngine\D3D12</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D12Device.h">
-      <Filter>Fichiers d%27en-tête\MiniEngine\D3D12</Filter>
-    </ClInclude>
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderWindow.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\Application.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\RenderSystem.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\RenderTarget.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\Root.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DynamicLibrary.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics_DX12.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainApplication.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
