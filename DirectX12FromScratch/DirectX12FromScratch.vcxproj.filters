@@ -19,6 +19,12 @@
     <Filter Include="Fichiers sources\MiniEngine">
       <UniqueIdentifier>{7acc00ef-52f9-4c05-b723-9a27a5e1975b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\MiniEngine\D3D12">
+      <UniqueIdentifier>{f36db23a-f8b9-4252-8e2f-cf1f7967082a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\MiniEngine\D3D12">
+      <UniqueIdentifier>{d6c927b2-fbc1-4295-a0cc-50e5162f5712}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,6 +44,21 @@
     </ClCompile>
     <ClCompile Include="MainApplication.cpp">
       <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>Fichiers sources\MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>Fichiers sources\MiniEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D12RenderSystem.cpp">
+      <Filter>Fichiers sources\MiniEngine\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D12RenderWindow.cpp">
+      <Filter>Fichiers sources\MiniEngine\D3D12</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D12Device.cpp">
+      <Filter>Fichiers sources\MiniEngine\D3D12</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +85,21 @@
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>Fichiers d%27en-tête\MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>Fichiers d%27en-tête\MiniEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D12RenderSystem.h">
+      <Filter>Fichiers d%27en-tête\MiniEngine\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D12RenderWindow.h">
+      <Filter>Fichiers d%27en-tête\MiniEngine\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D12Device.h">
+      <Filter>Fichiers d%27en-tête\MiniEngine\D3D12</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

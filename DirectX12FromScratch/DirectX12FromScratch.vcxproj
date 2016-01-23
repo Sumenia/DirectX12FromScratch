@@ -131,18 +131,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="D3D12Device.cpp" />
+    <ClCompile Include="D3D12RenderSystem.cpp" />
+    <ClCompile Include="D3D12RenderWindow.cpp" />
     <ClCompile Include="Graphics_DX12.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DynamicLibrary.cpp" />
     <ClCompile Include="MainApplication.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Root.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="D3D12Device.h" />
+    <ClInclude Include="D3D12RenderSystem.h" />
+    <ClInclude Include="D3D12RenderWindow.h" />
     <ClInclude Include="Graphics_DX12.h" />
     <ClInclude Include="DynamicLibrary.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="IGraphics.h" />
+    <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="MainApplication.h" />
     <ClInclude Include="Root.h" />

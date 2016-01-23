@@ -1,5 +1,7 @@
 #include <iostream>
 #include "MainApplication.h"
+#include "D3D12RenderSystem.h"
+#include "D3D12RenderWindow.h"
 
 MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
 {
@@ -7,7 +9,10 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
     if (_window)
     {
-        _root
+        _root->setRenderSystem(new MiniEngine::D3D12RenderSystem);
+
+        if (_root->getRenderSystem())
+            _root->getRenderSystem()->addRenderTarget(new MiniEngine::D3D12RenderWindow(_window));
     }
 }
 
@@ -25,7 +30,7 @@ void MainApplication::initWindow(const std::string &windowType, HINSTANCE hInsta
     std::function<Window*(void)> createWindow = (Window*(*)(void))_dllWindow.loadSymbol("entry");
 
     if (!createWindow)
-    {
+    {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
         std::cerr << "Can't load dll entry point" << std::endl;
         return;
     }
