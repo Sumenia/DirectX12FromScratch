@@ -3,6 +3,7 @@
 # include <dxgi1_4.h>
 # include "MiniEngine/RenderSystem.h"
 # include "MiniEngine/D3D12/D3D12CommandQueue.h"
+# include "MiniEngine/D3D12/D3D12RootSignature.h"
 
 namespace MiniEngine
 {
@@ -17,14 +18,17 @@ namespace MiniEngine
         bool                init();
         bool                initDevice();
         bool                initCommandQueue();
+        bool                initRootSignature();
 
         IDXGIFactory4       *getFactory();
         D3D12Device         *getDevice();
         D3D12CommandQueue   *getCommandQueue();
+        D3D12RootSignature  *getRootSignature();
 
     protected:
         IDXGIFactory4       *_factory;
         D3D12Device         *_device;
         D3D12CommandQueue   *_commandQueue;
+        D3D12RootSignature  *_rootSignature;
     };
 }

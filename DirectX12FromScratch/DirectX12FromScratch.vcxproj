@@ -30,6 +30,8 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h" />
     <ClInclude Include="include\MiniEngine\CommandQueue.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RootSignature.h" />
+    <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
     <ClInclude Include="include\MiniEngine\Root.h" />
@@ -46,6 +48,7 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderWindow.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RootSignature.cpp" />
     <ClCompile Include="src\MiniEngine\RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\RenderTarget.cpp" />
     <ClCompile Include="src\MiniEngine\Root.cpp" />

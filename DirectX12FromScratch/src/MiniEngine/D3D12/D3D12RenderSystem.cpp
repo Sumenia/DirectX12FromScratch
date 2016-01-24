@@ -19,6 +19,7 @@ bool D3D12RenderSystem::init()
 {
     return (
         initDevice()
+        && initRootSignature()
         && initCommandQueue()
     );
 }
@@ -52,6 +53,12 @@ bool D3D12RenderSystem::initCommandQueue()
     return (_commandQueue->init());
 }
 
+bool D3D12RenderSystem::initRootSignature()
+{
+    _rootSignature = new D3D12RootSignature();
+    return (_rootSignature->init(*this));
+}
+
 IDXGIFactory4 *D3D12RenderSystem::getFactory()
 {
     return (_factory);
@@ -65,4 +72,9 @@ D3D12Device *D3D12RenderSystem::getDevice()
 D3D12CommandQueue *D3D12RenderSystem::getCommandQueue()
 {
     return (_commandQueue);
+}
+
+D3D12RootSignature *D3D12RenderSystem::getRootSignature()
+{
+    return (_rootSignature);
 }
