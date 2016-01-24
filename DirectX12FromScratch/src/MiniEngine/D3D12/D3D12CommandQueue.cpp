@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MiniEngine/D3D12/D3D12Device.h"
 #include "MiniEngine/D3D12/D3D12CommandQueue.h"
+#include "MiniEngine/D3D12/D3D12RenderSystem.h"
 
 using namespace MiniEngine;
 

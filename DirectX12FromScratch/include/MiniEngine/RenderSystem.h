@@ -1,6 +1,7 @@
 #pragma once
 
 # include <list>
+# include "MiniEngine/CommandQueue.h"
 
 namespace MiniEngine
 {
@@ -13,6 +14,7 @@ namespace MiniEngine
         virtual ~RenderSystem();
 
         virtual bool                init();
+        virtual CommandQueue        *getCommandQueue() = 0;
 
         void                        addRenderTarget(RenderTarget *target);
 

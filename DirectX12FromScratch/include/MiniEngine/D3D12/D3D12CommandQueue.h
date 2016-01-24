@@ -2,11 +2,12 @@
 
 # include <d3d12.h>
 # include <dxgi1_4.h>
-# include "MiniEngine/D3D12/D3D12RenderSystem.h"
 # include "MiniEngine/CommandQueue.h"
 
 namespace MiniEngine
 {
+    class D3D12RenderSystem;
+
     class D3D12CommandQueue : public CommandQueue
     {
     public:
