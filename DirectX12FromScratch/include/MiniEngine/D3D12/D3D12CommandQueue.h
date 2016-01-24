@@ -3,6 +3,7 @@
 # include <d3d12.h>
 # include <dxgi1_4.h>
 # include "MiniEngine/CommandQueue.h"
+# include "MiniEngine/D3D12/D3D12Fence.h"
 
 namespace MiniEngine
 {
@@ -13,6 +14,9 @@ namespace MiniEngine
     public:
         D3D12CommandQueue(D3D12RenderSystem &system);
         ~D3D12CommandQueue();
+
+        bool                    wait(Fence &fence);
+        bool                    wait(D3D12Fence &fence);
 
         bool                    init();
         ID3D12CommandQueue      *getNative();

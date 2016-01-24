@@ -1,5 +1,7 @@
 #pragma once
 
+# include "MiniEngine/Fence.h"
+
 namespace MiniEngine
 {
     class CommandQueue
@@ -7,5 +9,7 @@ namespace MiniEngine
     public:
         CommandQueue();
         virtual ~CommandQueue();
+
+        virtual bool    wait(Fence &fence) = 0;
     };
 }

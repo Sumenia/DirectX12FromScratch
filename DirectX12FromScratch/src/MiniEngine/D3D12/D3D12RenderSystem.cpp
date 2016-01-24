@@ -24,6 +24,8 @@ bool D3D12RenderSystem::init()
         initDevice()
         && initRootSignature()
         && initCommandQueue()
+        && initFence()
+        && _commandQueue->wait(*_fence)
     );
 }
 
@@ -54,6 +56,12 @@ bool D3D12RenderSystem::initCommandQueue()
 {
     _commandQueue = new D3D12CommandQueue(*this);
     return (_commandQueue->init());
+}
+
+bool D3D12RenderSystem::initFence()
+{
+    _fence = new D3D12Fence(*this);
+    return (_fence->init());
 }
 
 bool D3D12RenderSystem::initRootSignature()

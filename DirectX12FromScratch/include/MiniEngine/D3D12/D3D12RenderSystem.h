@@ -18,6 +18,7 @@ namespace MiniEngine
         bool                init();
         bool                initDevice();
         bool                initCommandQueue();
+        bool                initFence();
         bool                initRootSignature();
 
         IDXGIFactory4       *getFactory();
@@ -29,6 +30,7 @@ namespace MiniEngine
         IDXGIFactory4       *_factory;
         D3D12Device         *_device;
         D3D12CommandQueue   *_commandQueue;
+        D3D12Fence          *_fence;
         D3D12RootSignature  *_rootSignature;
     };
 }

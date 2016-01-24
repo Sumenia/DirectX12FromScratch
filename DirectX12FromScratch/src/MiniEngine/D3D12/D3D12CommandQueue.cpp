@@ -2,6 +2,7 @@
 #include "MiniEngine/D3D12/D3D12Device.h"
 #include "MiniEngine/D3D12/D3D12CommandQueue.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
+#include "MiniEngine/D3D12/D3D12Fence.h"
 
 using namespace MiniEngine;
 
@@ -13,6 +14,42 @@ D3D12CommandQueue::~D3D12CommandQueue()
     if (_queue)
         _queue->Release();
     _queue = nullptr;
+}
+
+bool D3D12CommandQueue::wait(Fence &fence)
+{
+    return (wait(dynamic_cast<D3D12Fence&>(fence)));
+}
+
+bool D3D12CommandQueue::wait(D3D12Fence &fence)
+{
+    HRESULT         result;
+    const UINT64    fenceValue = fence.getValue();
+
+    result = _queue->Signal(fence.getNative(), fenceValue);
+
+    if (FAILED(result))
+    {
+        std::cout << "Can't set signal on fence" << std::endl;
+        return (false);
+    }
+
+    fence.incValue();
+
+    if (fence.getNative()->GetCompletedValue() < fenceValue)
+    {
+        result = fence.getNative()->SetEventOnCompletion(fenceValue, fence.getEvent());
+
+        if (FAILED(result))
+        {
+            std::cout << "Can't set event on completion" << std::endl;
+            return (false);
+        }
+
+        WaitForSingleObject(fence.getEvent(), INFINITE);
+    }
+
+    return (true);
 }
 
 bool D3D12CommandQueue::init()
