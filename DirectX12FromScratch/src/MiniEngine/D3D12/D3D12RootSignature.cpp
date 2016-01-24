@@ -10,8 +10,9 @@ D3D12RootSignature::D3D12RootSignature() : _signature(nullptr)
 
 D3D12RootSignature::~D3D12RootSignature()
 {
-    _signature->Release();
-    delete _signature;
+    if (_signature)
+        _signature->Release();
+    _signature = nullptr;
 }
 
 bool D3D12RootSignature::init(D3D12RenderSystem &system)

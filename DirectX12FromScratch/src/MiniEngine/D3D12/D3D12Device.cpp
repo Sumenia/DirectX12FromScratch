@@ -7,8 +7,9 @@ D3D12Device::D3D12Device(ID3D12Device* device) : _device(device)
 
 D3D12Device::~D3D12Device()
 {
-    _device->Release();
-    delete _device;
+    if (_device)
+        _device->Release();
+    _device = nullptr;
 }
 
 ID3D12Device *D3D12Device::getNative()

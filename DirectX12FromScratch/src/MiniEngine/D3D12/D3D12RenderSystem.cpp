@@ -15,7 +15,7 @@ D3D12RenderSystem::~D3D12RenderSystem()
     delete _commandQueue;
     delete _rootSignature;
     delete _device;
-    delete _factory;
+    _factory = nullptr;
 }
 
 bool D3D12RenderSystem::init()
