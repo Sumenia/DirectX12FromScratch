@@ -10,14 +10,15 @@ D3D12RootSignature::D3D12RootSignature() : _signature(nullptr)
 
 D3D12RootSignature::~D3D12RootSignature()
 {
+    _signature->Release();
     delete _signature;
 }
 
 bool D3D12RootSignature::init(D3D12RenderSystem &system)
 {
     HRESULT         result;
-    ID3DBlob        *signature;
-    ID3DBlob        *error;
+    ID3DBlob        *signature = nullptr;
+    ID3DBlob        *error = nullptr;
 
     CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
     rootSignatureDesc.Init(0, nullptr, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
@@ -34,6 +35,9 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system)
 
     if (FAILED(result))
     {
+        delete signature;
+        delete error;
+
         std::cout << "Can't create D3D12 Root Signature" << std::endl;
         return (false);
     }

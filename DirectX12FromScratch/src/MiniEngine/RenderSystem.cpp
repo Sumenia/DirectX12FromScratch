@@ -7,11 +7,7 @@ RenderSystem::RenderSystem()
 
 RenderSystem::~RenderSystem()
 {
-    while (_targets.size())
-    {
-        delete _targets.front();
-        _targets.pop_front();
-    }
+    clear();
 }
 
 bool RenderSystem::init()
@@ -22,4 +18,13 @@ bool RenderSystem::init()
 void RenderSystem::addRenderTarget(RenderTarget *target)
 {
     _targets.push_back(target);
+}
+
+void RenderSystem::clear()
+{
+    while (_targets.size())
+    {
+        delete _targets.front();
+        _targets.pop_front();
+    }
 }

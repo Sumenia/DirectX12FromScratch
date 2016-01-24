@@ -17,6 +17,7 @@ namespace MiniEngine
         virtual CommandQueue        *getCommandQueue() = 0;
 
         void                        addRenderTarget(RenderTarget *target);
+        void                        clear();
 
     protected:
         std::list<RenderTarget*>    _targets;

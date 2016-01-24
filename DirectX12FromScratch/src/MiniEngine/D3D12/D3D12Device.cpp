@@ -6,7 +6,10 @@ D3D12Device::D3D12Device(ID3D12Device* device) : _device(device)
 {}
 
 D3D12Device::~D3D12Device()
-{}
+{
+    _device->Release();
+    delete _device;
+}
 
 ID3D12Device *D3D12Device::getNative()
 {

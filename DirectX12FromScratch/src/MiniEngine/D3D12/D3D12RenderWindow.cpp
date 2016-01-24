@@ -11,6 +11,7 @@ D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) 
 
 D3D12RenderWindow::~D3D12RenderWindow()
 {
+    _swapChain->Release();
     delete _swapChain;
 }
 

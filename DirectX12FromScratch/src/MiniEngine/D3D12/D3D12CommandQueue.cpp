@@ -10,6 +10,7 @@ D3D12CommandQueue::D3D12CommandQueue(D3D12RenderSystem &system) : _system(system
 
 D3D12CommandQueue::~D3D12CommandQueue()
 {
+    _queue->Release();
     delete (_queue);
 }
 
