@@ -1,10 +1,11 @@
 #pragma once
 
 # include <list>
-# include "RenderTarget.h"
 
 namespace MiniEngine
 {
+    class RenderTarget;
+
     class RenderSystem
     {
     public:

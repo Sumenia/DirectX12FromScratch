@@ -10,6 +10,8 @@ namespace MiniEngine
         D3D12Device(ID3D12Device* device);
         ~D3D12Device();
 
+        ID3D12Device            *getNative();
+
         static D3D12Device      *create(D3D_FEATURE_LEVEL featureLevel = D3D_FEATURE_LEVEL_11_0);
 
     protected:

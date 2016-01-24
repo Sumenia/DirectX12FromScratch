@@ -46,6 +46,16 @@ void Window_SFML::destroy()
 	_window->close();
 }
 
+unsigned int Window_SFML::getWidth() const
+{
+    return (_window->getSize().x);
+}
+
+unsigned int Window_SFML::getHeight() const
+{
+    return (_window->getSize().y);
+}
+
 Window::EVENT_TYPE Window_SFML::getEvent()
 {
 	sf::Event event;

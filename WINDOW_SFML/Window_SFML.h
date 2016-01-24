@@ -15,11 +15,14 @@ public:
 	virtual bool                isOpen() const;
 	virtual void                destroy();
 
+    virtual unsigned int        getWidth() const;
+    virtual unsigned int        getHeight() const;
+
 	// Inherited via IEvent
 	virtual Window::EVENT_TYPE getEvent();
 
 private:
 	sf::Window			                                *_window;
-	std::map<sf::Keyboard::Key, Window::EVENT_TYPE>    _map;
+	std::map<sf::Keyboard::Key, Window::EVENT_TYPE>     _map;
 
 };

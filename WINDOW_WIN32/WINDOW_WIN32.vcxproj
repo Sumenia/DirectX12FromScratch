@@ -23,9 +23,9 @@
     <ClCompile Include="Window_Win32.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\DirectX12FromScratch\Config.h" />
-    <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h" />
-    <ClInclude Include="..\DirectX12FromScratch\Window.h" />
+    <ClInclude Include="..\DirectX12FromScratch\include\Config.h" />
+    <ClInclude Include="..\DirectX12FromScratch\include\DynamicLibrary.h" />
+    <ClInclude Include="..\DirectX12FromScratch\include\Window.h" />
     <ClInclude Include="Window_Win32.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

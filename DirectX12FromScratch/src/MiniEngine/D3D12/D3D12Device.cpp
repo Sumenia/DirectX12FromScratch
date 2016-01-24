@@ -8,6 +8,11 @@ D3D12Device::D3D12Device(ID3D12Device* device) : _device(device)
 D3D12Device::~D3D12Device()
 {}
 
+ID3D12Device *D3D12Device::getNative()
+{
+    return (_device);
+}
+
 D3D12Device *D3D12Device::create(D3D_FEATURE_LEVEL featureLevel)
 {
     ID3D12Device    *device;

@@ -25,9 +25,11 @@
     <ClInclude Include="include\IGraphics.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandQueue.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h" />
+    <ClInclude Include="include\MiniEngine\CommandQueue.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
     <ClInclude Include="include\MiniEngine\Root.h" />
@@ -39,6 +41,8 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainApplication.cpp" />
     <ClCompile Include="src\MiniEngine\Application.cpp" />
+    <ClCompile Include="src\MiniEngine\CommandQueue.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandQueue.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderWindow.cpp" />

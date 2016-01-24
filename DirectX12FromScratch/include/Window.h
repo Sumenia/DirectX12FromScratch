@@ -21,6 +21,9 @@ public:
 	virtual	void                *getHandle() = 0;
 	virtual	bool	            isOpen() const = 0;
 	virtual void                destroy() = 0;
+    
+    virtual unsigned int        getWidth() const = 0;
+    virtual unsigned int        getHeight() const = 0;
 
 	virtual Window::EVENT_TYPE getEvent() = 0;
 

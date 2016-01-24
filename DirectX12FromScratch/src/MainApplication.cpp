@@ -12,7 +12,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
         _root->setRenderSystem(new MiniEngine::D3D12RenderSystem);
 
         if (_root->getRenderSystem())
-            _root->getRenderSystem()->addRenderTarget(new MiniEngine::D3D12RenderWindow(_window));
+            _root->getRenderSystem()->addRenderTarget(new MiniEngine::D3D12RenderWindow(*dynamic_cast<MiniEngine::D3D12RenderSystem*>(_root->getRenderSystem()), _window));
     }
 }
 

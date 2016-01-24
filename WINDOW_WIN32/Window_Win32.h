@@ -18,6 +18,9 @@ public:
 	virtual bool                isOpen() const;
 	virtual void                destroy();
 
+    virtual unsigned int        getWidth() const;
+    virtual unsigned int        getHeight() const;
+
 	virtual Window::EVENT_TYPE getEvent();
 
 private:

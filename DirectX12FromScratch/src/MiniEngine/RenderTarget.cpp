@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-RenderTarget::RenderTarget()
+RenderTarget::RenderTarget(RenderSystem &system) : _system(system)
 {}
 
 RenderTarget::~RenderTarget()

@@ -26,13 +26,13 @@
     <ClInclude Include="Window_SFML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectX12FromScratch\DynamicLibrary.h">
+    <ClInclude Include="..\DirectX12FromScratch\include\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectX12FromScratch\Window.h">
+    <ClInclude Include="..\DirectX12FromScratch\include\DynamicLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DirectX12FromScratch\Config.h">
+    <ClInclude Include="..\DirectX12FromScratch\include\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

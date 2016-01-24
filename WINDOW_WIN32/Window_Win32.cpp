@@ -91,6 +91,22 @@ void Window_Win32::destroy()
 		DestroyWindow(_handle);
 }
 
+unsigned int Window_Win32::getWidth() const
+{
+    RECT rc;
+
+    GetClientRect(_handle, &rc);
+    return (rc.right);
+}
+
+unsigned int Window_Win32::getHeight() const
+{
+    RECT rc;
+
+    GetClientRect(_handle, &rc);
+    return (rc.bottom);
+}
+
 Window::EVENT_TYPE Window_Win32::getEvent()
 {
 	MSG msg;
