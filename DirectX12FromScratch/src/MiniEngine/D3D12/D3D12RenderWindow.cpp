@@ -38,4 +38,6 @@ void D3D12RenderWindow::initSwapChain(Window *window)
 
         return;
     }
+
+    _frameIdx = _swapChain->GetCurrentBackBufferIndex();
 }

@@ -21,5 +21,6 @@ namespace MiniEngine
     protected:
         D3D12RenderSystem   &_system;
         IDXGISwapChain3     *_swapChain;
+        unsigned int        _frameIdx;
     };
 }
