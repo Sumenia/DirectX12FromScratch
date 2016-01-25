@@ -18,8 +18,9 @@ D3D12Fence::~D3D12Fence()
 bool D3D12Fence::init()
 {
     HRESULT result;
-    
-    result = _system.getDevice()->getNative()->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)_fence);
+
+	//		HRESULT result = static_cast<DeviceDX12 *>(inpDev)->dev->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)&fence);
+    result = _system.getDevice()->getNative()->CreateFence(0, D3D12_FENCE_FLAG_NONE, __uuidof(ID3D12Fence), (void**)&_fence);
 
     if (FAILED(result))
     {
