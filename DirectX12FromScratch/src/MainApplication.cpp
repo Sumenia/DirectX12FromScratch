@@ -46,7 +46,7 @@ void MainApplication::initWindow(const std::string &windowType, HINSTANCE hInsta
 # if defined(SYSTEM_WINDOWS)
     if (!_window->create(800, 600, hInstance))
 # else 
-    if (!win->create(800, 600))
+    if (!_window->create(800, 600))
 # endif
     {
         std::cerr << "Can't create window" << std::endl;

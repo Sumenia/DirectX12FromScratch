@@ -10,6 +10,8 @@ namespace MiniEngine
         RenderTarget(RenderSystem &system);
         virtual ~RenderTarget();
 
+		virtual bool		init() = 0;
+
     protected:
         RenderSystem        &_system;
     };

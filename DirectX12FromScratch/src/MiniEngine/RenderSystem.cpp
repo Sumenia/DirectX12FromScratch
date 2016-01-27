@@ -1,4 +1,5 @@
 #include "MiniEngine/RenderSystem.h"
+#include "MiniEngine/RenderTarget.h"
 
 using namespace MiniEngine;
 
@@ -17,7 +18,10 @@ bool RenderSystem::init()
 
 void RenderSystem::addRenderTarget(RenderTarget *target)
 {
-    _targets.push_back(target);
+	if (target->init())
+		_targets.push_back(target);
+	else
+		delete target;
 }
 
 void RenderSystem::clear()

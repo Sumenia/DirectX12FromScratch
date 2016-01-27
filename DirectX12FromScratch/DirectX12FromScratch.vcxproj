@@ -26,6 +26,7 @@
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandQueue.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12DescriptorHeap.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Fence.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h" />
@@ -48,6 +49,7 @@
     <ClCompile Include="src\MiniEngine\Application.cpp" />
     <ClCompile Include="src\MiniEngine\CommandQueue.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandQueue.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12DescriptorHeap.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderTarget.cpp" />
