@@ -19,6 +19,7 @@ namespace MiniEngine
 
         bool                        initSwapChain();
 		bool						initRtvDescriptorHeap();
+		bool						initRtv();
 
         static const unsigned int   FrameCount = 2;
 
@@ -26,6 +27,7 @@ namespace MiniEngine
         IDXGISwapChain3     *_swapChain;
 		Window				*_window;
 		D3D12DescriptorHeap	*_rtvDescriptorHeap;
+		ID3D12Resource		*_rtvs[D3D12RenderWindow::FrameCount];
         unsigned int        _frameIdx;
     };
 }

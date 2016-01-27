@@ -5,11 +5,16 @@
 
 using namespace MiniEngine;
 
-D3D12DescriptorHeap::D3D12DescriptorHeap(D3D12RenderSystem &system) : _system(system)
+D3D12DescriptorHeap::D3D12DescriptorHeap(D3D12RenderSystem &system) : _system(system), _descriptorHeap(nullptr)
 {}
 
 D3D12DescriptorHeap::~D3D12DescriptorHeap()
-{}
+{
+	if (_descriptorHeap)
+		_descriptorHeap->Release();
+
+	_descriptorHeap = nullptr;
+}
 
 bool D3D12DescriptorHeap::init(UINT nb, D3D12_DESCRIPTOR_HEAP_TYPE type)
 {
@@ -29,4 +34,14 @@ bool D3D12DescriptorHeap::init(UINT nb, D3D12_DESCRIPTOR_HEAP_TYPE type)
 	}
 
 	_size = _system.getDevice()->getNative()->GetDescriptorHandleIncrementSize(type);
+}
+
+ID3D12DescriptorHeap *D3D12DescriptorHeap::getNative()
+{
+	return (_descriptorHeap);
+}
+
+UINT D3D12DescriptorHeap::getSize() const
+{
+	return (_size);
 }

@@ -15,6 +15,9 @@ namespace MiniEngine
 
 		bool					init(UINT nb, D3D12_DESCRIPTOR_HEAP_TYPE type);
 
+		ID3D12DescriptorHeap	*getNative();
+		UINT					getSize() const;
+
 	protected:
 		D3D12RenderSystem		&_system;
 		ID3D12DescriptorHeap	*_descriptorHeap;
