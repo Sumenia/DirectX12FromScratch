@@ -32,3 +32,14 @@ void RenderSystem::clear()
         _targets.pop_front();
     }
 }
+
+bool RenderSystem::render()
+{
+    for (auto &&target : _targets)
+    {
+        if (!target->render())
+            return (false);
+    }
+
+    return (true);
+}

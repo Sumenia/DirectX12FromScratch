@@ -6,7 +6,7 @@
 
 using namespace MiniEngine;
 
-D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr)
+D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr), _commandList(nullptr)
 {
 	for (UINT n = 0; n < FrameCount; n++)
 	{
@@ -16,6 +16,9 @@ D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) 
 
 D3D12RenderWindow::~D3D12RenderWindow()
 {
+    delete _commandList;
+    _commandList = nullptr;
+
 	for (UINT n = 0; n < FrameCount; n++)
 		_rtvs[n]->Release();
 
@@ -34,7 +37,58 @@ bool D3D12RenderWindow::init()
 		initSwapChain()
 		&& initRtvDescriptorHeap()
 		&& initRtv()
+        && initCommandList()
 	);
+}
+
+bool D3D12RenderWindow::render()
+{
+    D3D12_RESOURCE_BARRIER      barrier;
+    D3D12_CPU_DESCRIPTOR_HANDLE renderTargetViewHandle;
+
+    if (!_commandList->reset())
+        return (false);
+
+    // Set a ressource barrier
+    barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+    barrier.Transition.pResource = _rtvs[_frameIdx];
+    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+    barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+
+    _commandList->getNative()->ResourceBarrier(1, &barrier);
+
+    // Set the current render target view
+    renderTargetViewHandle = _rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart();
+
+    if (_frameIdx == 1)
+        renderTargetViewHandle.ptr += _rtvDescriptorHeap->getSize();
+
+    _commandList->getNative()->OMSetRenderTargets(1, &renderTargetViewHandle, FALSE, nullptr);
+
+    // Clear the render target view
+    _commandList->getNative()->ClearRenderTargetView(renderTargetViewHandle, _clearColor, 0, nullptr);
+
+    // TO-DO: Render all the viewports
+
+    // Indicate that the back buffer will now be used to present.
+    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+
+    _commandList->getNative()->ResourceBarrier(1, &barrier);
+
+    // Close the list of commands.
+    if (!_commandList->end())
+        return (false);
+
+    // Execute the list of commands.
+    _system.getCommandQueue()->executeCommandLists(1, _commandList);
+
+    if (!swap())
+        return (false);
+
+    return (waitPreviousFrame());
 }
 
 bool D3D12RenderWindow::initSwapChain()
@@ -93,4 +147,31 @@ bool D3D12RenderWindow::initRtv()
 	}
 
 	return (true);
+}
+
+bool D3D12RenderWindow::initCommandList()
+{
+    _commandList = _system.getCommandQueue()->createCommandList(*_pipeline);
+    return (_commandList->init());
+}
+
+bool D3D12RenderWindow::swap()
+{
+    HRESULT     result;
+
+    result = _swapChain->Present(1, 0);
+
+    if (FAILED(result))
+    {
+        std::cout << "Can't swap back buffer" << std::endl;
+        return (false);
+    }
+
+    return (true);
+}
+
+bool D3D12RenderWindow::waitPreviousFrame()
+{
+    _frameIdx = !_frameIdx;
+    return (_system.getCommandQueue()->wait(*_system.getFence()));
 }

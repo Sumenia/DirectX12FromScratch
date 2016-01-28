@@ -25,6 +25,8 @@
     <ClInclude Include="include\IGraphics.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
+    <ClInclude Include="include\MiniEngine\CommandList.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandList.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandQueue.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12DescriptorHeap.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h" />
@@ -55,6 +57,7 @@
     <ClCompile Include="src\MainApplication.cpp" />
     <ClCompile Include="src\MiniEngine\Application.cpp" />
     <ClCompile Include="src\MiniEngine\CommandQueue.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandList.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandQueue.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12DescriptorHeap.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp" />
@@ -73,6 +76,7 @@
     <ClCompile Include="src\MiniEngine\RenderWindow.cpp" />
     <ClCompile Include="src\MiniEngine\Root.cpp" />
     <ClCompile Include="src\MiniEngine\Shader.cpp" />
+    <ClCompile Include="src\MiniEngine\CommandList.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CD1E3FAC-98C1-4172-8CEB-B41CAB92CCC6}</ProjectGuid>

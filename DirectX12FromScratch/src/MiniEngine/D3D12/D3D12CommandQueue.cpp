@@ -16,6 +16,11 @@ D3D12CommandQueue::~D3D12CommandQueue()
     _queue = nullptr;
 }
 
+D3D12CommandList *D3D12CommandQueue::createCommandList(GraphicPipeline &pipeline)
+{
+    return (new D3D12CommandList(_system, dynamic_cast<D3D12GraphicPipeline&>(pipeline)));
+}
+
 bool D3D12CommandQueue::wait(Fence &fence)
 {
     return (wait(dynamic_cast<D3D12Fence&>(fence)));
@@ -48,6 +53,21 @@ bool D3D12CommandQueue::wait(D3D12Fence &fence)
 
         WaitForSingleObject(fence.getEvent(), INFINITE);
     }
+
+    return (true);
+}
+
+bool D3D12CommandQueue::executeCommandLists(unsigned int nb, CommandList *tmpList)
+{
+    D3D12CommandList    *list = dynamic_cast<D3D12CommandList*>(tmpList);
+    ID3D12CommandList   **commandLists = new ID3D12CommandList*[nb];
+
+    for (unsigned int i = 0; i < nb; i++)
+        commandLists[i] = list[i].getNative();
+
+    _queue->ExecuteCommandLists(nb, commandLists);
+
+    delete[] commandLists;
 
     return (true);
 }

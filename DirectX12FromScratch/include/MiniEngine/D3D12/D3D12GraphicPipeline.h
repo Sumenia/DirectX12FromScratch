@@ -39,6 +39,8 @@ namespace MiniEngine
 
         bool                                    finalize();
 
+        ID3D12PipelineState                     *getNative();
+
     protected:
         D3D12RenderSystem                       &_system;
         D3D12_GRAPHICS_PIPELINE_STATE_DESC      _desc;

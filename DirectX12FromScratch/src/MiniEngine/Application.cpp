@@ -27,6 +27,8 @@ void Application::run()
 
 bool Application::renderOneFrame()
 {
-    // Render one frame with the render system
-    return (true);
+    if (_root->getRenderSystem())
+        return (_root->getRenderSystem()->render());
+
+    return (false);
 }
