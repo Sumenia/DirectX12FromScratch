@@ -32,6 +32,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             // Create pipeline
             pipeline = renderTarget->getGraphicPipeline();
             pipeline->addVertexShader(*vertexShader);
+            pipeline->addPixelShader(*pixelShader);
             pipeline->finalize();
 
             delete vertexShader;
