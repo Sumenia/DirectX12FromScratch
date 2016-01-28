@@ -108,10 +108,7 @@
     <ClInclude Include="include\MiniEngine\RenderWindow.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="include\MiniEngine\CommandList.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandList.h">
+    <ClInclude Include="include\MiniEngine\Vector.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -186,12 +183,6 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\MiniEngine\RenderWindow.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MiniEngine\CommandList.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandList.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
