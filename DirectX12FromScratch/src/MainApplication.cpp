@@ -12,7 +12,31 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
         _root->setRenderSystem(new MiniEngine::D3D12RenderSystem);
 
         if (_root->getRenderSystem())
-            _root->getRenderSystem()->addRenderTarget(new MiniEngine::D3D12RenderWindow(*dynamic_cast<MiniEngine::D3D12RenderSystem*>(_root->getRenderSystem()), _window));
+        {
+            MiniEngine::RenderTarget        *renderTarget = new MiniEngine::D3D12RenderWindow(*dynamic_cast<MiniEngine::D3D12RenderSystem*>(_root->getRenderSystem()), _window);
+            MiniEngine::GraphicPipeline     *pipeline;
+
+            MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders.hlsl", "VSMain");
+            MiniEngine::HLSLShader          *pixelShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders.hlsl", "PSMain");
+
+            // Add render target
+            _root->getRenderSystem()->addRenderTarget(renderTarget);
+
+            // Compile shader
+            if (!vertexShader->compile(MiniEngine::Shader::VERTEX))
+                std::cout << "Can't compile Vertex shader" << std::endl;
+
+            if (!pixelShader->compile(MiniEngine::Shader::PIXEL))
+                std::cout << "Can't compile Pixel shader" << std::endl;
+
+            // Create pipeline
+            pipeline = renderTarget->getGraphicPipeline();
+            pipeline->addVertexShader(*vertexShader);
+            pipeline->finalize();
+
+            delete vertexShader;
+            delete pixelShader;
+        }
     }
 }
 

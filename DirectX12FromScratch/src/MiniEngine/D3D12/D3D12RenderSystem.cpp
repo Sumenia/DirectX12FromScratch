@@ -89,3 +89,8 @@ D3D12RootSignature *D3D12RenderSystem::getRootSignature()
 {
     return (_rootSignature);
 }
+
+D3D12HLSLShader *D3D12RenderSystem::createHLSLShader(std::string const &filename, std::string const &entry)
+{
+    return (new D3D12HLSLShader(filename, entry));
+}

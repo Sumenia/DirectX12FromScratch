@@ -1,6 +1,7 @@
 #pragma once
 
 # include <list>
+# include "MiniEngine/HLSLShader.h"
 # include "MiniEngine/CommandQueue.h"
 
 namespace MiniEngine
@@ -18,6 +19,8 @@ namespace MiniEngine
 
         void                        addRenderTarget(RenderTarget *target);
         void                        clear();
+
+        virtual HLSLShader          *createHLSLShader(std::string const &filename, std::string const &entry) = 0;
 
     protected:
         std::list<RenderTarget*>    _targets;

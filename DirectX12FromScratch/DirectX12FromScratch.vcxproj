@@ -29,16 +29,21 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12DescriptorHeap.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Fence.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12GraphicPipeline.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12HLSLShader.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderTarget.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h" />
     <ClInclude Include="include\MiniEngine\CommandQueue.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RootSignature.h" />
     <ClInclude Include="include\MiniEngine\Fence.h" />
+    <ClInclude Include="include\MiniEngine\GraphicPipeline.h" />
     <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
+    <ClInclude Include="include\MiniEngine\HLSLShader.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
     <ClInclude Include="include\MiniEngine\Root.h" />
+    <ClInclude Include="include\MiniEngine\Shader.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -51,15 +56,20 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandQueue.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12DescriptorHeap.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12GraphicPipeline.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12HLSLShader.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderTarget.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderWindow.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RootSignature.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Fence.cpp" />
     <ClCompile Include="src\MiniEngine\Fence.cpp" />
+    <ClCompile Include="src\MiniEngine\GraphicPipeline.cpp" />
+    <ClCompile Include="src\MiniEngine\HLSLShader.cpp" />
     <ClCompile Include="src\MiniEngine\RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\RenderTarget.cpp" />
     <ClCompile Include="src\MiniEngine\Root.cpp" />
+    <ClCompile Include="src\MiniEngine\Shader.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CD1E3FAC-98C1-4172-8CEB-B41CAB92CCC6}</ProjectGuid>

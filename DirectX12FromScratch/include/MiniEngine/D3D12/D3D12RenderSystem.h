@@ -4,6 +4,7 @@
 # include "MiniEngine/RenderSystem.h"
 # include "MiniEngine/D3D12/D3D12CommandQueue.h"
 # include "MiniEngine/D3D12/D3D12RootSignature.h"
+# include "MiniEngine/D3D12/D3D12HLSLShader.h"
 
 namespace MiniEngine
 {
@@ -15,16 +16,18 @@ namespace MiniEngine
         D3D12RenderSystem();
         ~D3D12RenderSystem();
 
-        bool                init();
-        bool                initDevice();
-        bool                initCommandQueue();
-        bool                initFence();
-        bool                initRootSignature();
+        bool                    init();
+        bool                    initDevice();
+        bool                    initCommandQueue();
+        bool                    initFence();
+        bool                    initRootSignature();
 
-        IDXGIFactory4       *getFactory();
-        D3D12Device         *getDevice();
-        D3D12CommandQueue   *getCommandQueue();
-        D3D12RootSignature  *getRootSignature();
+        IDXGIFactory4           *getFactory();
+        D3D12Device             *getDevice();
+        D3D12CommandQueue       *getCommandQueue();
+        D3D12RootSignature      *getRootSignature();
+
+        D3D12HLSLShader         *createHLSLShader(std::string const &filename, std::string const &entry);
 
     protected:
         IDXGIFactory4       *_factory;
