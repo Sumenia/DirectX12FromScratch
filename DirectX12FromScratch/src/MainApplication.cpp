@@ -13,7 +13,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
         if (_root->getRenderSystem())
         {
-            MiniEngine::RenderTarget        *renderTarget = new MiniEngine::D3D12RenderWindow(*dynamic_cast<MiniEngine::D3D12RenderSystem*>(_root->getRenderSystem()), _window);
+            MiniEngine::RenderTarget        *renderTarget = _root->getRenderSystem()->createRenderWindow(_window);
             MiniEngine::GraphicPipeline     *pipeline;
 
             MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders.hlsl", "VSMain");

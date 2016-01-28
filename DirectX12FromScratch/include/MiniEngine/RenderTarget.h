@@ -16,6 +16,6 @@ namespace MiniEngine
         virtual GraphicPipeline *getGraphicPipeline() = 0;
 
     protected:
-        RenderSystem        &_system;
+        RenderSystem            &_system;
     };
 }

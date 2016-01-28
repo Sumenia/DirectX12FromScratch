@@ -42,6 +42,7 @@
     <ClInclude Include="include\MiniEngine\HLSLShader.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
+    <ClInclude Include="include\MiniEngine\RenderWindow.h" />
     <ClInclude Include="include\MiniEngine\Root.h" />
     <ClInclude Include="include\MiniEngine\Shader.h" />
     <ClInclude Include="include\Window.h" />
@@ -68,6 +69,7 @@
     <ClCompile Include="src\MiniEngine\HLSLShader.cpp" />
     <ClCompile Include="src\MiniEngine\RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\RenderTarget.cpp" />
+    <ClCompile Include="src\MiniEngine\RenderWindow.cpp" />
     <ClCompile Include="src\MiniEngine\Root.cpp" />
     <ClCompile Include="src\MiniEngine\Shader.cpp" />
   </ItemGroup>

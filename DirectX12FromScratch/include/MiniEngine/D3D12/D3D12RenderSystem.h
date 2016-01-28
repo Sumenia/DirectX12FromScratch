@@ -1,10 +1,12 @@
 #pragma once
 
 # include <dxgi1_4.h>
+# include "Window.h"
 # include "MiniEngine/RenderSystem.h"
 # include "MiniEngine/D3D12/D3D12CommandQueue.h"
 # include "MiniEngine/D3D12/D3D12RootSignature.h"
 # include "MiniEngine/D3D12/D3D12HLSLShader.h"
+# include "MiniEngine/D3D12/D3D12RenderWindow.h"
 
 namespace MiniEngine
 {
@@ -27,6 +29,7 @@ namespace MiniEngine
         D3D12CommandQueue       *getCommandQueue();
         D3D12RootSignature      *getRootSignature();
 
+        D3D12RenderWindow       *createRenderWindow(Window *window);
         D3D12HLSLShader         *createHLSLShader(std::string const &filename, std::string const &entry);
 
     protected:

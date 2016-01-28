@@ -8,7 +8,7 @@ namespace MiniEngine
 {
 	class D3D12RenderSystem;
 
-	class D3D12RenderTarget: public RenderTarget
+	class D3D12RenderTarget: virtual public RenderTarget
 	{
 	public:
 		D3D12RenderTarget(D3D12RenderSystem &system);
