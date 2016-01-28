@@ -71,3 +71,8 @@ bool D3D12CommandList::end()
 
     return (!FAILED(result));
 }
+
+ID3D12GraphicsCommandList *D3D12CommandList::getNative()
+{
+    return (_list);
+}

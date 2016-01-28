@@ -25,6 +25,8 @@ namespace MiniEngine
         virtual RenderWindow        *createRenderWindow(Window *window) = 0;
         virtual HLSLShader          *createHLSLShader(std::string const &filename, std::string const &entry) = 0;
 
+        bool                        render();
+
     protected:
         std::list<RenderTarget*>    _targets;
     };

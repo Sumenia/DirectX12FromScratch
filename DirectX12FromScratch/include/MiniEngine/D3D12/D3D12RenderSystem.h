@@ -27,6 +27,7 @@ namespace MiniEngine
         IDXGIFactory4           *getFactory();
         D3D12Device             *getDevice();
         D3D12CommandQueue       *getCommandQueue();
+        D3D12Fence              *getFence();
         D3D12RootSignature      *getRootSignature();
 
         D3D12RenderWindow       *createRenderWindow(Window *window);

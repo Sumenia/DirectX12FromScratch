@@ -86,6 +86,11 @@ D3D12CommandQueue *D3D12RenderSystem::getCommandQueue()
     return (_commandQueue);
 }
 
+D3D12Fence *D3D12RenderSystem::getFence()
+{
+    return (_fence);
+}
+
 D3D12RootSignature *D3D12RenderSystem::getRootSignature()
 {
     return (_rootSignature);

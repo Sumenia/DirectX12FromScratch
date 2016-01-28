@@ -5,6 +5,8 @@
 
 MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
 {
+    float       clearColor[4] = { 1.0f, 0.0f, 0.0f, 0.0f };
+
     initWindow(windowType, hInstance);
 
     if (_window)
@@ -21,6 +23,9 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
             // Add render target
             _root->getRenderSystem()->addRenderTarget(renderTarget);
+
+            // Change clear color
+            renderTarget->setClearColor(clearColor);
 
             // Compile shader
             if (!vertexShader->compile(MiniEngine::Shader::VERTEX))

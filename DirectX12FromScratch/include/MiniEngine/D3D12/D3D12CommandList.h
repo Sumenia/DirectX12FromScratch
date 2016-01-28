@@ -19,6 +19,8 @@ namespace MiniEngine
         bool                        begin();
         bool                        end();
 
+        ID3D12GraphicsCommandList   *getNative();
+
     protected:
         D3D12RenderSystem           &_system;
         D3D12GraphicPipeline        &_pipeline;

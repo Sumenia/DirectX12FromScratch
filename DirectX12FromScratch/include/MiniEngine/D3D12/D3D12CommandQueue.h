@@ -21,6 +21,8 @@ namespace MiniEngine
         bool                    wait(Fence &fence);
         bool                    wait(D3D12Fence &fence);
 
+        bool                    executeCommandLists(unsigned int nb, CommandList *list);
+
         bool                    init();
         ID3D12CommandQueue      *getNative();
 

@@ -18,11 +18,15 @@ namespace MiniEngine
         ~D3D12RenderWindow();
 
 		bool						init();
+        bool                        render();
 
         bool                        initSwapChain();
 		bool						initRtvDescriptorHeap();
 		bool						initRtv();
         bool                        initCommandList();
+
+        bool                        swap();
+        bool                        waitPreviousFrame();
 
         static const unsigned int   FrameCount = 2;
 
