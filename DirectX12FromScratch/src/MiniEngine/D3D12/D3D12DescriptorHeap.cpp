@@ -34,6 +34,7 @@ bool D3D12DescriptorHeap::init(UINT nb, D3D12_DESCRIPTOR_HEAP_TYPE type)
 	}
 
 	_size = _system.getDevice()->getNative()->GetDescriptorHandleIncrementSize(type);
+    return (true);
 }
 
 ID3D12DescriptorHeap *D3D12DescriptorHeap::getNative()
