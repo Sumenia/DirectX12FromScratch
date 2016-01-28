@@ -46,6 +46,7 @@
     <ClInclude Include="include\MiniEngine\Root.h" />
     <ClInclude Include="include\MiniEngine\Shader.h" />
     <ClInclude Include="include\Window.h" />
+    <ClInclude Include="include\MiniEngine\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DynamicLibrary.cpp" />
