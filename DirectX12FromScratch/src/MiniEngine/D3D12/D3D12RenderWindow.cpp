@@ -6,7 +6,7 @@
 
 using namespace MiniEngine;
 
-D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr)
+D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr), _commandList(nullptr)
 {
 	for (UINT n = 0; n < FrameCount; n++)
 	{
@@ -16,6 +16,9 @@ D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) 
 
 D3D12RenderWindow::~D3D12RenderWindow()
 {
+    delete _commandList;
+    _commandList = nullptr;
+
 	for (UINT n = 0; n < FrameCount; n++)
 		_rtvs[n]->Release();
 
@@ -34,6 +37,7 @@ bool D3D12RenderWindow::init()
 		initSwapChain()
 		&& initRtvDescriptorHeap()
 		&& initRtv()
+        && initCommandList()
 	);
 }
 
@@ -93,4 +97,10 @@ bool D3D12RenderWindow::initRtv()
 	}
 
 	return (true);
+}
+
+bool D3D12RenderWindow::initCommandList()
+{
+    _commandList = _system.getCommandQueue()->createCommandList(*_pipeline);
+    return (_commandList->init());
 }

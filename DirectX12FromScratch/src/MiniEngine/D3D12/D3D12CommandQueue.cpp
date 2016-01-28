@@ -16,6 +16,11 @@ D3D12CommandQueue::~D3D12CommandQueue()
     _queue = nullptr;
 }
 
+D3D12CommandList *D3D12CommandQueue::createCommandList(GraphicPipeline &pipeline)
+{
+    return (new D3D12CommandList(_system, dynamic_cast<D3D12GraphicPipeline&>(pipeline)));
+}
+
 bool D3D12CommandQueue::wait(Fence &fence)
 {
     return (wait(dynamic_cast<D3D12Fence&>(fence)));

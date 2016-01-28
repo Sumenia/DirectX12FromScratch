@@ -90,3 +90,8 @@ bool D3D12GraphicPipeline::finalize()
 
     return (true);
 }
+
+ID3D12PipelineState *D3D12GraphicPipeline::getNative()
+{
+    return (_pipeline);
+}
