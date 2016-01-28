@@ -16,6 +16,9 @@ namespace MiniEngine
         size_t          getSize();
 
         bool            compile(Shader::Type type);
+
+        static DXGI_FORMAT                  toD3D12(HLSLShader::Input::Format value);
+        static D3D12_INPUT_CLASSIFICATION   toD3D12(HLSLShader::Input::Classification value);
         
     protected:
         ID3DBlob        *_blob;

@@ -12,6 +12,8 @@ namespace MiniEngine
         GraphicPipeline(RenderSystem &system);
         virtual ~GraphicPipeline();
 
+        virtual void        setInputs(unsigned int nb, const void *inputs) = 0;
+
         virtual void        addVertexShader(Shader &shader) = 0;
         virtual void        addPixelShader(Shader &shader) = 0;
 

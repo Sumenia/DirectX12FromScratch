@@ -31,8 +31,17 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
             // Create pipeline
             pipeline = renderTarget->getGraphicPipeline();
+
+            const MiniEngine::HLSLShader::Input    inputs[] = {
+                { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
+                { "COLOR", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32A32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
+            };
+
+            pipeline->setInputs(2, inputs);
+
             pipeline->addVertexShader(*vertexShader);
             pipeline->addPixelShader(*pixelShader);
+
             pipeline->finalize();
 
             delete vertexShader;

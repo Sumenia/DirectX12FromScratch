@@ -13,6 +13,11 @@ namespace MiniEngine
             PIXEL
         };
 
+        struct Input
+        {
+            virtual ~Input() {};
+        };
+
     public:
         Shader(std::string const &filename, std::string const &entry);
         virtual ~Shader();

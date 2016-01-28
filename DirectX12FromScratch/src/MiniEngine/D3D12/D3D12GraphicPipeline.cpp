@@ -32,6 +32,38 @@ D3D12GraphicPipeline::~D3D12GraphicPipeline()
     _pipeline = nullptr;
 }
 
+void D3D12GraphicPipeline::setInputs(unsigned int nb, const void *inputs)
+{
+    setInputs(nb, static_cast<const HLSLShader::Input*>(inputs));
+}
+
+void D3D12GraphicPipeline::setInputs(unsigned int nb, const HLSLShader::Input *inputs)
+{
+    _desc.InputLayout.NumElements = nb;
+
+    if (nb > 0)
+    {
+        D3D12_INPUT_ELEMENT_DESC *newInputs = new D3D12_INPUT_ELEMENT_DESC[nb];
+
+        for (unsigned int i = 0; i < nb; i++)
+        {
+            newInputs[i] = {
+                inputs[i].semanticName,
+                inputs[i].semanticIndex,
+                D3D12HLSLShader::toD3D12(inputs[i].format),
+                inputs[i].inputSlot,
+                inputs[i].alignedByteOffset,
+                D3D12HLSLShader::toD3D12(inputs[i].inputSlotClass),
+                inputs[i].instanceDataStepRate
+            };
+        }
+        
+        _inputs.reset(newInputs);
+    }
+    else
+        _inputs = nullptr;
+}
+
 void D3D12GraphicPipeline::addVertexShader(Shader &shader)
 {
     _desc.VS = CD3D12_SHADER_BYTECODE(shader.getBytecode(), shader.getSize());
@@ -45,6 +77,8 @@ void D3D12GraphicPipeline::addPixelShader(Shader &shader)
 bool D3D12GraphicPipeline::finalize()
 {
     HRESULT result;
+
+    _desc.InputLayout.pInputElementDescs = _inputs.get();
     
     result = _system.getDevice()->getNative()->CreateGraphicsPipelineState(&_desc, __uuidof(ID3D12PipelineState), (void**)&_pipeline);
 
