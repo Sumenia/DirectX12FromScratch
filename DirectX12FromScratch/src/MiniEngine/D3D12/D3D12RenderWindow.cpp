@@ -44,10 +44,14 @@ bool D3D12RenderWindow::init()
 bool D3D12RenderWindow::render()
 {
     D3D12_RESOURCE_BARRIER      barrier;
-    D3D12_CPU_DESCRIPTOR_HANDLE renderTargetViewHandle;
 
     if (!_commandList->reset())
         return (false);
+
+    // Set necessary state
+    _commandList->getNative()->SetGraphicsRootSignature(_system.getRootSignature()->getNative());
+
+    // TO-DO: Set viewport and scissor
 
     // Set a ressource barrier
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
@@ -60,15 +64,11 @@ bool D3D12RenderWindow::render()
     _commandList->getNative()->ResourceBarrier(1, &barrier);
 
     // Set the current render target view
-    renderTargetViewHandle = _rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart();
-
-    if (_frameIdx == 1)
-        renderTargetViewHandle.ptr += _rtvDescriptorHeap->getSize();
-
-    _commandList->getNative()->OMSetRenderTargets(1, &renderTargetViewHandle, FALSE, nullptr);
+    CD3DX12_CPU_DESCRIPTOR_HANDLE renderTargetView(_rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart(), _frameIdx, _rtvDescriptorHeap->getSize());
+    _commandList->getNative()->OMSetRenderTargets(1, &renderTargetView, FALSE, nullptr);
 
     // Clear the render target view
-    _commandList->getNative()->ClearRenderTargetView(renderTargetViewHandle, _clearColor, 0, nullptr);
+    _commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
 
     // TO-DO: Render all the viewports
 
