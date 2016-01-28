@@ -172,6 +172,6 @@ bool D3D12RenderWindow::swap()
 
 bool D3D12RenderWindow::waitPreviousFrame()
 {
-    _frameIdx = !_frameIdx;
+    _frameIdx = (_frameIdx + 1) % D3D12RenderWindow::FrameCount;
     return (_system.getCommandQueue()->wait(*_system.getFence()));
 }
