@@ -22,7 +22,7 @@ bool Viewport::render(CommandList &commandList)
     if (_camera)
         return (_camera->render(commandList));
 
-    return (false);
+    return (true);
 }
 
 Vector2f const &Viewport::getPosition() const
