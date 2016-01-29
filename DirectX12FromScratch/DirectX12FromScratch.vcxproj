@@ -42,6 +42,7 @@
     <ClInclude Include="include\MiniEngine\GraphicPipeline.h" />
     <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
     <ClInclude Include="include\MiniEngine\HLSLShader.h" />
+    <ClInclude Include="include\MiniEngine\Matrix.h" />
     <ClInclude Include="include\MiniEngine\Mesh.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
