@@ -25,6 +25,8 @@
     <ClInclude Include="include\IGraphics.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
+    <ClInclude Include="include\MiniEngine\BasicSceneManager.h" />
+    <ClInclude Include="include\MiniEngine\Camera.h" />
     <ClInclude Include="include\MiniEngine\CommandList.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandList.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandQueue.h" />
@@ -43,16 +45,18 @@
     <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
     <ClInclude Include="include\MiniEngine\HLSLShader.h" />
     <ClInclude Include="include\MiniEngine\Mesh.h" />
+    <ClInclude Include="include\MiniEngine\MovableObject.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
     <ClInclude Include="include\MiniEngine\RenderWindow.h" />
     <ClInclude Include="include\MiniEngine\Root.h" />
+    <ClInclude Include="include\MiniEngine\SceneManager.h" />
+    <ClInclude Include="include\MiniEngine\SceneNode.h" />
     <ClInclude Include="include\MiniEngine\Shader.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\MiniEngine\Vector.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\MiniEngine\Mesh.cpp" />
     <ClCompile Include="src\DynamicLibrary.cpp" />
     <ClCompile Include="src\Graphics_DX12.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -73,6 +77,7 @@
     <ClCompile Include="src\MiniEngine\Fence.cpp" />
     <ClCompile Include="src\MiniEngine\GraphicPipeline.cpp" />
     <ClCompile Include="src\MiniEngine\HLSLShader.cpp" />
+    <ClCompile Include="src\MiniEngine\Mesh.cpp" />
     <ClCompile Include="src\MiniEngine\RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\RenderTarget.cpp" />
     <ClCompile Include="src\MiniEngine\RenderWindow.cpp" />

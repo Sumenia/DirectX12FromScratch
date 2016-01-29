@@ -16,9 +16,7 @@ int	main()
 int	main()
 {
     MainApplication application("WINDOW_SFML");
-	MiniEngine::Mesh mesh;
 
-	mesh.loadObjFromFile("./Assets/TestMesh.obj");
     application.run();
     return (0);
 }
