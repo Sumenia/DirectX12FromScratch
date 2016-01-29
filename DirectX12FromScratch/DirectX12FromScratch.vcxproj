@@ -42,6 +42,7 @@
     <ClInclude Include="include\MiniEngine\GraphicPipeline.h" />
     <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
     <ClInclude Include="include\MiniEngine\HLSLShader.h" />
+    <ClInclude Include="include\MiniEngine\Mesh.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
     <ClInclude Include="include\MiniEngine\RenderWindow.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="include\MiniEngine\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\MiniEngine\Mesh.cpp" />
     <ClCompile Include="src\DynamicLibrary.cpp" />
     <ClCompile Include="src\Graphics_DX12.cpp" />
     <ClCompile Include="src\main.cpp" />
