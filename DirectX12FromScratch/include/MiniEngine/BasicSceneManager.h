@@ -9,5 +9,7 @@ namespace MiniEngine
     public:
         BasicSceneManager();
         ~BasicSceneManager();
+
+        bool    render(Camera &camera, CommandList &commandList);
     };
 }

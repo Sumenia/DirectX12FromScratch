@@ -11,6 +11,8 @@ namespace MiniEngine
         RenderWindow(RenderSystem &system, Window *window);
         ~RenderWindow();
 
+        Viewport            *getDefaultViewport();
+
     protected:
         Window				*_window;
     };

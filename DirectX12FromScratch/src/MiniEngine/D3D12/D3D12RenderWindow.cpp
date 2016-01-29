@@ -51,8 +51,6 @@ bool D3D12RenderWindow::render()
     // Set necessary state
     _commandList->getNative()->SetGraphicsRootSignature(_system.getRootSignature()->getNative());
 
-    // TO-DO: Set viewport and scissor
-
     // Set a ressource barrier
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
     barrier.Transition.pResource = _rtvs[_frameIdx];
@@ -70,7 +68,11 @@ bool D3D12RenderWindow::render()
     // Clear the render target view
     _commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
 
-    // TO-DO: Render all the viewports
+    for (auto &&viewport : _viewports)
+    {
+        // TO-DO: Set viewport and scissor
+        viewport->render(*_commandList);
+    }
 
     // Indicate that the back buffer will now be used to present.
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;

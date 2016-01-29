@@ -7,8 +7,8 @@
 #include <string>
 #include <cassert>
 
-#ifndef DEG2RAD(x)
-#define DEG2RAD(x) ((x * M_PI) / 180.0)
+#ifndef DEG2RAD
+# define DEG2RAD(x) ((x * M_PI) / 180.0)
 #endif
 
 namespace MiniEngine

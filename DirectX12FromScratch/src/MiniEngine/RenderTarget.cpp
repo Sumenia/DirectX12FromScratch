@@ -6,7 +6,18 @@ RenderTarget::RenderTarget(RenderSystem &system) : _system(system), _clearColor{
 {}
 
 RenderTarget::~RenderTarget()
-{}
+{
+    while (_viewports.size())
+    {
+        delete _viewports.front();
+        _viewports.pop_front();
+    }
+}
+
+void RenderTarget::addViewport(Viewport *viewport)
+{
+    _viewports.push_back(viewport);
+}
 
 void RenderTarget::setClearColor(const float color[4])
 {

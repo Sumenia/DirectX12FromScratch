@@ -15,7 +15,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
         if (_root->getRenderSystem())
         {
-            MiniEngine::RenderTarget        *renderTarget = _root->getRenderSystem()->createRenderWindow(_window);
+            MiniEngine::RenderWindow        *renderTarget = _root->getRenderSystem()->createRenderWindow(_window);
             MiniEngine::GraphicPipeline     *pipeline;
 
             MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders.hlsl", "VSMain");
@@ -48,6 +48,12 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             pipeline->addPixelShader(*pixelShader);
 
             pipeline->finalize();
+
+            // Create Scene
+            MiniEngine::SceneManager    *sm = _root->createSceneManager(MiniEngine::Root::SceneManagerType::BASIC);
+            MiniEngine::Camera          *camera = sm->createCamera();
+
+            renderTarget->getDefaultViewport()->attachCamera(camera);
 
             delete vertexShader;
             delete pixelShader;

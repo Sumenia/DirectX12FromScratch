@@ -13,6 +13,7 @@ namespace MiniEngine
         virtual ~SceneManager();
 
         virtual SceneNode   *getRootNode();
+        virtual Camera      *createCamera(SceneNode *node = nullptr);
 
         virtual bool        render(Camera &camera, CommandList &commandList) = 0;
 

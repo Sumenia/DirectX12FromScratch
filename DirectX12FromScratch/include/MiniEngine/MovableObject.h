@@ -2,10 +2,18 @@
 
 namespace MiniEngine
 {
+    class SceneNode;
+
     class MovableObject
     {
     public:
-        virtual void    setParent(SceneNode *node);
+        MovableObject();
+        virtual ~MovableObject();
+
+        virtual void        setParent(SceneNode *node);
+        virtual SceneNode   *getParent();
+
+        virtual void        updateMatrix();
 
     protected:
         SceneNode       *_parent;

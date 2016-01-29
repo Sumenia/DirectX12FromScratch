@@ -1,4 +1,5 @@
 #include "MiniEngine/Root.h"
+#include "MiniEngine/BasicSceneManager.h"
 
 using namespace MiniEngine;
 
@@ -25,4 +26,12 @@ void Root::setRenderSystem(RenderSystem *renderSystem)
 RenderSystem *Root::getRenderSystem() const
 {
     return (_renderSystem);
+}
+
+SceneManager *Root::createSceneManager(SceneManagerType type)
+{
+    if (type == BASIC)
+        return (new BasicSceneManager());
+
+    return (nullptr);
 }
