@@ -49,7 +49,16 @@ bool D3D12RenderWindow::render()
         return (false);
 
     // Set necessary state
+    D3D12_RECT      scissorRect;
+
     _commandList->getNative()->SetGraphicsRootSignature(_system.getRootSignature()->getNative());
+
+    scissorRect.left = 0;
+    scissorRect.top = 0;
+    scissorRect.right = static_cast<LONG>(_window->getWidth());
+    scissorRect.bottom = static_cast<LONG>(_window->getHeight());
+
+    _commandList->getNative()->RSSetScissorRects(1, &scissorRect);
 
     // Set a ressource barrier
     barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
@@ -68,28 +77,35 @@ bool D3D12RenderWindow::render()
     // Clear the render target view
     _commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
 
+    // Render all viewports
     for (auto &&viewport : _viewports)
     {
-        // Set viewport and scissor
+        // Set viewport
         D3D12_VIEWPORT  viewportRect;
-        D3D12_RECT      scissorRect;
 
-        viewportRect.TopLeftX = static_cast<LONG>(viewport->getPosition().x);
-        viewportRect.TopLeftY = static_cast<LONG>(viewport->getPosition().y);
+        viewportRect.TopLeftX = static_cast<float>(viewport->getPosition().x);
+        viewportRect.TopLeftY = static_cast<float>(viewport->getPosition().y);
         viewportRect.Width = static_cast<float>(viewport->getSize().x);
         viewportRect.Height = static_cast<float>(viewport->getSize().y);
-        viewportRect.MaxDepth = 1.0f;
-
-        scissorRect.left = static_cast<LONG>(viewport->getPosition().x);
-        scissorRect.top = static_cast<LONG>(viewport->getPosition().y);
-        scissorRect.right = static_cast<LONG>(viewport->getSize().x);
-        scissorRect.bottom = static_cast<LONG>(viewport->getSize().y);
+        viewportRect.MaxDepth = D3D12_MAX_DEPTH;
+        viewportRect.MinDepth = D3D12_MIN_DEPTH;
 
         _commandList->getNative()->RSSetViewports(1, &viewportRect);
-        _commandList->getNative()->RSSetScissorRects(1, &scissorRect);
 
         viewport->render(*_commandList);
     }
+
+    // Reset viewport
+    D3D12_VIEWPORT  viewportRect;
+
+    viewportRect.TopLeftX = 0.0f;
+    viewportRect.TopLeftY = 0.0f;
+    viewportRect.Width = static_cast<float>(_window->getWidth());
+    viewportRect.Height = static_cast<float>(_window->getHeight());
+    viewportRect.MaxDepth = D3D12_MAX_DEPTH;
+    viewportRect.MinDepth = D3D12_MIN_DEPTH;
+
+    _commandList->getNative()->RSSetViewports(1, &viewportRect);
 
     // Indicate that the back buffer will now be used to present.
     barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
