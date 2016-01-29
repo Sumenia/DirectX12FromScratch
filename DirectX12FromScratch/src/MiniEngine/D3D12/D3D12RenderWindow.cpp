@@ -70,7 +70,24 @@ bool D3D12RenderWindow::render()
 
     for (auto &&viewport : _viewports)
     {
-        // TO-DO: Set viewport and scissor
+        // Set viewport and scissor
+        D3D12_VIEWPORT  viewportRect;
+        D3D12_RECT      scissorRect;
+
+        viewportRect.TopLeftX = static_cast<LONG>(viewport->getPosition().x);
+        viewportRect.TopLeftY = static_cast<LONG>(viewport->getPosition().y);
+        viewportRect.Width = static_cast<float>(viewport->getSize().x);
+        viewportRect.Height = static_cast<float>(viewport->getSize().y);
+        viewportRect.MaxDepth = 1.0f;
+
+        scissorRect.left = static_cast<LONG>(viewport->getPosition().x);
+        scissorRect.top = static_cast<LONG>(viewport->getPosition().y);
+        scissorRect.right = static_cast<LONG>(viewport->getSize().x);
+        scissorRect.bottom = static_cast<LONG>(viewport->getSize().y);
+
+        _commandList->getNative()->RSSetViewports(1, &viewportRect);
+        _commandList->getNative()->RSSetScissorRects(1, &scissorRect);
+
         viewport->render(*_commandList);
     }
 
