@@ -21,8 +21,6 @@
   <ItemGroup>
     <ClInclude Include="include\Config.h" />
     <ClInclude Include="include\DynamicLibrary.h" />
-    <ClInclude Include="include\Graphics_DX12.h" />
-    <ClInclude Include="include\IGraphics.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
     <ClInclude Include="include\MiniEngine\BasicSceneManager.h" />
@@ -63,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DynamicLibrary.cpp" />
-    <ClCompile Include="src\Graphics_DX12.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainApplication.cpp" />
     <ClCompile Include="src\MiniEngine\Application.cpp" />
