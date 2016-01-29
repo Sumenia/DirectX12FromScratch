@@ -17,12 +17,18 @@ D3D12RootSignature::~D3D12RootSignature()
 
 bool D3D12RootSignature::init(D3D12RenderSystem &system)
 {
-    HRESULT         result;
-    ID3DBlob        *signature = nullptr;
-    ID3DBlob        *error = nullptr;
+    HRESULT                     result;
+    ID3DBlob                    *signature = nullptr;
+    ID3DBlob                    *error = nullptr;
+
+    CD3DX12_DESCRIPTOR_RANGE    range;
+    CD3DX12_ROOT_PARAMETER      parameter;
+
+    range.Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0);
+    parameter.InitAsDescriptorTable(1, &range, D3D12_SHADER_VISIBILITY_VERTEX);
 
     CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
-    rootSignatureDesc.Init(0, nullptr, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+    rootSignatureDesc.Init(1, &parameter, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
     result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error);
 

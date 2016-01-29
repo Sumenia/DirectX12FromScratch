@@ -16,14 +16,14 @@ D3D12DescriptorHeap::~D3D12DescriptorHeap()
 	_descriptorHeap = nullptr;
 }
 
-bool D3D12DescriptorHeap::init(UINT nb, D3D12_DESCRIPTOR_HEAP_TYPE type)
+bool D3D12DescriptorHeap::init(UINT nb, D3D12_DESCRIPTOR_HEAP_TYPE type, D3D12_DESCRIPTOR_HEAP_FLAGS flags)
 {
 	HRESULT						result;
 	D3D12_DESCRIPTOR_HEAP_DESC	heapDesc = {};
 
 	heapDesc.NumDescriptors = nb;
 	heapDesc.Type = type;
-	heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+	heapDesc.Flags = flags;
 
 	result = _system.getDevice()->getNative()->CreateDescriptorHeap(&heapDesc, __uuidof(ID3D12DescriptorHeap), (void**)&_descriptorHeap);
 
