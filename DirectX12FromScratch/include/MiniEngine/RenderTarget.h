@@ -24,5 +24,6 @@ namespace MiniEngine
         RenderSystem            &_system;
         float                   _clearColor[4];
         std::list<Viewport*>    _viewports;
+
     };
 }

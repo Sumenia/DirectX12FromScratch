@@ -26,8 +26,10 @@
     <ClInclude Include="include\MiniEngine\BasicSceneManager.h" />
     <ClInclude Include="include\MiniEngine\Camera.h" />
     <ClInclude Include="include\MiniEngine\CommandList.h" />
+    <ClInclude Include="include\MiniEngine\ConstantBuffer.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandList.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandQueue.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12ConstantBuffer.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12DescriptorHeap.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Fence.h" />
@@ -67,8 +69,10 @@
     <ClCompile Include="src\MiniEngine\BasicSceneManager.cpp" />
     <ClCompile Include="src\MiniEngine\Camera.cpp" />
     <ClCompile Include="src\MiniEngine\CommandQueue.cpp" />
+    <ClCompile Include="src\MiniEngine\ConstantBuffer.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandList.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandQueue.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12ConstantBuffer.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12DescriptorHeap.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12GraphicPipeline.cpp" />
