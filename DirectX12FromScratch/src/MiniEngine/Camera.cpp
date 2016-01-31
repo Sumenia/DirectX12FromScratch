@@ -57,10 +57,10 @@ void Camera::updateProjectionMatrix()
         for (int y = 1; y <= 4; y++)
             _projection(x, y) = 0;
 
-    _projection(2, 2) = 1 / tan(0.5f * _fov);
-    _projection(1, 1) = -1 * _projection(2, 2) / _ratio;
-    _projection(3, 3) = _far * oneOverDepth;
-    _projection(4, 3) = (-_far * _near) * oneOverDepth;
-    _projection(3, 4) = 1;
+    _projection(2, 2) = 1 / tan(0.5f * (_fov * M_PI / 180.0f));
+    _projection(1, 1) = 1 * _projection(2, 2) / _ratio;
+    _projection(3, 3) = -_far * oneOverDepth;
+    _projection(3, 4) = (-_far * _near) * oneOverDepth;
+    _projection(4, 3) = -1;
     _projection(4, 4) = 0;
 }
