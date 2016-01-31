@@ -226,13 +226,13 @@ namespace MiniEngine
 			return Quaternion<T>(w, -v);
 		}
 
-		Quaternion<T> inverse(Quaternion<T> q)
+		Quaternion<T> inverse()
 		{
 			Quaternion<T> ret = Quaternion<T>(
-				q.w / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z),
-				-1 * q.v.x / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z),
-				-1 * q.v.y / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z),
-				-1 * q.v.z / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z));
+				this->w / (this->w * this->w + this->v.x * this->v.x + this->v.y * this->v.y + this->v.z * this->v.z),
+				-1 * this->v.x / (this->w * this->w + this->v.x * this->v.x + this->v.y * this->v.y + this->v.z * this->v.z),
+				-1 * this->v.y / (this->w * this->w + this->v.x * this->v.x + this->v.y * this->v.y + this->v.z * this->v.z),
+				-1 * this->v.z / (this->w * this->w + this->v.x * this->v.x + this->v.y * this->v.y + this->v.z * this->v.z));
 			return ret;
 		}
 
