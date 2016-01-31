@@ -11,8 +11,13 @@ Camera::~Camera()
 
 bool Camera::render(CommandList &commandList)
 {
+    bool    result;
+
     commandList.setCameraMatrix(_view, _projection);
-    return  (_manager.render(*this, commandList));
+    result = _manager.render(*this, commandList);
+    commandList.afterCameraRender();
+
+    return (result);
 }
 
 void Camera::updateMatrix()

@@ -13,6 +13,7 @@ namespace MiniEngine
 		virtual bool    init(unsigned int size, unsigned int nb) = 0;
 
         virtual void    update(CommandList &commandList, unsigned int size, void *data) = 0;
+        virtual void    afterUpdate(CommandList &commandList) = 0;
 
 	protected:
 		RenderSystem	&_system;

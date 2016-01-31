@@ -18,6 +18,7 @@ namespace MiniEngine
         bool                initView(unsigned int size, unsigned int nb);
 
         void                update(CommandList &commandList, unsigned int size, void *data);
+        void                afterUpdate(CommandList &commandList);
 
         D3D12DescriptorHeap *getHeap();
 

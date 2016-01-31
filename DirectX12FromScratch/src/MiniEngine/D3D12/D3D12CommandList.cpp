@@ -92,6 +92,11 @@ void D3D12CommandList::setCameraMatrix(Matrix4f const &view, Matrix4f const &pro
     _target.getCameraBuffer()->update(*this, sizeof(camera), &camera);
 }
 
+void D3D12CommandList::afterCameraRender()
+{
+    _target.getCameraBuffer()->afterUpdate(*this);
+}
+
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()
 {
     return (_list);
