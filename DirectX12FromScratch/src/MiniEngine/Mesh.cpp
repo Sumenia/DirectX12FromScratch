@@ -3,11 +3,11 @@
 using namespace MiniEngine;
 
 bool Vertex::operator==(const Vertex& toCompare) const {
-	return (/*toCompare.normal.x == normal.x &&
+	return (toCompare.normal.x == normal.x &&
 		toCompare.normal.y == normal.y &&
 		toCompare.normal.z == normal.z &&
 		toCompare.uv.x == uv.x &&
-		toCompare.uv.y == uv.y &*/
+		toCompare.uv.y == uv.y &&
 		toCompare.vertice.x == vertice.x &&
 		toCompare.vertice.y == vertice.y &&
 		toCompare.vertice.z == vertice.z);

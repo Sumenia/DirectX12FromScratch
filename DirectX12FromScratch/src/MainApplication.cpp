@@ -5,7 +5,7 @@
 
 MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
 {
-    float       clearColor[4] = { 1.0f, 0.0f, 0.0f, 0.0f };
+    float       clearColor[4] = { 0.2f, 0.2f, 0.2f, 0.0f };
 
     initWindow(windowType, hInstance);
 
@@ -39,10 +39,10 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
             const MiniEngine::HLSLShader::Input    inputs[] = {
                 { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
-                //{ "COLOR", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32A32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
+                { "COLOR", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
             };
 
-            pipeline->setInputs(1, inputs);
+            pipeline->setInputs(2, inputs);
 
             pipeline->addVertexShader(*vertexShader);
             pipeline->addPixelShader(*pixelShader);

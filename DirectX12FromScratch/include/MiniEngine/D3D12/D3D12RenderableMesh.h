@@ -12,7 +12,7 @@ namespace MiniEngine
     {
         DirectX::XMFLOAT3 vertice;
         //DirectX::XMFLOAT2 uv;
-        //DirectX::XMFLOAT3 normal;
+        DirectX::XMFLOAT3 normal;
     };
 
     class D3D12RenderableMesh : public RenderableMesh
