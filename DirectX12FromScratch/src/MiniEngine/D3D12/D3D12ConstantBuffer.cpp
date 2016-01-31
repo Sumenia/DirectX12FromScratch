@@ -102,9 +102,9 @@ bool D3D12ConstantBuffer::initView(unsigned int size, unsigned int nb)
         desc.BufferLocation = cbvGpuAddress;
         desc.SizeInBytes = size;
 
-        _system.getDevice()->getNative()->CreateConstantBufferView(&desc, cbvCpuHandle);
+        cbvCpuHandle.Offset(n * _heap->getSize());
 
-        cbvCpuHandle.Offset(_heap->getSize());
+        _system.getDevice()->getNative()->CreateConstantBufferView(&desc, cbvCpuHandle);
     }
 
     return (true);
