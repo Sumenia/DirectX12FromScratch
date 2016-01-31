@@ -25,8 +25,6 @@ namespace MiniEngine
 
         ID3D12GraphicsCommandList   *getNative();
 
-        D3D12Fence                  *_fence;
-
     protected:
         D3D12RenderSystem           &_system;
         D3D12GraphicPipeline        &_pipeline;
