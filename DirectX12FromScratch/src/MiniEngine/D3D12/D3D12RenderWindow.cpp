@@ -198,7 +198,7 @@ bool D3D12RenderWindow::initRtv()
 
 bool D3D12RenderWindow::initCommandList()
 {
-    _commandList = _system.getCommandQueue()->createCommandList(*this, *_pipeline);
+    _commandList = _system.getCommandQueue()->createCommandList(this, *_pipeline);
     return (_commandList->init());
 }
 

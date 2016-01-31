@@ -6,7 +6,7 @@
 
 using namespace MiniEngine;
 
-D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget &target, D3D12GraphicPipeline &pipeline) : CommandList(system, target, pipeline), _system(system), _pipeline(pipeline), _allocator(nullptr), _list(nullptr)
+D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget *target, D3D12GraphicPipeline &pipeline) : CommandList(system, target, pipeline), _system(system), _pipeline(pipeline), _allocator(nullptr), _list(nullptr)
 {}
 
 D3D12CommandList::~D3D12CommandList()
@@ -89,12 +89,12 @@ void D3D12CommandList::setCameraMatrix(Matrix4f const &view, Matrix4f const &pro
         for (unsigned int y = 0; y < 4; y++)
             camera.projection.m[x][y] = projection(x + 1, y + 1);
 
-    _target.getCameraBuffer()->update(*this, sizeof(camera), &camera);
+    _target->getCameraBuffer()->update(*this, sizeof(camera), &camera);
 }
 
 void D3D12CommandList::afterCameraRender()
 {
-    _target.getCameraBuffer()->afterUpdate(*this);
+    _target->getCameraBuffer()->afterUpdate(*this);
 }
 
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()

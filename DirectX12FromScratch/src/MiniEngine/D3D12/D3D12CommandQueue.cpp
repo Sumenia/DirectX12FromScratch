@@ -16,9 +16,9 @@ D3D12CommandQueue::~D3D12CommandQueue()
     _queue = nullptr;
 }
 
-D3D12CommandList *D3D12CommandQueue::createCommandList(RenderTarget &target, GraphicPipeline &pipeline)
+D3D12CommandList *D3D12CommandQueue::createCommandList(RenderTarget *target, GraphicPipeline &pipeline)
 {
-    return (new D3D12CommandList(_system, dynamic_cast<D3D12RenderTarget&>(target), dynamic_cast<D3D12GraphicPipeline&>(pipeline)));
+    return (new D3D12CommandList(_system, dynamic_cast<D3D12RenderTarget*>(target), dynamic_cast<D3D12GraphicPipeline&>(pipeline)));
 }
 
 bool D3D12CommandQueue::wait(Fence &fence)

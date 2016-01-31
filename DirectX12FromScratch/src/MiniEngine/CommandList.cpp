@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-CommandList::CommandList(RenderSystem &system, RenderTarget &target, GraphicPipeline &pipeline) : _system(system), _target(target), _pipeline(pipeline)
+CommandList::CommandList(RenderSystem &system, RenderTarget *target, GraphicPipeline &pipeline) : _system(system), _target(target), _pipeline(pipeline)
 {}
 
 CommandList::~CommandList()
@@ -10,5 +10,5 @@ CommandList::~CommandList()
 
 RenderTarget &CommandList::getRenderTarget()
 {
-    return (_target);
+    return (*_target);
 }

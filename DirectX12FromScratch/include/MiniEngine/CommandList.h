@@ -11,7 +11,7 @@ namespace MiniEngine
     class CommandList
     {
     public:
-        CommandList(RenderSystem &system, RenderTarget &target, GraphicPipeline &pipeline);
+        CommandList(RenderSystem &system, RenderTarget *target, GraphicPipeline &pipeline);
         virtual ~CommandList();
 
         virtual bool        init() = 0;
@@ -27,7 +27,7 @@ namespace MiniEngine
 
     protected:
         RenderSystem        &_system;
-        RenderTarget        &_target;
+        RenderTarget        *_target;
         GraphicPipeline     &_pipeline;
     };
 }
