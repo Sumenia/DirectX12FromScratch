@@ -108,13 +108,13 @@ void D3D12ConstantBuffer::update(CommandList &commandList, unsigned int size, vo
 
     UpdateSubresources(dynamic_cast<D3D12CommandList&>(commandList).getNative(), _constantBuffer, _constantBufferUpload, 0, 0, 1, &descData);
 
-    CD3DX12_RESOURCE_BARRIER bufferResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_constantBuffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_INDEX_BUFFER);
+    CD3DX12_RESOURCE_BARRIER bufferResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_constantBuffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
     dynamic_cast<D3D12CommandList&>(commandList).getNative()->ResourceBarrier(1, &bufferResourceBarrier);
 }
 
 void D3D12ConstantBuffer::afterUpdate(CommandList &commandList)
 {
-    CD3DX12_RESOURCE_BARRIER bufferResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_constantBuffer, D3D12_RESOURCE_STATE_INDEX_BUFFER, D3D12_RESOURCE_STATE_COPY_DEST);
+    CD3DX12_RESOURCE_BARRIER bufferResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_constantBuffer, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, D3D12_RESOURCE_STATE_COPY_DEST);
     dynamic_cast<D3D12CommandList&>(commandList).getNative()->ResourceBarrier(1, &bufferResourceBarrier);
 }
 
