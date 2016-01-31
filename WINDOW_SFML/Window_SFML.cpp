@@ -4,6 +4,10 @@
 Window_SFML::Window_SFML()
 {
     _window = nullptr;
+	_map[sf::Keyboard::Left] = LEFT;
+	_map[sf::Keyboard::Right] = RIGHT;
+	_map[sf::Keyboard::Up] = UP;
+	_map[sf::Keyboard::Down] = DOWN;
     _map[sf::Keyboard::Escape] = ESCAPE;
 }
 
