@@ -3,12 +3,7 @@
 
 using namespace MiniEngine;
 
-ConstantBuffer::ConstantBuffer()
-{
-
-}
-
-MiniEngine::ConstantBuffer::ConstantBuffer(RenderSystem & system) : _system(system)
+ConstantBuffer::ConstantBuffer(RenderSystem & system) : _system(system)
 {
 }
 
