@@ -153,6 +153,9 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12VertexBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12IndexBuffer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp">
@@ -258,6 +261,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\MiniEngine\D3D12\D3D12VertexBuffer.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12IndexBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
