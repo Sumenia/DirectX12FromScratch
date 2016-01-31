@@ -24,6 +24,7 @@ namespace MiniEngine
 		bool						initRtvDescriptorHeap();
 		bool						initRtv();
         bool                        initCommandList();
+        bool                        initConstantBuffers();
 
         bool                        swap();
         bool                        waitPreviousFrame();

@@ -8,9 +8,11 @@ namespace MiniEngine
 	{
 	public:
 		ConstantBuffer(RenderSystem&);
-		~ConstantBuffer();
+		virtual ~ConstantBuffer();
 
-		virtual bool init() = 0;
+		virtual bool    init(unsigned int size, unsigned int nb) = 0;
+
+        virtual void    update(CommandList &commandList, unsigned int size, void *data) = 0;
 
 	protected:
 		RenderSystem	&_system;

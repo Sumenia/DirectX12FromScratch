@@ -1,11 +1,12 @@
 #include <iostream>
+#include <DirectXMath.h>
 #include "MiniEngine/D3D12/D3D12CommandList.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12Device.h"
 
 using namespace MiniEngine;
 
-D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline) : CommandList(system, pipeline), _system(system), _pipeline(pipeline), _allocator(nullptr), _list(nullptr)
+D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget &target, D3D12GraphicPipeline &pipeline) : CommandList(system, target, pipeline), _system(system), _pipeline(pipeline), _allocator(nullptr), _list(nullptr)
 {}
 
 D3D12CommandList::~D3D12CommandList()
@@ -70,6 +71,25 @@ bool D3D12CommandList::end()
     result = _list->Close();
 
     return (!FAILED(result));
+}
+
+void D3D12CommandList::setCameraMatrix(Matrix4f const &view, Matrix4f const &projection)
+{
+    struct CameraMatrix
+    {
+        DirectX::XMFLOAT4X4  view;
+        DirectX::XMFLOAT4X4  projection;
+    }   camera;
+
+    for (unsigned int x = 0; x < 4; x++)
+        for (unsigned int y = 0; y < 4; y++)
+            camera.view.m[x][y] = view(x + 1, y + 1);
+
+    for (unsigned int x = 0; x < 4; x++)
+        for (unsigned int y = 0; y < 4; y++)
+            camera.projection.m[x][y] = projection(x + 1, y + 1);
+
+    _target.getCameraBuffer()->update(*this, sizeof(camera), &camera);
 }
 
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()

@@ -1,15 +1,17 @@
 #pragma once
 
 # include "MiniEngine/GraphicPipeline.h"
+# include "MiniEngine/Geometry.h"
 
 namespace MiniEngine
 {
     class RenderSystem;
+    class RenderTarget;
 
     class CommandList
     {
     public:
-        CommandList(RenderSystem &system, GraphicPipeline &pipeline);
+        CommandList(RenderSystem &system, RenderTarget &target, GraphicPipeline &pipeline);
         virtual ~CommandList();
 
         virtual bool        init() = 0;
@@ -18,8 +20,11 @@ namespace MiniEngine
         virtual bool        begin() = 0;
         virtual bool        end() = 0;
 
+        virtual void        setCameraMatrix(Matrix4f const &view, Matrix4f const &projection) = 0;
+
     protected:
         RenderSystem        &_system;
+        RenderTarget        &_target;
         GraphicPipeline     &_pipeline;
     };
 }

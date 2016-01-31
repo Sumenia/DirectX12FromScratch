@@ -4,10 +4,7 @@
 using namespace MiniEngine;
 
 ConstantBuffer::ConstantBuffer(RenderSystem & system) : _system(system)
-{
-}
+{}
 
 ConstantBuffer::~ConstantBuffer()
-{
-
-}
+{}

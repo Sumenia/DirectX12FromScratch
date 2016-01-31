@@ -3,6 +3,7 @@
 #include "MiniEngine/D3D12/D3D12RenderWindow.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12Device.h"
+#include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 
 using namespace MiniEngine;
 
@@ -38,6 +39,7 @@ bool D3D12RenderWindow::init()
 		&& initRtvDescriptorHeap()
 		&& initRtv()
         && initCommandList()
+        && initConstantBuffers()
 	);
 }
 
@@ -52,6 +54,16 @@ bool D3D12RenderWindow::render()
     D3D12_RECT      scissorRect;
 
     _commandList->getNative()->SetGraphicsRootSignature(_system.getRootSignature()->getNative());
+
+    // Bind constant buffer heaps
+    D3D12DescriptorHeap *camerHeap = dynamic_cast<D3D12ConstantBuffer*>(_cameraConstantBuffer)->getHeap();
+
+    ID3D12DescriptorHeap* ppHeaps[] = { camerHeap->getNative() };
+    _commandList->getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+
+    // Bind camera constant buffer to slot 0
+    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(camerHeap->getNative()->GetGPUDescriptorHandleForHeapStart(), _frameIdx, camerHeap->getSize());
+    _commandList->getNative()->SetGraphicsRootDescriptorTable(0, gpuHandle);
 
     scissorRect.left = 0;
     scissorRect.top = 0;
@@ -186,8 +198,14 @@ bool D3D12RenderWindow::initRtv()
 
 bool D3D12RenderWindow::initCommandList()
 {
-    _commandList = _system.getCommandQueue()->createCommandList(*_pipeline);
+    _commandList = _system.getCommandQueue()->createCommandList(*this, *_pipeline);
     return (_commandList->init());
+}
+
+bool D3D12RenderWindow::initConstantBuffers()
+{
+    _cameraConstantBuffer = new D3D12ConstantBuffer(_system);
+    return (_cameraConstantBuffer->init(128, D3D12RenderWindow::FrameCount));
 }
 
 bool D3D12RenderWindow::swap()

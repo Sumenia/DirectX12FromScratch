@@ -3,6 +3,7 @@
 # include "MiniEngine/Viewport.h"
 # include "MiniEngine/RenderSystem.h"
 # include "MiniEngine/GraphicPipeline.h"
+# include "MiniEngine/ConstantBuffer.h"
 
 namespace MiniEngine
 {
@@ -18,6 +19,8 @@ namespace MiniEngine
         void                    addViewport(Viewport *viewport);
         void                    setClearColor(const float color[4]);
 
+        virtual ConstantBuffer  *getCameraBuffer();
+
         virtual GraphicPipeline *getGraphicPipeline() = 0;
 
     protected:
@@ -25,5 +28,6 @@ namespace MiniEngine
         float                   _clearColor[4];
         std::list<Viewport*>    _viewports;
 
+        ConstantBuffer          *_cameraConstantBuffer;
     };
 }

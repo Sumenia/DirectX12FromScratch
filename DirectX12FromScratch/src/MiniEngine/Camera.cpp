@@ -11,9 +11,7 @@ Camera::~Camera()
 
 bool Camera::render(CommandList &commandList)
 {
-    // TO-DO: Set projection matrix
-    // TO-DO: Set view matrix
-
+    commandList.setCameraMatrix(_view, _projection);
     return  (_manager.render(*this, commandList));
 }
 

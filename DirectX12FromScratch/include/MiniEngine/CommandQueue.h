@@ -11,7 +11,7 @@ namespace MiniEngine
         CommandQueue();
         virtual ~CommandQueue();
 
-        virtual CommandList        *createCommandList(GraphicPipeline &pipeline) = 0;
+        virtual CommandList        *createCommandList(RenderTarget &target, GraphicPipeline &pipeline) = 0;
         virtual bool                wait(Fence &fence) = 0;
 
         virtual bool                executeCommandLists(unsigned int nb, CommandList *lists) = 0;
