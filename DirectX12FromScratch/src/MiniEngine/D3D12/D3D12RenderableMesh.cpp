@@ -35,7 +35,6 @@ bool D3D12RenderableMesh::initVertexBuffer(D3D12RenderSystem &system, D3D12Graph
 
     for (unsigned int i = 0; i < _vertexs.size(); i++)
     {
-        std::cout << _vertexs[i].vertice.x << " / " << _vertexs[i].vertice.y << " / " << _vertexs[i].vertice.z << std::endl;
         _vertexData[i].vertice = { _vertexs[i].vertice.x, _vertexs[i].vertice.y, _vertexs[i].vertice.z };
         _vertexData[i].normal = { _vertexs[i].normal.x, _vertexs[i].normal.y, _vertexs[i].normal.z };
         //_vertexData[i].uv = { _vertexs[i].uv.x, _vertexs[i].uv.y };
@@ -50,13 +49,7 @@ bool D3D12RenderableMesh::initIndexBuffer(D3D12RenderSystem &system, D3D12Graphi
     _indexData = new unsigned short[_indices.size()];
 
     for (unsigned int i = 0; i < _indices.size(); i++)
-    {
-        std::cout << _indices[i] << ", ";
-        if (i % 3 == 2)
-            std::cout << std::endl;
-
         _indexData[i] = _indices[i];
-    }
 
     _indexBuffer = new D3D12IndexBuffer(system);
     return (_indexBuffer->init(pipeline, sizeof(unsigned short) * _indices.size(), _indexData));
@@ -81,8 +74,6 @@ bool D3D12RenderableMesh::render(Camera &camera, CommandList &commandList)
     d3d12CommandList.getNative()->IASetVertexBuffers(0, 1, &vertexView);
     d3d12CommandList.getNative()->IASetIndexBuffer(&indexView);
     d3d12CommandList.getNative()->DrawIndexedInstanced(_indices.size(), 1, 0, 0, 0);
-
-    //std::cout << "RENDER " << _indices.size() << " indices" << std::endl;
 
     return (true);
 }
