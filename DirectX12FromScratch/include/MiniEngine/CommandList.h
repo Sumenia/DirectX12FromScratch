@@ -23,6 +23,8 @@ namespace MiniEngine
         virtual void        setCameraMatrix(Matrix4f const &view, Matrix4f const &projection) = 0;
         virtual void        afterCameraRender() = 0;
 
+        RenderTarget        &getRenderTarget();
+
     protected:
         RenderSystem        &_system;
         RenderTarget        &_target;

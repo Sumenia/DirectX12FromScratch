@@ -35,7 +35,6 @@ namespace MiniEngine
         IDXGISwapChain3             *_swapChain;
 		D3D12DescriptorHeap	        *_rtvDescriptorHeap;
 		ID3D12Resource		        *_rtvs[D3D12RenderWindow::FrameCount];
-        unsigned int                _frameIdx;
         D3D12CommandList            *_commandList;
     };
 }

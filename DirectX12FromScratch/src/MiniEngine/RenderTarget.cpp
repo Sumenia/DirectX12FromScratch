@@ -34,3 +34,8 @@ ConstantBuffer *RenderTarget::getCameraBuffer()
 {
     return (_cameraConstantBuffer);
 }
+
+unsigned int RenderTarget::getFrameIdx()
+{
+    return (_frameIdx);
+}

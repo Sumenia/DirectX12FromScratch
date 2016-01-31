@@ -23,11 +23,14 @@ namespace MiniEngine
 
         virtual GraphicPipeline *getGraphicPipeline() = 0;
 
+        unsigned int            getFrameIdx();
+
     protected:
         RenderSystem            &_system;
         float                   _clearColor[4];
         std::list<Viewport*>    _viewports;
 
         ConstantBuffer          *_cameraConstantBuffer;
+        unsigned int            _frameIdx;
     };
 }

@@ -7,3 +7,8 @@ CommandList::CommandList(RenderSystem &system, RenderTarget &target, GraphicPipe
 
 CommandList::~CommandList()
 {}
+
+RenderTarget &CommandList::getRenderTarget()
+{
+    return (_target);
+}

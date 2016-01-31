@@ -24,8 +24,10 @@ namespace MiniEngine
 
 	protected:
 		D3D12RenderSystem	&_system;
-		ID3D12Resource		*_constantBuffer;
-        ID3D12Resource		*_constantBufferUpload;
+		ID3D12Resource		**_constantBuffer;
+        ID3D12Resource		**_constantBufferUpload;
         D3D12DescriptorHeap *_heap;
+
+        unsigned int        _nb;
 	};
 };
