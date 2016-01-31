@@ -13,9 +13,10 @@ namespace MiniEngine
         virtual void        setParent(SceneNode *node);
         virtual SceneNode   *getParent();
 
-        virtual void        updateMatrix();
+        virtual void        needUpdate();
 
     protected:
         SceneNode       *_parent;
+        bool            _needUpdate;
     };
 }

@@ -15,7 +15,6 @@ namespace MiniEngine
         ~Camera();
 
         bool            render(CommandList &commandList);
-        virtual void    updateMatrix();
 
         void            lookAt(const Vector3f &eye, const Vector3f &target, const Vector3f &up);
 

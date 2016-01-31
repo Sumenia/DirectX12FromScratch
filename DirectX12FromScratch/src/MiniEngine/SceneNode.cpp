@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0))
+SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0)), _needUpdate(true)
 {}
 
 SceneNode::~SceneNode()
@@ -24,7 +24,7 @@ SceneNode *SceneNode::addChild(SceneNode *node)
     _childs.push_back(node);
 
     node->setParent(this);
-    node->updateMatrix();
+    node->needUpdate();
 
     return (node);
 }
@@ -59,48 +59,107 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
     return (true);
 }
 
-Matrix4f const &SceneNode::getTransformationMatrix() const
+Vector3f &SceneNode::getDerivedPosition()
 {
-    return (_localMatrix);
+    if (_needUpdate)
+        update();
+
+    return (_derivedPosition);
 }
 
-Matrix4f const &SceneNode::getWorldTransformationMatrix() const
+Quatf &SceneNode::getDerivedRotation()
 {
-    return (_worldMatrix);
+    if (_needUpdate)
+        update();
+
+    return (_derivedRotation);
 }
 
-void MiniEngine::SceneNode::rotate(float w, Vector3f & v)
+Vector3f &SceneNode::getDerivedScaling()
 {
-	_rotation *= Quatf::fromAxisRot(v, w);
-	updateMatrix();
+    if (_needUpdate)
+        update();
+
+    return (_derivedScaling);
 }
 
-void MiniEngine::SceneNode::translate(Vector3f & v)
+Matrix4f &SceneNode::getTransformationMatrix()
 {
-	_position += v;
+    if (_needUpdate)
+        update();
+
+    return (_transform);
 }
 
-void MiniEngine::SceneNode::scale(Vector3f & v)
+void MiniEngine::SceneNode::rotate(float w, Vector3f &v, TransformSpace space)
 {
+	Quatf q = Quatf::fromAxisRot(v, w);
+    q.normalize();
+
+    if (space == TS_LOCAL)
+        _rotation = _rotation * q;
+    else if (space == TS_PARENT)
+        _rotation = q * _rotation;
+    else if (space == TS_WORLD)
+        _rotation = _rotation - getDerivedRotation().inverse() * q * getDerivedRotation();
+
+	needUpdate();
 }
 
-void SceneNode::updateMatrix()
+void MiniEngine::SceneNode::translate(Vector3f &v, TransformSpace space)
 {
-    _localMatrix = Matrix4f::createTranslation(_position.x, _position.y, _position.z) * _rotation.transform() * Matrix4f::createScale(_scaling.x, _scaling.y, _scaling.z);
+    if (space == TS_LOCAL)
+        _position += _rotation.transform() * v;
+    else if (space == TS_PARENT)
+        _position += v;
+    else if (space == TS_WORLD)
+    {
+        if (_parent)
+            _position += (_parent->getDerivedRotation().inverse().transform() * v) / _parent->getDerivedScaling();
+        else
+            _position += v;
+    }
 
-    if (_parent)
-        _worldMatrix = _localMatrix * _parent->getWorldTransformationMatrix();
-    else
-        _worldMatrix = _localMatrix;
+    needUpdate();
+}
+
+void MiniEngine::SceneNode::scale(Vector3f &v)
+{
+    _scaling *= v;
+    needUpdate();
+}
+
+void SceneNode::needUpdate()
+{
+    _needUpdate = true;
 
     for (auto &&child : _childs)
-        child->updateMatrix();
+        child->needUpdate();
 
     if (_obj)
-        _obj->updateMatrix();
+        _obj->needUpdate();
 }
 
 void SceneNode::setParent(SceneNode *node)
 {
     _parent = node;
+}
+
+void SceneNode::update()
+{
+    if (_parent)
+    {
+        _derivedPosition = _parent->getDerivedRotation().transform() * (_parent->getDerivedScaling() * _position) + _parent->getDerivedPosition();
+        _derivedRotation = _parent->getDerivedRotation() * _rotation;
+        _derivedScaling = _parent->getDerivedScaling() * _scaling;
+    }
+    else
+    {
+        _derivedPosition = _position;
+        _derivedRotation = _rotation;
+        _derivedScaling = _scaling;
+    }
+
+    _needUpdate = false;
+    _transform = Matrix4f::createTranslation(_derivedPosition.x, _derivedPosition.y, _derivedPosition.z) * _derivedRotation.transform() * Matrix4f::createScale(_derivedScaling.x, _derivedScaling.y, _derivedScaling.z);
 }

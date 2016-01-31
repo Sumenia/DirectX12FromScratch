@@ -12,6 +12,13 @@ namespace MiniEngine
 {
     class SceneManager;
 
+    enum TransformSpace
+    {
+        TS_LOCAL,
+        TS_PARENT,
+        TS_WORLD
+    };
+
     class SceneNode
     {
     public:
@@ -26,17 +33,21 @@ namespace MiniEngine
 
         virtual bool            render(Camera &camera, CommandList &commandList);
 
-        virtual Matrix4f const &getTransformationMatrix() const;
-        virtual Matrix4f const &getWorldTransformationMatrix() const;
+        virtual Matrix4f        &getTransformationMatrix();
 
-		virtual void			rotate(float w, Vector3f& v);
-		virtual void			translate(Vector3f& v);
+        Vector3f                &getDerivedPosition();
+        Quatf                   &getDerivedRotation();
+        Vector3f                &getDerivedScaling();
+
+		virtual void			rotate(float w, Vector3f& v, TransformSpace space = TS_LOCAL);
+		virtual void			translate(Vector3f& v, TransformSpace space = TS_LOCAL);
 		virtual void			scale(Vector3f& v);
 
-        virtual void            updateMatrix();
+        virtual void            needUpdate();
 
     protected:
         virtual void            setParent(SceneNode *node);
+        virtual void            update();
 
     protected:
         SceneManager            &_manager;
@@ -49,7 +60,11 @@ namespace MiniEngine
         Quatf                   _rotation;
         Vector3f                _scaling;
 
-        Matrix4f                _localMatrix;
-        Matrix4f                _worldMatrix;
+        Vector3f                _derivedPosition;
+        Quatf                   _derivedRotation;
+        Vector3f                _derivedScaling;
+
+        Matrix4f                _transform;
+        bool                    _needUpdate;
     };
 }

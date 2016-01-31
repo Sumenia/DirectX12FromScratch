@@ -5,7 +5,7 @@
 
 using namespace MiniEngine;
 
-Camera::Camera(SceneManager &manager) : _manager(manager), _fov(90.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(100.0f)
+Camera::Camera(SceneManager &manager) : _manager(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(100.0f)
 {}
 
 Camera::~Camera()
@@ -15,6 +15,16 @@ bool Camera::render(CommandList &commandList)
 {
     bool    result;
 
+    if (_needUpdate)
+    {
+        if (_parent)
+            _worldView = _view * _parent->getTransformationMatrix();
+        else
+            _worldView = _view;
+
+        _needUpdate = false;
+    }
+
     commandList.setCameraMatrix(_worldView, _projection);
     result = _manager.render(*this, commandList);
     commandList.afterCameraRender();
@@ -22,18 +32,10 @@ bool Camera::render(CommandList &commandList)
     return (result);
 }
 
-void Camera::updateMatrix()
-{
-    if (_parent)
-        _worldView = _view * _parent->getWorldTransformationMatrix();
-    else
-        _worldView = _view;
-}
-
 void Camera::lookAt(const Vector3f &eye, const Vector3f &target, const Vector3f &up)
 {
     _view = Matrix4f::createLookAt(eye, target, up);
-    updateMatrix();
+    _needUpdate = true;
 }
 
 void Camera::setFov(float fov)

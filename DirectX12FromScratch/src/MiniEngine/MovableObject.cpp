@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-MovableObject::MovableObject() : _parent(nullptr)
+MovableObject::MovableObject() : _parent(nullptr), _needUpdate(true)
 {}
 
 MovableObject::~MovableObject()
@@ -18,7 +18,7 @@ SceneNode *MovableObject::getParent()
     return (_parent);
 }
 
-void MovableObject::updateMatrix()
+void MovableObject::needUpdate()
 {
-
+    _needUpdate = true;
 }
