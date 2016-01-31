@@ -66,7 +66,9 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 }
 
 MainApplication::~MainApplication()
-{}
+{
+    delete _sceneManager;
+}
 
 void MainApplication::initWindow(const std::string &windowType, HINSTANCE hInstance)
 {
@@ -109,8 +111,8 @@ bool MainApplication::update()
 {
     if (!_window || !_window->isOpen())
         return (false);
-	Window::EVENT_TYPE event = _window->getEvent();
 
+	Window::EVENT_TYPE event = _window->getEvent();
 
 	if (event == Window::EVENT_TYPE::LEFT)
 	{
