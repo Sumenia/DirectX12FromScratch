@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f)
+SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0))
 {}
 
 SceneNode::~SceneNode()
@@ -33,6 +33,7 @@ void SceneNode::attachObject(MovableObject *obj)
 {
     delete _obj;
     _obj = obj;
+	_obj->setParent(this);
 }
 
 SceneNode *SceneNode::getParent()
@@ -72,6 +73,7 @@ Matrix4f const &SceneNode::getWorldTransformationMatrix() const
 void MiniEngine::SceneNode::rotate(float w, Vector3f & v)
 {
 	_rotation *= Quatf::fromAxisRot(v, w);
+	updateMatrix();
 }
 
 void MiniEngine::SceneNode::translate(Vector3f & v)
