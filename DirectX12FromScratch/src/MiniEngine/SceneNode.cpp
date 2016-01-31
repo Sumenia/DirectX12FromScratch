@@ -31,8 +31,7 @@ SceneNode *SceneNode::addChild(SceneNode *node)
 
 void SceneNode::attachObject(MovableObject *obj)
 {
-    delete _obj;
-    _obj = obj;
+    _obj.reset(obj);
 	_obj->setParent(this);
 }
 
@@ -43,7 +42,7 @@ SceneNode *SceneNode::getParent()
 
 bool SceneNode::render(Camera &camera, CommandList &commandList)
 {
-    RenderableObject    *object = dynamic_cast<RenderableObject*>(_obj);
+    std::shared_ptr<RenderableObject>   object = std::dynamic_pointer_cast<RenderableObject>(_obj);
 
     if (object)
     {

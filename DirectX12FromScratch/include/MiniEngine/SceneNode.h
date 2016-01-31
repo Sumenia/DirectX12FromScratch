@@ -2,6 +2,7 @@
 
 # include "MiniEngine/Geometry.h"
 # include <list>
+# include <memory>
 # include "MiniEngine/MovableObject.h"
 # include "MiniEngine/Camera.h"
 # include "MiniEngine/CommandList.h"
@@ -42,13 +43,11 @@ namespace MiniEngine
 
         SceneNode               *_parent;
         std::list<SceneNode*>   _childs;
-        MovableObject           *_obj;
+        std::shared_ptr<MovableObject>  _obj;
 
         Vector3f                _position;
         Quatf                   _rotation;
         Vector3f                _scaling;
-
-		Matrix4f                _transform;
 
         Matrix4f                _localMatrix;
         Matrix4f                _worldMatrix;
