@@ -50,14 +50,14 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             pipeline->finalize();
 
             // Create Scene
-            MiniEngine::SceneManager    *sm = _root->createSceneManager(MiniEngine::Root::SceneManagerType::BASIC);
-            MiniEngine::Camera          *camera = sm->createCamera();
+            _sceneManager = _root->createSceneManager(MiniEngine::Root::SceneManagerType::BASIC);
+            _camera = _sceneManager->createCamera();
 
-            camera->lookAt({ 0.0f, 0.7f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
-            renderTarget->getDefaultViewport()->attachCamera(camera);
+            _camera->lookAt({ 0.0f, 0.7f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+            renderTarget->getDefaultViewport()->attachCamera(_camera);
 
             // Load a cube
-            sm->getRootNode()->createChild(_root->getRenderSystem()->loadMesh(*pipeline, "./Assets/Cube.ntm"));
+			_sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadMesh(*pipeline, "./Assets/Cube.ntm"));
 
             delete vertexShader;
             delete pixelShader;
@@ -109,8 +109,30 @@ bool MainApplication::update()
 {
     if (!_window || !_window->isOpen())
         return (false);
+	Window::EVENT_TYPE event = _window->getEvent();
 
-    if (_window->getEvent() == Window::EVENT_TYPE::ESCAPE)
+
+	if (event == Window::EVENT_TYPE::LEFT)
+	{
+		//_camera->getParent()->rotate(1, MiniEngine::Vector3f(0, -1, 0));
+
+	}
+	else if (event == Window::EVENT_TYPE::RIGHT)
+	{
+		//_camera->getParent()->rotate(1, MiniEngine::Vector3f(0, 1, 0));
+
+	}
+	else if (event == Window::EVENT_TYPE::UP)
+	{
+		//_camera->getParent()->rotate(1, MiniEngine::Vector3f(-1, 0, 0));
+	}
+	else if (event == Window::EVENT_TYPE::DOWN)
+	{
+		//_camera->getParent()->rotate(1, MiniEngine::Vector3f(1, 0, 0));
+
+	}
+
+	else if (event == Window::EVENT_TYPE::ESCAPE)
     {
         _window->destroy();
         return (false);

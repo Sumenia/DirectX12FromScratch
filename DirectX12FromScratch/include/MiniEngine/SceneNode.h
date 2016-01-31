@@ -1,7 +1,7 @@
 #pragma once
 
-# include <list>
 # include "MiniEngine/Geometry.h"
+# include <list>
 # include "MiniEngine/MovableObject.h"
 # include "MiniEngine/Camera.h"
 # include "MiniEngine/CommandList.h"
@@ -28,6 +28,10 @@ namespace MiniEngine
         virtual Matrix4f const &getTransformationMatrix() const;
         virtual Matrix4f const &getWorldTransformationMatrix() const;
 
+		virtual void			rotate(float w, Vector3f& v);
+		virtual void			translate(Vector3f& v);
+		virtual void			scale(Vector3f& v);
+
         virtual void            updateMatrix();
 
     protected:
@@ -43,6 +47,8 @@ namespace MiniEngine
         Vector3f                _position;
         Quatf                   _rotation;
         Vector3f                _scaling;
+
+		Matrix4f                _transform;
 
         Matrix4f                _localMatrix;
         Matrix4f                _worldMatrix;

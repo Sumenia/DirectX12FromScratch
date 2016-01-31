@@ -18,4 +18,7 @@ public:
 protected:
     Window          *_window;
     DynamicLibrary  _dllWindow;
+
+	MiniEngine::SceneManager	*_sceneManager;
+	MiniEngine::Camera			*_camera;
 };
