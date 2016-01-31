@@ -2,9 +2,30 @@
 
 using namespace MiniEngine;
 
+bool Vertex::operator==(const Vertex& toCompare) const {
+	return (toCompare.normal.x == normal.x &&
+		toCompare.normal.y == normal.y &&
+		toCompare.normal.z == normal.z &&
+		toCompare.uv.x == uv.x &&
+		toCompare.uv.y == uv.y &&
+		toCompare.vertice.x == vertice.x &&
+		toCompare.vertice.y == vertice.y &&
+		toCompare.vertice.z == vertice.z);
+}
+
 Mesh::Mesh() : _isLoaded(false) {}
 
 Mesh::~Mesh() {}
+
+void Mesh::replaceAll(std::string& str, const std::string& from, const std::string& to) {
+	if (from.empty())
+		return;
+	size_t start_pos = 0;
+	while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+		str.replace(start_pos, from.length(), to);
+		start_pos += to.length();
+	}
+}
 
 bool Mesh::loadObjFromFile(const std::string &path) {
 
@@ -16,6 +37,9 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		return false;
 	}
 
+	_vertexs.clear();
+	_indices.clear();
+
 	for (std::string line; std::getline(file, line); ) {
 		
 		std::istringstream in(line);
@@ -25,7 +49,7 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		if (type == "v") {
 			Vector3f vertex;
 			in >> vertex.x >> vertex.y >> vertex.z;
-			_vertexs.push_back(vertex);
+			_vertices.push_back(vertex);
 		}
 		else if (type == "vt") {
 			Vector2f textureVertex;
@@ -40,20 +64,30 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		else if (type == "f") {
 
 			unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+			unsigned int tmp;
 			std::string substring;
 
 			for (int i = 0; i < 3; ++i) {
 				in >> substring;
+				replaceAll(substring, "/", " ");
+
 				std::stringstream ss(substring);
 				ss >> vertexIndex[i];
-				ss.ignore();
 				ss >> uvIndex[i];
-				ss.ignore();
-				ss >> normalIndex[i];
+				
+				tmp = 0;
+				ss >> tmp;
+
+				if (tmp > 0) {
+					normalIndex[i] = tmp;
+				} else {
+					normalIndex[i] = uvIndex[i];
+					uvIndex[i] = 0;
+				}
 			}
-			_vertexIndices.push_back(vertexIndex[0]);
-			_vertexIndices.push_back(vertexIndex[1]);
-			_vertexIndices.push_back(vertexIndex[2]);
+			_verticesIndices.push_back(vertexIndex[0]);
+			_verticesIndices.push_back(vertexIndex[1]);
+			_verticesIndices.push_back(vertexIndex[2]);
 			_uvIndices.push_back(uvIndex[0]);
 			_uvIndices.push_back(uvIndex[1]);
 			_uvIndices.push_back(uvIndex[2]);
@@ -65,6 +99,48 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 
 	file.close();
 
+	for (unsigned int i = 0; i < _verticesIndices.size(); ++i) {
+
+		Vertex vertex;
+
+		unsigned int verticeIndex = _verticesIndices[i];
+		unsigned int uvIndex = _uvIndices[i];
+		unsigned int normalIndex = _normalIndices[i];
+
+		vertex.vertice = _vertices[verticeIndex - 1];
+		vertex.normal = _normals[normalIndex - 1];
+
+		if (uvIndex > 0) {
+			vertex.uv = _uvs[uvIndex - 1];
+		} else {
+			Vector2f zero;
+			zero.x = 0;
+			zero.y = 0;
+			vertex.uv = zero;
+		}
+		
+		std::vector<Vertex>::iterator it;
+
+		it = std::find(_vertexs.begin(), _vertexs.end(), vertex);
+		if (it == _vertexs.end()) {
+			_vertexs.push_back(vertex);
+		} else {
+			unsigned int idx = it - _vertexs.begin();
+			_indices.push_back(idx);
+		}	
+	}
+
+	_verticesIndices.clear();
+	_uvIndices.clear();
+	_normalIndices.clear();
+	_vertices.clear();
+	_uvs.clear();
+	_normals.clear();
+
+	/* for (unsigned int i = 0; i < _vertexs.size(); ++i) {
+		std::cout << "VERTEX : POSITION : " << _vertexs[i].vertice.x << " " << _vertexs[i].vertice.y << " " << _vertexs[i].vertice.z << " NORMAL : " << _vertexs[i].normal.x << " " << _vertexs[i].normal.y << " " << _vertexs[i].normal.z << std::endl;
+	} */
+
 	_isLoaded = true;
 	return true;
 }
@@ -73,26 +149,10 @@ bool Mesh::isLoaded() const {
 	return _isLoaded;
 }
 
-const std::vector<unsigned int> &Mesh::getNormalIndices() const {
-	return _normalIndices;
-}
-
-const std::vector<unsigned int> &Mesh::getUvIndices() const {
-	return _uvIndices;
-}
-
-const std::vector<unsigned int> &Mesh::getVertexIndices() const {
-	return _vertexIndices;
-}
-
-const std::vector<Vector3f> &Mesh::getVertexs() const {
+const std::vector<Vertex> &Mesh::getVertexs() const {
 	return _vertexs;
 }
 
-const std::vector<Vector2f> &Mesh::getUvs() const {
-	return _uvs;
-}
-
-const std::vector<Vector3f> &Mesh::getNormals() const {
-	return _normals;
+const std::vector<unsigned int> &Mesh::getIndices() const {
+	return _indices;
 }

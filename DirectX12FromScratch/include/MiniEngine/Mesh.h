@@ -1,38 +1,45 @@
 #pragma once
 
 # include <string>
+# include <algorithm>
 # include <vector>
-#include <iostream>
-#include <fstream>
+# include <iostream>
+# include <fstream>
 # include "Vector.h"
 
 namespace MiniEngine
 {
+	struct Vertex {
+		Vector3f vertice;
+		Vector2f uv;
+		Vector3f normal;
+
+		bool operator==(const Vertex& toCompare) const;
+	};
+
 	class Mesh {
 	public:
 		Mesh();
 		~Mesh();
 
 		bool loadObjFromFile(const std::string &file);
-
-		const std::vector<unsigned int> &getVertexIndices() const;
-		const std::vector<unsigned int> &getUvIndices() const;
-		const std::vector<unsigned int> &getNormalIndices() const;
-
-		const std::vector<Vector3f> &getVertexs() const;
-		const std::vector<Vector2f> &getUvs() const;
-		const std::vector<Vector3f> &getNormals() const;
-
+		const std::vector<unsigned int> &getIndices() const;
+		const std::vector<Vertex> &getVertexs() const;
 		bool isLoaded() const;
 
 	private:
-		std::vector<unsigned int> _vertexIndices;
+		void replaceAll(std::string& str, const std::string& from, const std::string& to);
+
+		std::vector<unsigned int> _verticesIndices;
 		std::vector<unsigned int> _uvIndices;
 		std::vector<unsigned int> _normalIndices;
 
-		std::vector<Vector3f> _vertexs;
+		std::vector<Vector3f> _vertices;
 		std::vector<Vector2f> _uvs;
 		std::vector<Vector3f> _normals;
+
+		std::vector<Vertex> _vertexs;
+		std::vector<unsigned int> _indices;
 
 		bool _isLoaded;
 	};
