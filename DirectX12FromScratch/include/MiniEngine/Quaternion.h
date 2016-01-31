@@ -226,6 +226,16 @@ namespace MiniEngine
 			return Quaternion<T>(w, -v);
 		}
 
+		Quaternion<T> inverse(Quaternion<T> q)
+		{
+			Quaternion<T> ret = Quaternion<T>(
+				q.w / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z),
+				-1 * q.v.x / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z),
+				-1 * q.v.y / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z),
+				-1 * q.v.z / (q.w * q.w + q.v.x * q.v.x + q.v.y * q.v.y + q.v.z * q.v.z));
+			return ret;
+		}
+
 		/**
 		* Get lenght of quaternion.
 		* @return Length of quaternion.
