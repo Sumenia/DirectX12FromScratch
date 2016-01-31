@@ -83,7 +83,7 @@ bool D3D12RenderWindow::render()
     _commandList->getNative()->ResourceBarrier(1, &barrier);
 
     // Set the current render target view
-    CD3DX12_CPU_DESCRIPTOR_HANDLE renderTargetView(_rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart(), _frameIdx, _rtvDescriptorHeap->getSize());
+    CD3DX12_CPU_DESCRIPTOR_HANDLE renderTargetView(_rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart(), 0, _rtvDescriptorHeap->getSize());
     _commandList->getNative()->OMSetRenderTargets(1, &renderTargetView, FALSE, nullptr);
 
     // Clear the render target view
@@ -205,7 +205,7 @@ bool D3D12RenderWindow::initCommandList()
 bool D3D12RenderWindow::initConstantBuffers()
 {
     _cameraConstantBuffer = new D3D12ConstantBuffer(_system);
-    return (_cameraConstantBuffer->init(128, D3D12RenderWindow::FrameCount));
+    return (_cameraConstantBuffer->init(128));
 }
 
 bool D3D12RenderWindow::swap()

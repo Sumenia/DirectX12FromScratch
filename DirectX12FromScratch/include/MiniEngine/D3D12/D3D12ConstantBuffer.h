@@ -12,10 +12,10 @@ namespace MiniEngine
 		D3D12ConstantBuffer(D3D12RenderSystem&);
 		~D3D12ConstantBuffer();
 
-		bool                init(unsigned int size, unsigned int nb = D3D12RenderWindow::FrameCount);
-        bool                initHeap(unsigned int nb);
-        bool                initRessources(unsigned int size, unsigned int nb);
-        bool                initView(unsigned int size, unsigned int nb);
+		bool                init(unsigned int size);
+        bool                initHeap();
+        bool                initRessources(unsigned int size);
+        bool                initView(unsigned int size);
 
         void                update(CommandList &commandList, unsigned int size, void *data);
         void                afterUpdate(CommandList &commandList);

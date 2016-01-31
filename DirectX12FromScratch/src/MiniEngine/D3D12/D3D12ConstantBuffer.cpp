@@ -24,29 +24,29 @@ D3D12ConstantBuffer::~D3D12ConstantBuffer()
 }
 
 
-bool D3D12ConstantBuffer::init(unsigned int size, unsigned int nb)
+bool D3D12ConstantBuffer::init(unsigned int size)
 {
     size = (size + 255) & ~255;
 
     return (
-        initHeap(nb)
-        && initRessources(size, nb)
-        && initView(size, nb)
+        initHeap()
+        && initRessources(size)
+        && initView(size)
     );
 }
 
-bool D3D12ConstantBuffer::initHeap(unsigned int nb)
+bool D3D12ConstantBuffer::initHeap()
 {
     _heap = new D3D12DescriptorHeap(_system);
-    return (_heap->init(nb, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE));
+    return (_heap->init(1, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE));
 }
 
-bool D3D12ConstantBuffer::initRessources(unsigned int size, unsigned int nb)
+bool D3D12ConstantBuffer::initRessources(unsigned int size)
 {
     CD3DX12_HEAP_PROPERTIES     defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
     CD3DX12_HEAP_PROPERTIES     uploadHeapProperties(D3D12_HEAP_TYPE_UPLOAD);
 
-    CD3DX12_RESOURCE_DESC       constantBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(size * nb);
+    CD3DX12_RESOURCE_DESC       constantBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
     HRESULT                     result;
 
     result = _system.getDevice()->getNative()->CreateCommittedResource(
@@ -78,23 +78,17 @@ bool D3D12ConstantBuffer::initRessources(unsigned int size, unsigned int nb)
     return (true);
 }
 
-bool D3D12ConstantBuffer::initView(unsigned int size, unsigned int nb)
+bool D3D12ConstantBuffer::initView(unsigned int size)
 {
     D3D12_GPU_VIRTUAL_ADDRESS       cbvGpuAddress = _constantBuffer->GetGPUVirtualAddress();
     CD3DX12_CPU_DESCRIPTOR_HANDLE   cbvCpuHandle(_heap->getNative()->GetCPUDescriptorHandleForHeapStart());
 
-    for (unsigned int n = 0; n < nb; n++)
-    {
-        D3D12_CONSTANT_BUFFER_VIEW_DESC desc;
+    D3D12_CONSTANT_BUFFER_VIEW_DESC desc;
 
-        desc.BufferLocation = cbvGpuAddress;
-        desc.SizeInBytes = size;
+    desc.BufferLocation = cbvGpuAddress;
+    desc.SizeInBytes = size;
 
-        _system.getDevice()->getNative()->CreateConstantBufferView(&desc, cbvCpuHandle);
-
-        cbvGpuAddress += desc.SizeInBytes;
-        cbvCpuHandle.Offset(_heap->getSize());
-    }
+    _system.getDevice()->getNative()->CreateConstantBufferView(&desc, cbvCpuHandle);
 
     return (true);
 }
