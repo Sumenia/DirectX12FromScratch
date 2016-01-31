@@ -1,5 +1,5 @@
-#define _USE_MATH_DEFINES
-#include <cmath>
+
+#include "MiniEngine/Geometry.h"
 #include "MiniEngine/Camera.h"
 #include "MiniEngine/SceneManager.h"
 

@@ -69,6 +69,20 @@ Matrix4f const &SceneNode::getWorldTransformationMatrix() const
     return (_worldMatrix);
 }
 
+void MiniEngine::SceneNode::rotate(float w, Vector3f & v)
+{
+	_rotation *= Quatf::fromAxisRot(v, w);
+}
+
+void MiniEngine::SceneNode::translate(Vector3f & v)
+{
+	_position += v;
+}
+
+void MiniEngine::SceneNode::scale(Vector3f & v)
+{
+}
+
 void SceneNode::updateMatrix()
 {
     _localMatrix = Matrix4f::createTranslation(_position.x, _position.y, _position.z) * _rotation.transform() * Matrix4f::createScale(_scaling.x, _scaling.y, _scaling.z);
