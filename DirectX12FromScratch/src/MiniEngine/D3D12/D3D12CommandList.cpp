@@ -97,6 +97,25 @@ void D3D12CommandList::afterCameraRender()
     _target->getCameraBuffer()->afterUpdate(*this);
 }
 
+void D3D12CommandList::setModelMatrix(Matrix4f const &model)
+{
+    struct ModelMatrix
+    {
+        DirectX::XMFLOAT4X4  model;
+    }   data;
+
+    for (unsigned int x = 0; x < 4; x++)
+        for (unsigned int y = 0; y < 4; y++)
+            data.model.m[x][y] = model(x + 1, y + 1);
+
+    _target->getModelBuffer()->update(*this, sizeof(data), &data);
+}
+
+void D3D12CommandList::afterModelRender()
+{
+    _target->getModelBuffer()->afterUpdate(*this);
+}
+
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()
 {
     return (_list);

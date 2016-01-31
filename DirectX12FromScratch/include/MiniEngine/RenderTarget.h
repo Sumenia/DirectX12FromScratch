@@ -20,6 +20,7 @@ namespace MiniEngine
         void                    setClearColor(const float color[4]);
 
         virtual ConstantBuffer  *getCameraBuffer();
+        virtual ConstantBuffer  *getModelBuffer();
 
         virtual GraphicPipeline *getGraphicPipeline() = 0;
 
@@ -31,6 +32,8 @@ namespace MiniEngine
         std::list<Viewport*>    _viewports;
 
         ConstantBuffer          *_cameraConstantBuffer;
+        ConstantBuffer          *_modelConstantBuffer;
+
         unsigned int            _frameIdx;
     };
 }

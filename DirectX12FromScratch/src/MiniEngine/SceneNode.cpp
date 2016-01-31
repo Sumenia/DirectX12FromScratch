@@ -46,10 +46,15 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
 
     if (object)
     {
-        // TO-DO: Set model to world transformation
+        if (_needUpdate)
+            update();
+
+        commandList.setModelMatrix(_transform);
 
         if (!object->render(camera, commandList))
             return (false);
+
+        commandList.afterModelRender();
     }
 
     for (auto &&child : _childs)

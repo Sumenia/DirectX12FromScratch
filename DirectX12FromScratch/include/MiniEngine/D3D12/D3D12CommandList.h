@@ -23,6 +23,9 @@ namespace MiniEngine
         void                        setCameraMatrix(Matrix4f const &view, Matrix4f const &projection);
         void                        afterCameraRender();
 
+        void                        setModelMatrix(Matrix4f const &model);
+        void                        afterModelRender();
+
         ID3D12GraphicsCommandList   *getNative();
 
     protected:

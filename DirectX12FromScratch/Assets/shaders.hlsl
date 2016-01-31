@@ -4,6 +4,11 @@ cbuffer CameraConstantBuffer : register(b0)
     matrix projection;
 };
 
+cbuffer ModelConstantBuffer : register(b1)
+{
+    matrix model;
+};
+
 struct PSInput
 {
 	float4 position : SV_POSITION;
@@ -16,6 +21,7 @@ PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
 
     float4 worldPosition = float4(position, 1.0f);
 
+    worldPosition = mul(worldPosition, model);
     worldPosition = mul(worldPosition, view);
     worldPosition = mul(worldPosition, projection);
 
