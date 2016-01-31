@@ -1,4 +1,5 @@
 #include "MiniEngine/SceneNode.h"
+#include "MiniEngine/Camera.h"
 
 using namespace MiniEngine;
 

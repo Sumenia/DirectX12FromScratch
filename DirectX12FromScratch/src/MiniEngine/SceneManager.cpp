@@ -20,8 +20,9 @@ Camera *SceneManager::createCamera(SceneNode *node)
     Camera  *camera = new Camera(*this);
 
     if (!node)
-        node = _rootNode->createChild();
-    
-    node->attachObject(camera);
+        node = _rootNode;
+
+    node->addChild(camera);
+
     return (camera);
 }

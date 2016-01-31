@@ -5,7 +5,7 @@
 
 using namespace MiniEngine;
 
-Camera::Camera(SceneManager &manager) : _manager(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(100.0f)
+Camera::Camera(SceneManager &manager) : SceneNode(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(100.0f)
 {}
 
 Camera::~Camera()
@@ -17,11 +17,7 @@ bool Camera::render(CommandList &commandList)
 
     if (_needUpdate)
     {
-        if (_parent)
-            _worldView = _view * _parent->getTransformationMatrix();
-        else
-            _worldView = _view;
-
+        _worldView = getTransformationMatrix() * _view;
         _needUpdate = false;
     }
 

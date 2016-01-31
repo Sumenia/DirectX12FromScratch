@@ -54,6 +54,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             _camera = _sceneManager->createCamera();
 
             _camera->lookAt({ 0.0f, 0.7f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+
             renderTarget->getDefaultViewport()->attachCamera(_camera);
 
             // Load a cube
@@ -119,21 +120,21 @@ bool MainApplication::update()
 
 	if (event == Window::EVENT_TYPE::LEFT)
 	{
-		_camera->getParent()->rotate(1, MiniEngine::Vector3f(0, -1, 0), MiniEngine::TS_PARENT);
+		_camera->rotate(1, MiniEngine::Vector3f(0, -1, 0), MiniEngine::TS_LOCAL);
 
 	}
 	else if (event == Window::EVENT_TYPE::RIGHT)
 	{
-		_camera->getParent()->rotate(1, MiniEngine::Vector3f(0, 1, 0), MiniEngine::TS_PARENT);
+		_camera->rotate(1, MiniEngine::Vector3f(0, 1, 0), MiniEngine::TS_LOCAL);
 
 	}
 	else if (event == Window::EVENT_TYPE::UP)
 	{
-		_camera->getParent()->rotate(1, MiniEngine::Vector3f(-1, 0, 0), MiniEngine::TS_PARENT);
+		_camera->rotate(1, MiniEngine::Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
 	}
 	else if (event == Window::EVENT_TYPE::DOWN)
 	{
-		_camera->getParent()->rotate(1, MiniEngine::Vector3f(1, 0, 0), MiniEngine::TS_PARENT);
+		_camera->rotate(1, MiniEngine::Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
 	}
 
 	else if (event == Window::EVENT_TYPE::ESCAPE)

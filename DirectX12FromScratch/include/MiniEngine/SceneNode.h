@@ -4,13 +4,13 @@
 # include <list>
 # include <memory>
 # include "MiniEngine/MovableObject.h"
-# include "MiniEngine/Camera.h"
 # include "MiniEngine/CommandList.h"
 # include "MiniEngine/RenderableObject.h"
 
 namespace MiniEngine
 {
     class SceneManager;
+    class Camera;
 
     enum TransformSpace
     {

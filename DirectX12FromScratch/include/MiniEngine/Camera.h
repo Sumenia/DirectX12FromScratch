@@ -1,14 +1,14 @@
 #pragma once
 
+# include "MiniEngine/SceneNode.h"
 # include "MiniEngine/Geometry.h"
-# include "MiniEngine/MovableObject.h"
 # include "MiniEngine/CommandList.h"
 
 namespace MiniEngine
 {
     class SceneManager;
 
-    class Camera : public MovableObject
+    class Camera : public SceneNode
     {
     public:
         Camera(SceneManager &manager);
@@ -24,8 +24,6 @@ namespace MiniEngine
         void            updateProjectionMatrix();
     
     protected:
-        SceneManager    &_manager;
-
         float           _fov;
         float           _ratio;
 
