@@ -6,9 +6,7 @@
 using namespace MiniEngine;
 
 D3D12VertexBuffer::D3D12VertexBuffer(D3D12RenderSystem &system) : _system(system), _buffer(nullptr), _bufferUpload(nullptr)
-{
-    ZeroMemory(&_view, sizeof(_view));
-}
+{}
 
 D3D12VertexBuffer::~D3D12VertexBuffer()
 {
@@ -33,7 +31,7 @@ bool D3D12VertexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void 
     CD3DX12_RESOURCE_DESC   vertexBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
     D3D12_SUBRESOURCE_DATA  vertexDataDesc = {};
 
-    D3D12CommandList        *commandList = _system.getCommandQueue()->createCommandList(nullptr, pipeline);
+    std::shared_ptr<D3D12CommandList>   commandList(_system.getCommandQueue()->createCommandList(nullptr, pipeline));
 
     if (!commandList->init())
         return (false);
@@ -82,16 +80,11 @@ bool D3D12VertexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void 
     if (!commandList->end())
         return (false);
 
-    _system.getCommandQueue()->executeCommandLists(1, commandList);
+    _system.getCommandQueue()->executeCommandLists(1, commandList.get());
     return (_system.getCommandQueue()->wait(*_system.getFence()));
 }
 
 ID3D12Resource *D3D12VertexBuffer::getBuffer()
 {
     return (_buffer);
-}
-
-D3D12_VERTEX_BUFFER_VIEW    *D3D12VertexBuffer::getView()
-{
-    return (&_view);
 }

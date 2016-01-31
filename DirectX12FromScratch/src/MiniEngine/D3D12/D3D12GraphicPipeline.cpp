@@ -22,6 +22,7 @@ D3D12GraphicPipeline::D3D12GraphicPipeline(D3D12RenderSystem &system) : GraphicP
     _desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     _desc.NumRenderTargets = 1;
     _desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+    _desc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 }
 
 D3D12GraphicPipeline::~D3D12GraphicPipeline()

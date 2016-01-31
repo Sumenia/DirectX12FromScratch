@@ -14,10 +14,10 @@ namespace MiniEngine
     class SceneNode
     {
     public:
-        SceneNode(SceneManager &manager);
+        SceneNode(SceneManager &manager, MovableObject *object = nullptr);
         ~SceneNode();
 
-        virtual SceneNode       *createChild();
+        virtual SceneNode       *createChild(MovableObject *object = nullptr);
         virtual SceneNode       *addChild(SceneNode *node);
         virtual void            attachObject(MovableObject *obj);
 

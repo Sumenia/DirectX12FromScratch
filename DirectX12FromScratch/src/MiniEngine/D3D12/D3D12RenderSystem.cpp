@@ -105,3 +105,18 @@ D3D12HLSLShader *D3D12RenderSystem::createHLSLShader(std::string const &filename
 {
     return (new D3D12HLSLShader(filename, entry));
 }
+
+D3D12RenderableMesh *D3D12RenderSystem::loadMesh(GraphicPipeline &pipeline, std::string const &filename)
+{
+    D3D12RenderableMesh *mesh = new D3D12RenderableMesh;
+
+    if (!mesh->loadObjFromFile(*this, dynamic_cast<D3D12GraphicPipeline&>(pipeline), filename))
+    {
+        std::cout << "Can't load mesh : " << filename << std::endl;
+
+        delete mesh;
+        return (nullptr);
+    }
+
+    return (mesh);
+}

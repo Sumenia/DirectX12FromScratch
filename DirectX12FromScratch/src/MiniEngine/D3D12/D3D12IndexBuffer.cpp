@@ -6,9 +6,7 @@
 using namespace MiniEngine;
 
 D3D12IndexBuffer::D3D12IndexBuffer(D3D12RenderSystem &system) : _system(system), _buffer(nullptr), _bufferUpload(nullptr)
-{
-    ZeroMemory(&_view, sizeof(_view));
-}
+{}
 
 D3D12IndexBuffer::~D3D12IndexBuffer()
 {
@@ -23,7 +21,7 @@ D3D12IndexBuffer::~D3D12IndexBuffer()
     _bufferUpload = nullptr;
 }
 
-bool D3D12IndexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void *vertexData)
+bool D3D12IndexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void *indexData)
 {
     HRESULT                 result;
 
@@ -33,7 +31,7 @@ bool D3D12IndexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void *
     CD3DX12_RESOURCE_DESC   indexBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
     D3D12_SUBRESOURCE_DATA  indexDataDesc = {};
 
-    D3D12CommandList        *commandList = _system.getCommandQueue()->createCommandList(nullptr, pipeline);
+    std::shared_ptr<D3D12CommandList>   commandList(_system.getCommandQueue()->createCommandList(nullptr, pipeline));
 
     if (!commandList->init())
         return (false);
@@ -70,7 +68,7 @@ bool D3D12IndexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void *
         return (false);
 
     // Upload vertex data
-    indexDataDesc.pData = reinterpret_cast<BYTE*>(vertexData);
+    indexDataDesc.pData = reinterpret_cast<BYTE*>(indexData);
     indexDataDesc.RowPitch = size;
     indexDataDesc.SlicePitch = indexDataDesc.RowPitch;
 
@@ -82,16 +80,11 @@ bool D3D12IndexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void *
     if (!commandList->end())
         return (false);
 
-    _system.getCommandQueue()->executeCommandLists(1, commandList);
+    _system.getCommandQueue()->executeCommandLists(1, commandList.get());
     return (_system.getCommandQueue()->wait(*_system.getFence()));
 }
 
 ID3D12Resource *D3D12IndexBuffer::getBuffer()
 {
     return (_buffer);
-}
-
-D3D12_INDEX_BUFFER_VIEW    *D3D12IndexBuffer::getView()
-{
-    return (&_view);
 }

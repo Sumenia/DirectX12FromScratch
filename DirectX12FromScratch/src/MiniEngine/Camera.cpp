@@ -5,7 +5,7 @@
 
 using namespace MiniEngine;
 
-Camera::Camera(SceneManager &manager) : _manager(manager), _fov(90.0f), _ratio(16.0f / 9.0f), _near(0.1f), _far(100.0f)
+Camera::Camera(SceneManager &manager) : _manager(manager), _fov(90.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(100.0f)
 {}
 
 Camera::~Camera()
@@ -15,7 +15,7 @@ bool Camera::render(CommandList &commandList)
 {
     bool    result;
 
-    commandList.setCameraMatrix(_view, _projection);
+    commandList.setCameraMatrix(_worldView, _projection);
     result = _manager.render(*this, commandList);
     commandList.afterCameraRender();
 

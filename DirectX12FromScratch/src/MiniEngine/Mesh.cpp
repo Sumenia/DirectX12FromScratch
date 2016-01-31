@@ -3,11 +3,11 @@
 using namespace MiniEngine;
 
 bool Vertex::operator==(const Vertex& toCompare) const {
-	return (toCompare.normal.x == normal.x &&
+	return (/*toCompare.normal.x == normal.x &&
 		toCompare.normal.y == normal.y &&
 		toCompare.normal.z == normal.z &&
 		toCompare.uv.x == uv.x &&
-		toCompare.uv.y == uv.y &&
+		toCompare.uv.y == uv.y &*/
 		toCompare.vertice.x == vertice.x &&
 		toCompare.vertice.y == vertice.y &&
 		toCompare.vertice.z == vertice.z);
@@ -85,6 +85,7 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 					uvIndex[i] = 0;
 				}
 			}
+
 			_verticesIndices.push_back(vertexIndex[0]);
 			_verticesIndices.push_back(vertexIndex[1]);
 			_verticesIndices.push_back(vertexIndex[2]);
@@ -124,6 +125,7 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		it = std::find(_vertexs.begin(), _vertexs.end(), vertex);
 		if (it == _vertexs.end()) {
 			_vertexs.push_back(vertex);
+            _indices.push_back(_vertexs.size() - 1);
 		} else {
 			unsigned int idx = it - _vertexs.begin();
 			_indices.push_back(idx);

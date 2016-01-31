@@ -6,6 +6,7 @@
 namespace MiniEngine
 {
     class D3D12RenderSystem;
+    class GraphicPipeline;
 
     class D3D12VertexBuffer
     {
@@ -16,12 +17,10 @@ namespace MiniEngine
         bool                        init(GraphicPipeline &pipeline, unsigned int size, void *vertexData);
 
         ID3D12Resource              *getBuffer();
-        D3D12_VERTEX_BUFFER_VIEW    *getView();
 
     protected:
         D3D12RenderSystem           &_system;
         ID3D12Resource              *_buffer;
         ID3D12Resource              *_bufferUpload;
-        D3D12_VERTEX_BUFFER_VIEW    _view;
     };
 }

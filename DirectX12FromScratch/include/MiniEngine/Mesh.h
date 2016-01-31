@@ -20,14 +20,14 @@ namespace MiniEngine
 	class Mesh {
 	public:
 		Mesh();
-		~Mesh();
+		virtual ~Mesh();
 
-		bool loadObjFromFile(const std::string &file);
+		virtual bool loadObjFromFile(const std::string &file);
 		const std::vector<unsigned int> &getIndices() const;
 		const std::vector<Vertex> &getVertexs() const;
 		bool isLoaded() const;
 
-	private:
+	protected:
 		void replaceAll(std::string& str, const std::string& from, const std::string& to);
 
 		std::vector<unsigned int> _verticesIndices;

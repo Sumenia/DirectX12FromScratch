@@ -39,10 +39,10 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
             const MiniEngine::HLSLShader::Input    inputs[] = {
                 { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
-                { "COLOR", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32A32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
+                //{ "COLOR", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32A32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
             };
 
-            pipeline->setInputs(2, inputs);
+            pipeline->setInputs(1, inputs);
 
             pipeline->addVertexShader(*vertexShader);
             pipeline->addPixelShader(*pixelShader);
@@ -53,7 +53,11 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             MiniEngine::SceneManager    *sm = _root->createSceneManager(MiniEngine::Root::SceneManagerType::BASIC);
             MiniEngine::Camera          *camera = sm->createCamera();
 
+            camera->lookAt({ 0.0f, 0.7f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
             renderTarget->getDefaultViewport()->attachCamera(camera);
+
+            // Load a cube
+            sm->getRootNode()->createChild(_root->getRenderSystem()->loadMesh(*pipeline, "./Assets/Cube.ntm"));
 
             delete vertexShader;
             delete pixelShader;

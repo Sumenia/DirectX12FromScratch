@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-SceneNode::SceneNode(SceneManager &manager) : _manager(manager), _parent(nullptr), _obj(nullptr), _scaling(1.0f, 1.0f, 1.0f)
+SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f)
 {}
 
 SceneNode::~SceneNode()
@@ -14,9 +14,9 @@ SceneNode::~SceneNode()
     }
 }
 
-SceneNode *SceneNode::createChild()
+SceneNode *SceneNode::createChild(MovableObject *object)
 {
-    return (addChild(new SceneNode(_manager)));
+    return (addChild(new SceneNode(_manager, object)));
 }
 
 SceneNode *SceneNode::addChild(SceneNode *node)

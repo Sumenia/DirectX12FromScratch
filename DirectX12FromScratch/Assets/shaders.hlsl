@@ -10,12 +10,17 @@ struct PSInput
 	float4 color : COLOR;
 };
 
-PSInput VSMain(float4 position : POSITION, float4 color : COLOR)
+PSInput VSMain(float3 position : POSITION)
 {
 	PSInput result;
 
-	result.position = position;
-	result.color = color;
+    float4 worldPosition = float4(position, 1.0f);
+
+    worldPosition = mul(worldPosition, view);
+    worldPosition = mul(worldPosition, projection);
+
+	result.position = worldPosition;
+	result.color = float4(0.0f, 1.0f, 0.0f, 1.0f);
 
 	return result;
 }

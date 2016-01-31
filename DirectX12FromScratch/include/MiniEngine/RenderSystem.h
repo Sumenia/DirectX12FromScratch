@@ -9,6 +9,7 @@ namespace MiniEngine
 {
     class RenderTarget;
     class RenderWindow;
+    class RenderableMesh;
 
     class RenderSystem
     {
@@ -24,6 +25,8 @@ namespace MiniEngine
 
         virtual RenderWindow        *createRenderWindow(Window *window) = 0;
         virtual HLSLShader          *createHLSLShader(std::string const &filename, std::string const &entry) = 0;
+
+        virtual RenderableMesh      *loadMesh(GraphicPipeline &pipeline, std::string const &filename) = 0;
 
         bool                        render();
 

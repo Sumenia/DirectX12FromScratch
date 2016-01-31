@@ -7,7 +7,9 @@
 using namespace MiniEngine;
 
 D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget *target, D3D12GraphicPipeline &pipeline) : CommandList(system, target, pipeline), _system(system), _pipeline(pipeline), _allocator(nullptr), _list(nullptr)
-{}
+{
+    _fence = new D3D12Fence(system);
+}
 
 D3D12CommandList::~D3D12CommandList()
 {
