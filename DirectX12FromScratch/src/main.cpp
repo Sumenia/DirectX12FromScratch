@@ -16,7 +16,9 @@ int	main()
 int	main()
 {
     MainApplication application("WINDOW_SFML");
+	MiniEngine::Mesh mesh;
 
+	mesh.loadObjFromFile("../../DirectX12FromScratch/DirectX12FromScratch/Assets/Cube.obj");
     application.run();
     return (0);
 }
