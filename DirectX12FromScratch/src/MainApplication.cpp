@@ -58,10 +58,10 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             renderTarget->getDefaultViewport()->attachCamera(_camera);
 
             // Load a cube
-			MiniEngine::SceneNode   *node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadMesh(*pipeline, "./Assets/Cube.ntm"));
+			_node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadMesh(*pipeline, "./Assets/Cube.ntm"));
 
-            //node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
-            //node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
+            //_node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
+            //_node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
 
             delete vertexShader;
             delete pixelShader;
@@ -120,21 +120,21 @@ bool MainApplication::update()
 
 	if (event == Window::EVENT_TYPE::LEFT)
 	{
-		_camera->rotate(1, MiniEngine::Vector3f(0, -1, 0), MiniEngine::TS_LOCAL);
+		_node->rotate(1, MiniEngine::Vector3f(0, -1, 0), MiniEngine::TS_PARENT);
 
 	}
 	else if (event == Window::EVENT_TYPE::RIGHT)
 	{
-		_camera->rotate(1, MiniEngine::Vector3f(0, 1, 0), MiniEngine::TS_LOCAL);
+        _node->rotate(1, MiniEngine::Vector3f(0, 1, 0), MiniEngine::TS_PARENT);
 
 	}
 	else if (event == Window::EVENT_TYPE::UP)
 	{
-		_camera->rotate(1, MiniEngine::Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
+        _node->rotate(1, MiniEngine::Vector3f(-1, 0, 0), MiniEngine::TS_PARENT);
 	}
 	else if (event == Window::EVENT_TYPE::DOWN)
 	{
-		_camera->rotate(1, MiniEngine::Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
+        _node->rotate(1, MiniEngine::Vector3f(1, 0, 0), MiniEngine::TS_PARENT);
 	}
 
 	else if (event == Window::EVENT_TYPE::ESCAPE)
