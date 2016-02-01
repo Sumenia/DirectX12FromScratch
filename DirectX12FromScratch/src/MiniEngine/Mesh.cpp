@@ -63,31 +63,35 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		}
 		else if (type == "f") {
 
-			unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-			unsigned int tmp;
+			int vertexIndex[3], uvIndex[3], normalIndex[3];
+			 int tmp;
 			bool			 neg;
 			std::string substring;
 
-			for (int i = 0; i < 3; ++i) {
+			for (int i = 0; i < 3; ++i)
+			{
 				in >> substring;
 				replaceAll(substring, "/", " ");
-				neg = false;
-				if (substring.find("-") != std::string::npos)
-					neg = true;
-				replaceAll(substring, "-", " ");
+				//neg = false;
+				//if (substring.find("-") != std::string::npos)
+				//	neg = true;
+				//replaceAll(substring, "-", " ");
 
 
 				std::stringstream ss(substring);
 				ss >> vertexIndex[i];
-				if (neg)
+				if (vertexIndex[i] < 0)
 					vertexIndex[i] = _vertices.size() - vertexIndex[i];
 
 				ss >> uvIndex[i];
+				if (uvIndex[i] < 0)
+					uvIndex[i] = _uvIndices.size() - uvIndex[i];
 
 				tmp = 0;
 				ss >> tmp;
-
-				if (tmp > 0) {
+				if (tmp < 0)
+					normalIndex[i] = _normalIndices.size() - tmp;
+				else if (tmp > 0) {
 					normalIndex[i] = tmp;
 				}
 				else {
@@ -118,8 +122,6 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		unsigned int uvIndex = _uvIndices[i];
 		unsigned int normalIndex = _normalIndices[i];
 
-		vertex.vertice = _vertices[verticeIndex - 1];
-		vertex.normal = _normals[normalIndex - 1];
 		//std::cout << "Iteration numero  : " << i << std::endl;
 
 		//std::cout << "_verticesIndices.size() : " << _verticesIndices.size() << std::endl;
@@ -133,6 +135,10 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 
 		//std::cout << "_vertices.size() : " << _vertexs.size() << std::endl;
 		//std::cout << "_normals.size() : " << _normals.size() << std::endl;
+
+
+		vertex.vertice = _vertices[verticeIndex - 1 <= 0 ? 0 : verticeIndex - 1];
+		vertex.normal = _normals[normalIndex - 1 <= 0 ? 0 : normalIndex - 1];
 
 
 		if (uvIndex > 0) {
