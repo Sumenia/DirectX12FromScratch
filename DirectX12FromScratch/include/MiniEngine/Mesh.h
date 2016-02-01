@@ -30,16 +30,16 @@ namespace MiniEngine
 	protected:
 		void replaceAll(std::string& str, const std::string& from, const std::string& to);
 
-		std::vector<unsigned int> _verticesIndices;
-		std::vector<unsigned int> _uvIndices;
-		std::vector<unsigned int> _normalIndices;
+		std::vector<int>            _verticesIndices;
+		std::vector<int>            _uvIndices;
+		std::vector<int>            _normalIndices;
 
-		std::vector<Vector3f> _vertices;
-		std::vector<Vector2f> _uvs;
-		std::vector<Vector3f> _normals;
+		std::vector<Vector3f>       _vertices;
+		std::vector<Vector2f>       _uvs;
+		std::vector<Vector3f>       _normals;
 
-		std::vector<Vertex> _vertexs;
-		std::vector<unsigned int> _indices;
+		std::vector<Vertex>         _vertexs;
+		std::vector<unsigned int>   _indices;
 
 		bool _isLoaded;
 	};

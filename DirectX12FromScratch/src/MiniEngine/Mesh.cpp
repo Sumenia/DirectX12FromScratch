@@ -27,6 +27,19 @@ void Mesh::replaceAll(std::string& str, const std::string& from, const std::stri
 	}
 }
 
+void split(const std::string& s, char delim, std::vector<std::string>& v) {
+    auto i = 0;
+    auto pos = s.find(delim);
+    while (pos != std::string::npos) {
+        v.push_back(s.substr(i, pos - i));
+        i = ++pos;
+        pos = s.find(delim, pos);
+
+        if (pos == std::string::npos)
+            v.push_back(s.substr(i, s.length()));
+    }
+}
+
 bool Mesh::loadObjFromFile(const std::string &path) {
 
 	std::ifstream file(path);
@@ -64,48 +77,69 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		else if (type == "f") {
 
 			int vertexIndex[3], uvIndex[3], normalIndex[3];
-			 int tmp;
-			bool			 neg;
-			std::string substring;
+			int                 tmp;
+			bool			    neg;
+			std::string     substring;
+            std::vector<std::string>    tokens;
 
 			for (int i = 0; i < 3; ++i)
 			{
 				in >> substring;
-				replaceAll(substring, "/", " ");
-				//neg = false;
-				//if (substring.find("-") != std::string::npos)
-				//	neg = true;
-				//replaceAll(substring, "-", " ");
 
+                tokens.clear();
+                split(substring, '/', tokens);
 
-				std::stringstream ss(substring);
-				ss >> vertexIndex[i];
-				if (vertexIndex[i] < 0)
-					vertexIndex[i] = _vertices.size() - vertexIndex[i];
+                if (tokens.size() >= 1)
+                {
+                    std::stringstream ss(tokens[0]);
+                    vertexIndex[i] = 0;
+                    ss >> vertexIndex[i];
 
-				ss >> uvIndex[i];
-				if (uvIndex[i] < 0)
-					uvIndex[i] = _uvIndices.size() - uvIndex[i];
+                    if (vertexIndex[i] < 0)
+                        vertexIndex[i] = _vertices.size() - vertexIndex[i];
+                    else if (vertexIndex[i] == 0)
+                        vertexIndex[i] = -1;
+                }
+                else
+                    vertexIndex[i] = -1;
 
-				tmp = 0;
-				ss >> tmp;
-				if (tmp < 0)
-					normalIndex[i] = _normalIndices.size() - tmp;
-				else if (tmp > 0) {
-					normalIndex[i] = tmp;
-				}
-				else {
-					normalIndex[i] = uvIndex[i];
-					uvIndex[i] = 0;
-				}
+                if (tokens.size() >= 2)
+                {
+                    std::stringstream ss(tokens[1]);
+                    uvIndex[i] = 0;
+                    ss >> uvIndex[i];
+
+                    if (uvIndex[i] < 0)
+                        uvIndex[i] = _uvs.size() - uvIndex[i];
+                    else if (uvIndex[i] == 0)
+                        uvIndex[i] = -1;
+                }
+                else
+                    uvIndex[i] = -1;
+
+                if (tokens.size() >= 3)
+                {
+                    std::stringstream ss(tokens[2]);
+                    normalIndex[i] = 0;
+                    ss >> normalIndex[i];
+
+                    if (normalIndex[i] < 0)
+                        normalIndex[i] = _normals.size() - normalIndex[i];
+                    else if (normalIndex[i] == 0)
+                        normalIndex[i] = -1;
+                }
+                else
+                    normalIndex[i] = -1;
 			}
 
 			_verticesIndices.push_back(vertexIndex[0]);
 			_verticesIndices.push_back(vertexIndex[1]);
 			_verticesIndices.push_back(vertexIndex[2]);
+
 			_uvIndices.push_back(uvIndex[0]);
 			_uvIndices.push_back(uvIndex[1]);
 			_uvIndices.push_back(uvIndex[2]);
+
 			_normalIndices.push_back(normalIndex[0]);
 			_normalIndices.push_back(normalIndex[1]);
 			_normalIndices.push_back(normalIndex[2]);
@@ -114,13 +148,22 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 
 	file.close();
 
+    Vector2f zero2;
+    zero2.x = 0;
+    zero2.y = 0;
+
+    Vector3f zero3;
+    zero3.x = 0;
+    zero3.y = 0;
+    zero3.z = 0;
+
 	for (unsigned int i = 0; i < _verticesIndices.size(); ++i) {
 
 		Vertex vertex;
 
-		unsigned int verticeIndex = _verticesIndices[i];
-		unsigned int uvIndex = _uvIndices[i];
-		unsigned int normalIndex = _normalIndices[i];
+		int verticeIndex = _verticesIndices[i];
+		int uvIndex = _uvIndices[i];
+		int normalIndex = _normalIndices[i];
 
 		//std::cout << "Iteration numero  : " << i << std::endl;
 
@@ -136,19 +179,20 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		//std::cout << "_vertices.size() : " << _vertexs.size() << std::endl;
 		//std::cout << "_normals.size() : " << _normals.size() << std::endl;
 
+        if (verticeIndex >= 0)
+            vertex.vertice = _vertices[verticeIndex - 1 <= 0 ? 0 : verticeIndex - 1];
+        else
+            vertex.vertice = zero3;
 
-		vertex.vertice = _vertices[verticeIndex - 1 <= 0 ? 0 : verticeIndex - 1];
-		vertex.normal = _normals[normalIndex - 1 <= 0 ? 0 : normalIndex - 1];
+        if (normalIndex >= 0)
+            vertex.normal = _normals[normalIndex - 1 <= 0 ? 0 : normalIndex - 1];
+        else
+            vertex.normal = zero3;
 
-
-		if (uvIndex > 0) {
-			vertex.uv = _uvs[uvIndex - 1];
-		} else {
-			Vector2f zero;
-			zero.x = 0;
-			zero.y = 0;
-			vertex.uv = zero;
-		}
+        if (uvIndex >= 0)
+            vertex.uv = _uvs[uvIndex - 1 <= 0 ? 0 : uvIndex - 1];
+        else
+            vertex.uv = zero2;
 		
 		std::vector<Vertex>::iterator it;
 
