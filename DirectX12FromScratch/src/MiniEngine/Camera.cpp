@@ -5,7 +5,7 @@
 
 using namespace MiniEngine;
 
-Camera::Camera(SceneManager &manager) : SceneNode(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(100.0f)
+Camera::Camera(SceneManager &manager) : SceneNode(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(1000.0f)
 {}
 
 Camera::~Camera()

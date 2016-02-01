@@ -96,7 +96,7 @@ bool Mesh::loadObjFromFile(const std::string &path) {
                     ss >> vertexIndex[i];
 
                     if (vertexIndex[i] < 0)
-                        vertexIndex[i] = _vertices.size() - vertexIndex[i];
+                        vertexIndex[i] = _vertices.size() + vertexIndex[i] + 1;
                     else if (vertexIndex[i] == 0)
                         vertexIndex[i] = -1;
                 }
@@ -110,7 +110,7 @@ bool Mesh::loadObjFromFile(const std::string &path) {
                     ss >> uvIndex[i];
 
                     if (uvIndex[i] < 0)
-                        uvIndex[i] = _uvs.size() - uvIndex[i];
+                        uvIndex[i] = _uvs.size() + uvIndex[i] + 1;
                     else if (uvIndex[i] == 0)
                         uvIndex[i] = -1;
                 }
@@ -124,7 +124,7 @@ bool Mesh::loadObjFromFile(const std::string &path) {
                     ss >> normalIndex[i];
 
                     if (normalIndex[i] < 0)
-                        normalIndex[i] = _normals.size() - normalIndex[i];
+                        normalIndex[i] = _normals.size() + normalIndex[i] + 1;
                     else if (normalIndex[i] == 0)
                         normalIndex[i] = -1;
                 }
