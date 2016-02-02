@@ -56,8 +56,6 @@ bool D3D12RenderWindow::init()
 
 bool D3D12RenderWindow::render()
 {
-    D3D12_RESOURCE_BARRIER      barrier;
-
     if (!_commandList->reset())
         return (false);
 
@@ -74,25 +72,20 @@ bool D3D12RenderWindow::render()
     _commandList->getNative()->RSSetScissorRects(1, &scissorRect);
 
     // Set a ressource barrier
-    barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = _rtvs[_frameIdx];
-    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-    barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	CD3DX12_RESOURCE_BARRIER renderTargetResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_rtvs[_frameIdx], D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+    _commandList->getNative()->ResourceBarrier(1, &renderTargetResourceBarrier);
 
-    _commandList->getNative()->ResourceBarrier(1, &barrier);
-
-    // Set the current render target view
     CD3DX12_CPU_DESCRIPTOR_HANDLE renderTargetView(_rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart(), _frameIdx, _rtvDescriptorHeap->getSize());
-    _commandList->getNative()->OMSetRenderTargets(1, &renderTargetView, FALSE, nullptr);
+	CD3DX12_CPU_DESCRIPTOR_HANDLE depthStencilView(_dsvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
 
-    // Set the current depth stencil
-    CD3DX12_CPU_DESCRIPTOR_HANDLE depthStencilView(_dsvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
-    _commandList->getNative()->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	// Clear the render target view
+	_commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
 
-    // Clear the render target view
-    _commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
+	// Clear the depth stencil
+	_commandList->getNative()->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	
+	// Set the current render target view and depth stencil view
+	_commandList->getNative()->OMSetRenderTargets(1, &renderTargetView, FALSE, &depthStencilView);
 
     // Render all viewports
     for (auto &&viewport : _viewports)
@@ -125,10 +118,8 @@ bool D3D12RenderWindow::render()
     _commandList->getNative()->RSSetViewports(1, &viewportRect);
 
     // Indicate that the back buffer will now be used to present.
-    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-
-    _commandList->getNative()->ResourceBarrier(1, &barrier);
+	CD3DX12_RESOURCE_BARRIER presentResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_rtvs[_frameIdx], D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+	_commandList->getNative()->ResourceBarrier(1, &presentResourceBarrier);
 
     // Close the list of commands.
     if (!_commandList->end())
