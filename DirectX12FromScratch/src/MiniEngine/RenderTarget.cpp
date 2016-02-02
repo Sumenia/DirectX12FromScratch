@@ -2,17 +2,11 @@
 
 using namespace MiniEngine;
 
-RenderTarget::RenderTarget(RenderSystem &system) : _system(system), _clearColor{{0}}, _cameraConstantBuffer(nullptr), _modelConstantBuffer(nullptr)
+RenderTarget::RenderTarget(RenderSystem &system) : _system(system), _clearColor{{0}}
 {}
 
 RenderTarget::~RenderTarget()
 {
-    delete _cameraConstantBuffer;
-    _cameraConstantBuffer = nullptr;
-
-    delete _modelConstantBuffer;
-    _modelConstantBuffer = nullptr;
-
     while (_viewports.size())
     {
         delete _viewports.front();
@@ -33,17 +27,12 @@ void RenderTarget::setClearColor(const float color[4])
     _clearColor[3] = color[3];
 }
 
-ConstantBuffer *RenderTarget::getCameraBuffer()
-{
-    return (_cameraConstantBuffer);
-}
-
-ConstantBuffer *RenderTarget::getModelBuffer()
-{
-    return (_modelConstantBuffer);
-}
-
 unsigned int RenderTarget::getFrameIdx()
 {
     return (_frameIdx);
+}
+
+unsigned int RenderTarget::getFrameCount()
+{
+    return (_frameCount);
 }

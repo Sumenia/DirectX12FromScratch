@@ -7,6 +7,7 @@ namespace MiniEngine
 {
     class RenderSystem;
     class RenderTarget;
+    class ConstantBuffer;
 
     class CommandList
     {
@@ -20,13 +21,11 @@ namespace MiniEngine
         virtual bool        begin() = 0;
         virtual bool        end() = 0;
 
-        virtual void        setCameraMatrix(Matrix4f const &view, Matrix4f const &projection) = 0;
-        virtual void        afterCameraRender() = 0;
-
-        virtual void        setModelMatrix(Matrix4f const &model) = 0;
-        virtual void        afterModelRender() = 0;
+        virtual bool        setCameraMatrix(ConstantBuffer &buffer, Matrix4f const &view, Matrix4f const &projection) = 0;
+        virtual bool        setModelMatrix(ConstantBuffer &buffer, Matrix4f const &model) = 0;
 
         RenderTarget        &getRenderTarget();
+        RenderSystem        &getRenderSystem();
 
     protected:
         RenderSystem        &_system;

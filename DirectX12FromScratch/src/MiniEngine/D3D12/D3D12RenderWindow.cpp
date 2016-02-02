@@ -7,18 +7,28 @@
 
 using namespace MiniEngine;
 
-D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr), _commandList(nullptr)
+D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr), _commandList(nullptr), _rtvDescriptorHeap(nullptr), _dsvDescriptorHeap(nullptr)
 {
 	for (UINT n = 0; n < FrameCount; n++)
 	{
 		_rtvs[n] = nullptr;
 	}
+
+    _frameCount = FrameCount;
 }
 
 D3D12RenderWindow::~D3D12RenderWindow()
 {
     delete _commandList;
     _commandList = nullptr;
+
+    if (_dsv)
+        _dsv->Release();
+
+    _dsv = nullptr;
+
+    delete _dsvDescriptorHeap;
+    _dsvDescriptorHeap = nullptr;
 
 	for (UINT n = 0; n < FrameCount; n++)
 		_rtvs[n]->Release();
@@ -38,15 +48,14 @@ bool D3D12RenderWindow::init()
 		initSwapChain()
 		&& initRtvDescriptorHeap()
 		&& initRtv()
+        && initDsvDescriptorHeap()
+        && initDsv()
         && initCommandList()
-        && initConstantBuffers()
 	);
 }
 
 bool D3D12RenderWindow::render()
 {
-    D3D12_RESOURCE_BARRIER      barrier;
-
     if (!_commandList->reset())
         return (false);
 
@@ -54,28 +63,6 @@ bool D3D12RenderWindow::render()
     D3D12_RECT      scissorRect;
 
     _commandList->getNative()->SetGraphicsRootSignature(_system.getRootSignature()->getNative());
-
-    // Bind constant buffer heaps
-    D3D12DescriptorHeap *cameraHeap = dynamic_cast<D3D12ConstantBuffer*>(_cameraConstantBuffer)->getHeap();
-    D3D12DescriptorHeap *modelHeap = dynamic_cast<D3D12ConstantBuffer*>(_modelConstantBuffer)->getHeap();
-
-    // Bind camera constant buffer to slot 0
-    {
-        ID3D12DescriptorHeap* ppHeaps[] = { cameraHeap->getNative() };
-        _commandList->getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-
-        CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(cameraHeap->getNative()->GetGPUDescriptorHandleForHeapStart(), _frameIdx, cameraHeap->getSize());
-        _commandList->getNative()->SetGraphicsRootDescriptorTable(0, gpuHandle);
-    }
-
-    // Bind model constant buffer to slot 1
-    {
-        ID3D12DescriptorHeap* ppHeaps[] = { modelHeap->getNative() };
-        _commandList->getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-
-        CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(modelHeap->getNative()->GetGPUDescriptorHandleForHeapStart(), _frameIdx, modelHeap->getSize());
-        _commandList->getNative()->SetGraphicsRootDescriptorTable(1, gpuHandle);
-    }
 
     scissorRect.left = 0;
     scissorRect.top = 0;
@@ -85,21 +72,20 @@ bool D3D12RenderWindow::render()
     _commandList->getNative()->RSSetScissorRects(1, &scissorRect);
 
     // Set a ressource barrier
-    barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-    barrier.Transition.pResource = _rtvs[_frameIdx];
-    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-    barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-    barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	CD3DX12_RESOURCE_BARRIER renderTargetResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_rtvs[_frameIdx], D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+    _commandList->getNative()->ResourceBarrier(1, &renderTargetResourceBarrier);
 
-    _commandList->getNative()->ResourceBarrier(1, &barrier);
-
-    // Set the current render target view
     CD3DX12_CPU_DESCRIPTOR_HANDLE renderTargetView(_rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart(), _frameIdx, _rtvDescriptorHeap->getSize());
-    _commandList->getNative()->OMSetRenderTargets(1, &renderTargetView, FALSE, nullptr);
+	CD3DX12_CPU_DESCRIPTOR_HANDLE depthStencilView(_dsvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
 
-    // Clear the render target view
-    _commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
+	// Clear the render target view
+	_commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
+
+	// Clear the depth stencil
+	_commandList->getNative()->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	
+	// Set the current render target view and depth stencil view
+	_commandList->getNative()->OMSetRenderTargets(1, &renderTargetView, FALSE, &depthStencilView);
 
     // Render all viewports
     for (auto &&viewport : _viewports)
@@ -132,10 +118,8 @@ bool D3D12RenderWindow::render()
     _commandList->getNative()->RSSetViewports(1, &viewportRect);
 
     // Indicate that the back buffer will now be used to present.
-    barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-    barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-
-    _commandList->getNative()->ResourceBarrier(1, &barrier);
+	CD3DX12_RESOURCE_BARRIER presentResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_rtvs[_frameIdx], D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+	_commandList->getNative()->ResourceBarrier(1, &presentResourceBarrier);
 
     // Close the list of commands.
     if (!_commandList->end())
@@ -153,19 +137,22 @@ bool D3D12RenderWindow::render()
 bool D3D12RenderWindow::initSwapChain()
 {
     HRESULT                 result;
-    DXGI_SWAP_CHAIN_DESC    swapChainDesc = {};
+    DXGI_SWAP_CHAIN_DESC1   swapChainDesc = {};
 
-    swapChainDesc.BufferCount = D3D12RenderWindow::FrameCount;
-    swapChainDesc.BufferDesc.Width = _window->getWidth();
-    swapChainDesc.BufferDesc.Height = _window->getHeight();
-    swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.Width = _window->getWidth();
+	swapChainDesc.Height = _window->getHeight();
+	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.Stereo = false;
+	swapChainDesc.SampleDesc.Count = 1;
+	swapChainDesc.SampleDesc.Quality = 0;
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-    swapChainDesc.OutputWindow = (HWND)_window->getHandle();
-    swapChainDesc.SampleDesc.Count = 1;
-    swapChainDesc.Windowed = true;
+	swapChainDesc.BufferCount = D3D12RenderWindow::FrameCount;
+	swapChainDesc.Scaling = DXGI_SCALING_NONE;
+	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+	swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
+	swapChainDesc.Flags = 0;
 
-    result = _system.getFactory()->CreateSwapChain(_system.getCommandQueue()->getNative(), &swapChainDesc, (IDXGISwapChain**)&_swapChain);
+    result = _system.getFactory()->CreateSwapChainForHwnd(_system.getCommandQueue()->getNative(), (HWND)_window->getHandle(), &swapChainDesc, NULL, NULL, (IDXGISwapChain1**)&_swapChain);
 
     if (FAILED(result))
     {
@@ -208,18 +195,62 @@ bool D3D12RenderWindow::initRtv()
 	return (true);
 }
 
+bool D3D12RenderWindow::initDsvDescriptorHeap()
+{
+    _dsvDescriptorHeap = new D3D12DescriptorHeap(_system);
+    return (_dsvDescriptorHeap->init(1, D3D12_DESCRIPTOR_HEAP_TYPE_DSV));
+}
+
+bool D3D12RenderWindow::initDsv()
+{
+    HRESULT                         result;
+
+    D3D12_CLEAR_VALUE               depthOptimizedClearValue = {};
+    D3D12_DEPTH_STENCIL_VIEW_DESC   dsvDesc = {};
+
+    D3D12_HEAP_PROPERTIES           depthHeapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    D3D12_RESOURCE_DESC             depthResourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+        DXGI_FORMAT_D32_FLOAT,
+        static_cast<UINT>(_window->getWidth()),
+        static_cast<UINT>(_window->getHeight()),
+        1,
+        0,
+        1,
+        0,
+        D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL
+    );
+
+    depthOptimizedClearValue.Format = DXGI_FORMAT_D32_FLOAT;
+    depthOptimizedClearValue.DepthStencil.Depth = 1.0f;
+    depthOptimizedClearValue.DepthStencil.Stencil = 0;
+
+    result = _system.getDevice()->getNative()->CreateCommittedResource(
+        &depthHeapProperties,
+        D3D12_HEAP_FLAG_NONE,
+        &depthResourceDesc,
+        D3D12_RESOURCE_STATE_DEPTH_WRITE,
+        &depthOptimizedClearValue,
+        __uuidof(ID3D12Resource), (void**)&_dsv
+    );
+
+    if (FAILED(result))
+    {
+        std::cout << "Can't create ressource for DSV" << std::endl;
+        return (false);
+    }
+
+    dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+    dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+    dsvDesc.Flags = D3D12_DSV_FLAG_NONE;
+
+    _system.getDevice()->getNative()->CreateDepthStencilView(_dsv, &dsvDesc, _dsvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
+    return (true);
+}
+
 bool D3D12RenderWindow::initCommandList()
 {
     _commandList = _system.getCommandQueue()->createCommandList(this, *_pipeline);
     return (_commandList->init());
-}
-
-bool D3D12RenderWindow::initConstantBuffers()
-{
-    _cameraConstantBuffer = new D3D12ConstantBuffer(_system);
-    _modelConstantBuffer = new D3D12ConstantBuffer(_system);
-
-    return (_cameraConstantBuffer->init(128, D3D12RenderWindow::FrameCount) && _modelConstantBuffer->init(64, D3D12RenderWindow::FrameCount));
 }
 
 bool D3D12RenderWindow::swap()

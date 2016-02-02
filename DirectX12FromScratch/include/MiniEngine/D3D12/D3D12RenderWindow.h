@@ -10,6 +10,7 @@
 namespace MiniEngine
 {
     class D3D12RenderSystem;
+    class D3D12CommandList;
 
     class D3D12RenderWindow : public RenderWindow, public D3D12RenderTarget
     {
@@ -23,8 +24,9 @@ namespace MiniEngine
         bool                        initSwapChain();
 		bool						initRtvDescriptorHeap();
 		bool						initRtv();
+        bool						initDsvDescriptorHeap();
+        bool						initDsv();
         bool                        initCommandList();
-        bool                        initConstantBuffers();
 
         bool                        swap();
         bool                        waitPreviousFrame();
@@ -35,6 +37,8 @@ namespace MiniEngine
         IDXGISwapChain3             *_swapChain;
 		D3D12DescriptorHeap	        *_rtvDescriptorHeap;
 		ID3D12Resource		        *_rtvs[D3D12RenderWindow::FrameCount];
+        D3D12DescriptorHeap         *_dsvDescriptorHeap;
+        ID3D12Resource              *_dsv;
         D3D12CommandList            *_commandList;
     };
 }

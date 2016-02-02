@@ -1,6 +1,7 @@
 #include <iostream>
 #include <DirectXMath.h>
 #include "MiniEngine/D3D12/D3D12CommandList.h"
+#include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12Device.h"
 
@@ -73,7 +74,7 @@ bool D3D12CommandList::end()
     return (!FAILED(result));
 }
 
-void D3D12CommandList::setCameraMatrix(Matrix4f const &view, Matrix4f const &projection)
+bool D3D12CommandList::setCameraMatrix(ConstantBuffer &buffer, Matrix4f const &view, Matrix4f const &projection)
 {
     struct CameraMatrix
     {
@@ -89,15 +90,10 @@ void D3D12CommandList::setCameraMatrix(Matrix4f const &view, Matrix4f const &pro
         for (unsigned int y = 0; y < 4; y++)
             camera.projection.m[x][y] = projection(x + 1, y + 1);
 
-    _target->getCameraBuffer()->update(*this, sizeof(camera), &camera);
+    return (buffer.update(*this, 0, sizeof(camera), &camera));
 }
 
-void D3D12CommandList::afterCameraRender()
-{
-    _target->getCameraBuffer()->afterUpdate(*this);
-}
-
-void D3D12CommandList::setModelMatrix(Matrix4f const &model)
+bool D3D12CommandList::setModelMatrix(ConstantBuffer &buffer, Matrix4f const &model)
 {
     struct ModelMatrix
     {
@@ -108,12 +104,7 @@ void D3D12CommandList::setModelMatrix(Matrix4f const &model)
         for (unsigned int y = 0; y < 4; y++)
             data.model.m[x][y] = model(x + 1, y + 1);
 
-    _target->getModelBuffer()->update(*this, sizeof(data), &data);
-}
-
-void D3D12CommandList::afterModelRender()
-{
-    _target->getModelBuffer()->afterUpdate(*this);
+    return (buffer.update(*this, 1, sizeof(data), &data));
 }
 
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()

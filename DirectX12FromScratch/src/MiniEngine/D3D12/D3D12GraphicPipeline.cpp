@@ -17,8 +17,7 @@ D3D12GraphicPipeline::D3D12GraphicPipeline(D3D12RenderSystem &system) : GraphicP
     _desc.pRootSignature = _system.getRootSignature()->getNative();
     _desc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
     _desc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-    _desc.DepthStencilState.DepthEnable = FALSE;
-    _desc.DepthStencilState.StencilEnable = FALSE;
+	_desc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
     _desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     _desc.NumRenderTargets = 1;
     _desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;

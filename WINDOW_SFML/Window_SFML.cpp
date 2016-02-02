@@ -8,7 +8,9 @@ Window_SFML::Window_SFML()
 	_map[sf::Keyboard::Right] = RIGHT;
 	_map[sf::Keyboard::Up] = UP;
 	_map[sf::Keyboard::Down] = DOWN;
-    _map[sf::Keyboard::Escape] = ESCAPE;
+	_map[sf::Keyboard::Escape] = ESCAPE;
+	_map[sf::Keyboard::I] = ZOOM_IN;
+	_map[sf::Keyboard::O] = ZOOM_OUT;
 }
 
 Window_SFML::~Window_SFML()

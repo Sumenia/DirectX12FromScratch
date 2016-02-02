@@ -22,7 +22,9 @@ namespace MiniEngine
         void            setRatio(float ratio);
 
         void            updateProjectionMatrix();
-    
+
+		const Vector3f	&getPos() const;
+
     protected:
         float           _fov;
         float           _ratio;
@@ -30,8 +32,12 @@ namespace MiniEngine
         float           _near;
         float           _far;
 
+		Vector3f		_pos;
+
         Matrix4f        _view;
         Matrix4f        _worldView;
         Matrix4f        _projection;
+
+        ConstantBuffer  *_cameraConstantBuffer;
     };
 }
