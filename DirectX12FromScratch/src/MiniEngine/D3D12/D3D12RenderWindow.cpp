@@ -38,6 +38,8 @@ bool D3D12RenderWindow::init()
 		initSwapChain()
 		&& initRtvDescriptorHeap()
 		&& initRtv()
+        && initDsvDescriptorHeap()
+        && initDsv()
         && initCommandList()
         && initConstantBuffers()
 	);
@@ -97,6 +99,10 @@ bool D3D12RenderWindow::render()
     // Set the current render target view
     CD3DX12_CPU_DESCRIPTOR_HANDLE renderTargetView(_rtvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart(), _frameIdx, _rtvDescriptorHeap->getSize());
     _commandList->getNative()->OMSetRenderTargets(1, &renderTargetView, FALSE, nullptr);
+
+    // Set the current depth stencil
+    CD3DX12_CPU_DESCRIPTOR_HANDLE depthStencilView(_dsvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
+    _commandList->getNative()->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     // Clear the render target view
     _commandList->getNative()->ClearRenderTargetView(renderTargetView, _clearColor, 0, nullptr);
@@ -206,6 +212,58 @@ bool D3D12RenderWindow::initRtv()
 	}
 
 	return (true);
+}
+
+bool D3D12RenderWindow::initDsvDescriptorHeap()
+{
+    _dsvDescriptorHeap = new D3D12DescriptorHeap(_system);
+    return (_dsvDescriptorHeap->init(1, D3D12_DESCRIPTOR_HEAP_TYPE_DSV));
+}
+
+bool D3D12RenderWindow::initDsv()
+{
+    HRESULT                         result;
+
+    D3D12_CLEAR_VALUE               depthOptimizedClearValue = {};
+    D3D12_DEPTH_STENCIL_VIEW_DESC   dsvDesc = {};
+
+    D3D12_HEAP_PROPERTIES           depthHeapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    D3D12_RESOURCE_DESC             depthResourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+        DXGI_FORMAT_D32_FLOAT,
+        static_cast<UINT>(_window->getWidth()),
+        static_cast<UINT>(_window->getHeight()),
+        1,
+        0,
+        1,
+        0,
+        D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL
+    );
+
+    depthOptimizedClearValue.Format = DXGI_FORMAT_D32_FLOAT;
+    depthOptimizedClearValue.DepthStencil.Depth = 1.0f;
+    depthOptimizedClearValue.DepthStencil.Stencil = 0;
+
+    result = _system.getDevice()->getNative()->CreateCommittedResource(
+        &depthHeapProperties,
+        D3D12_HEAP_FLAG_NONE,
+        &depthResourceDesc,
+        D3D12_RESOURCE_STATE_DEPTH_WRITE,
+        &depthOptimizedClearValue,
+        __uuidof(ID3D12Resource), (void**)&_dsv
+    );
+
+    if (FAILED(result))
+    {
+        std::cout << "Can't create ressource for DSV" << std::endl;
+        return (false);
+    }
+
+    dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+    dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+    dsvDesc.Flags = D3D12_DSV_FLAG_NONE;
+
+    _system.getDevice()->getNative()->CreateDepthStencilView(_dsv, &dsvDesc, _dsvDescriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
+    return (true);
 }
 
 bool D3D12RenderWindow::initCommandList()
