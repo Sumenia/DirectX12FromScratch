@@ -7,7 +7,7 @@
 
 using namespace MiniEngine;
 
-D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr), _commandList(nullptr)
+D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr), _commandList(nullptr), _rtvDescriptorHeap(nullptr), _dsvDescriptorHeap(nullptr)
 {
 	for (UINT n = 0; n < FrameCount; n++)
 	{
@@ -19,6 +19,14 @@ D3D12RenderWindow::~D3D12RenderWindow()
 {
     delete _commandList;
     _commandList = nullptr;
+
+    if (_dsv)
+        _dsv->Release();
+
+    _dsv = nullptr;
+
+    delete _dsvDescriptorHeap;
+    _dsvDescriptorHeap = nullptr;
 
 	for (UINT n = 0; n < FrameCount; n++)
 		_rtvs[n]->Release();
