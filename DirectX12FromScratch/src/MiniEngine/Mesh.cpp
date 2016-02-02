@@ -1,6 +1,3 @@
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
 #include "MiniEngine/Mesh.h"
 #include "windows.h"
 
@@ -17,7 +14,7 @@ bool Vertex::operator==(const Vertex& toCompare) const {
 		toCompare.vertice.z == vertice.z);
 }
 
-Mesh::Mesh() : _isLoaded(false) {}
+Mesh::Mesh() {}
 
 Mesh::~Mesh() {}
 
@@ -44,86 +41,57 @@ void split(const std::string& s, char delim, std::vector<std::string>& v) {
     }
 }
 
-bool Mesh::loadObjFromFile(const std::string &path) {
+bool Mesh::loadFromAssimp(aiMesh *mesh) {
 
-	//std::ifstream file(path);
-	Assimp::Importer importer;
+	
+		
 
-	// And have it read the given file with some example postprocessing
-	// Usually - if speed is not the most important aspect for you - you'll 
-	// propably to request more postprocessing than we do in this example.
-	const aiScene* scene = importer.ReadFile(path,
-		aiProcess_CalcTangentSpace |
-		aiProcess_Triangulate |
-		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType);
-
-	// If the import failed, report it
-	if (!scene)
+	std::cout << "MESH" << std::endl;
+	for (int j = 0; j < mesh->mNumVertices; j++)
 	{
-		std::cerr << importer.GetErrorString() << std::endl;
-		return false;
+		Vertex vertex;
+		Vector3f vertice;
+		Vector2f uv;
+		Vector3f normal;
+
+		vertice.x = mesh->mVertices[j].x;
+		vertice.y = mesh->mVertices[j].y;
+		vertice.z = mesh->mVertices[j].z;
+
+		if (mesh->HasNormals())
+		{
+			normal.x = mesh->mNormals[j].x;
+			normal.y = mesh->mNormals[j].y;
+			normal.z = mesh->mNormals[j].z;
+		}
+		else
+			normal = Vector3f(1.0f, 1.0f, 1.0f);
+
+		if (mesh->HasTextureCoords(0))
+		{
+			uv.x = mesh->mTextureCoords[0][j].x;
+			uv.y = mesh->mTextureCoords[0][j].y;
+		}
+		else
+			uv = Vector2f(0, 0);
+
+		vertex.vertice = vertice;
+		vertex.normal = normal;
+		vertex.uv = uv;
+
+		_vertexs.push_back(vertex);
 	}
 
-	_vertexs.clear();
-	_indices.clear();
-	for (int i = 0; i < scene->mNumMeshes; i++)
+	for (int j = 0; j < mesh->mNumFaces; j++)
 	{
-		auto &&mesh = scene->mMeshes[i];
-
-		std::cout << "MESH" << std::endl;
-		for (int j = 0; j < mesh->mNumVertices; j++)
+		auto &&face = mesh->mFaces[j];
+		for (int k = 0; k < 3; k++)
 		{
-			Vertex vertex;
-			Vector3f vertice;
-			Vector2f uv;
-			Vector3f normal;
-
-			vertice.x = mesh->mVertices[j].x;
-			vertice.y = mesh->mVertices[j].y;
-			vertice.z = mesh->mVertices[j].z;
-
-			if (mesh->HasNormals())
-			{
-				normal.x = mesh->mNormals[j].x;
-				normal.y = mesh->mNormals[j].y;
-				normal.z = mesh->mNormals[j].z;
-			}
-			else
-				normal = Vector3f(1.0f, 1.0f, 1.0f);
-
-			if (mesh->HasTextureCoords(0))
-			{
-				uv.x = mesh->mTextureCoords[0][j].x;
-				uv.y = mesh->mTextureCoords[0][j].y;
-			}
-			else
-				uv = Vector2f(0, 0);
-
-			vertex.vertice = vertice;
-			vertex.normal = normal;
-			vertex.uv = uv;
-
-			_vertexs.push_back(vertex);
-		}
-
-		for (int j = 0; j < mesh->mNumFaces; j++)
-		{
-			auto &&face = mesh->mFaces[j];
-			for (int k = 2; k >= 0; k--)
-			{
-				_indices.push_back(face.mIndices[k]);
-			}
+			_indices.push_back(face.mIndices[k]);
 		}
 	}
 
-	std::cout << "LOADED" << std::endl;
-	_isLoaded = true;
 	return true;
-}
-
-bool Mesh::isLoaded() const {
-	return _isLoaded;
 }
 
 const std::vector<Vertex> &Mesh::getVertexs() const {

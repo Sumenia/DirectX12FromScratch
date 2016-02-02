@@ -156,10 +156,13 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12IndexBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="include\MiniEngine\RenderableMesh.h">
+    <ClInclude Include="include\MiniEngine\Model.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableMesh.h">
+    <ClInclude Include="include\MiniEngine\RenderableModel.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableModel.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -269,13 +272,16 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12IndexBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\MiniEngine\RenderableMesh.cpp">
+    <ClCompile Include="src\MainApplication.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableMesh.cpp">
+    <ClCompile Include="src\MiniEngine\Model.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="x64\MainApplication.cpp">
+    <ClCompile Include="src\MiniEngine\RenderableModel.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableModel.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

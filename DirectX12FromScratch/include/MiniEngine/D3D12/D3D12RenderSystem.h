@@ -7,7 +7,7 @@
 # include "MiniEngine/D3D12/D3D12RootSignature.h"
 # include "MiniEngine/D3D12/D3D12HLSLShader.h"
 # include "MiniEngine/D3D12/D3D12RenderWindow.h"
-# include "MiniEngine/D3D12/D3D12RenderableMesh.h"
+# include "MiniEngine/D3D12/D3D12RenderableModel.h"
 # include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 
 namespace MiniEngine
@@ -36,7 +36,7 @@ namespace MiniEngine
 
         D3D12RenderWindow       *createRenderWindow(Window *window);
         D3D12HLSLShader         *createHLSLShader(std::string const &filename, std::string const &entry);
-        D3D12RenderableMesh     *loadMesh(GraphicPipeline &pipeline, std::string const &filename);
+		D3D12RenderableModel    *loadModel(GraphicPipeline &pipeline, std::string const &filename);
 
     protected:
         IDXGIFactory4       *_factory;

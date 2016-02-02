@@ -36,7 +36,7 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12GraphicPipeline.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12HLSLShader.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12IndexBuffer.h" />
-    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableMesh.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableModel.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderTarget.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h" />
@@ -50,9 +50,10 @@
     <ClInclude Include="include\MiniEngine\HLSLShader.h" />
     <ClInclude Include="include\MiniEngine\Matrix.h" />
     <ClInclude Include="include\MiniEngine\Mesh.h" />
+    <ClInclude Include="include\MiniEngine\Model.h" />
     <ClInclude Include="include\MiniEngine\MovableObject.h" />
     <ClInclude Include="include\MiniEngine\Quaternion.h" />
-    <ClInclude Include="include\MiniEngine\RenderableMesh.h" />
+    <ClInclude Include="include\MiniEngine\RenderableModel.h" />
     <ClInclude Include="include\MiniEngine\RenderableObject.h" />
     <ClInclude Include="include\MiniEngine\RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\RenderTarget.h" />
@@ -82,7 +83,7 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12GraphicPipeline.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12HLSLShader.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12IndexBuffer.cpp" />
-    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableMesh.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableModel.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderTarget.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderWindow.cpp" />
@@ -93,8 +94,9 @@
     <ClCompile Include="src\MiniEngine\GraphicPipeline.cpp" />
     <ClCompile Include="src\MiniEngine\HLSLShader.cpp" />
     <ClCompile Include="src\MiniEngine\Mesh.cpp" />
+    <ClCompile Include="src\MiniEngine\Model.cpp" />
     <ClCompile Include="src\MiniEngine\MovableObject.cpp" />
-    <ClCompile Include="src\MiniEngine\RenderableMesh.cpp" />
+    <ClCompile Include="src\MiniEngine\RenderableModel.cpp" />
     <ClCompile Include="src\MiniEngine\RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\RenderTarget.cpp" />
     <ClCompile Include="src\MiniEngine\RenderWindow.cpp" />
