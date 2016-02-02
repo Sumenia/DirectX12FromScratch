@@ -14,14 +14,10 @@ bool			Model::isLoaded() const
 	return _isLoaded;
 }
 
-bool			Model::loadObjFromFile(const std::string &file)
+bool			Model::loadFromFile(const std::string &file)
 {
-	//std::ifstream file(path);
 	Assimp::Importer importer;
 
-	// And have it read the given file with some example postprocessing
-	// Usually - if speed is not the most important aspect for you - you'll 
-	// propably to request more postprocessing than we do in this example.
 	const aiScene* scene = importer.ReadFile(file,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
@@ -30,15 +26,13 @@ bool			Model::loadObjFromFile(const std::string &file)
 		aiProcess_FixInfacingNormals |
 		aiProcess_GenUVCoords |
 		aiProcess_FlipWindingOrder |
-		aiProcess_GenNormals);
+		aiProcess_GenSmoothNormals);
 
-	// If the import failed, report it
 	if (!scene)
 	{
 		std::cerr << importer.GetErrorString() << std::endl;
 		return false;
 	}
-
 
 	for (int i = 0; i < scene->mNumMeshes; i++)
 	{
@@ -63,7 +57,6 @@ bool			Model::loadObjFromFile(const std::string &file)
 	}*/
 
 	_isLoaded = true;
-	std::cout << "LOADED" << std::endl;
 
 	return true;
 }
@@ -73,9 +66,10 @@ unsigned int		Model::getVertexsSize() const
 	unsigned int	size;
 
 	size = 0;
+
 	for (auto &&mesh : _meshs)
 	{
-		size += mesh->getVertexs().size();
+		size += mesh->vertexs.size();
 	}
 
 	return size;
@@ -86,9 +80,10 @@ unsigned int		Model::getIndicesSize() const
 	unsigned int	size;
 
 	size = 0;
+
 	for (auto &&mesh : _meshs)
 	{
-		size += mesh->getIndices().size();
+		size += mesh->indices.size();
 	}
 
 	return size;

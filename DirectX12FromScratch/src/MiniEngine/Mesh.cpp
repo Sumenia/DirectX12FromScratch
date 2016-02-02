@@ -14,40 +14,14 @@ bool Vertex::operator==(const Vertex& toCompare) const {
 		toCompare.vertice.z == vertice.z);
 }
 
-Mesh::Mesh() {}
+Mesh::Mesh() : offset(0)
+{}
 
-Mesh::~Mesh() {}
-
-void Mesh::replaceAll(std::string& str, const std::string& from, const std::string& to) {
-	if (from.empty())
-		return;
-	size_t start_pos = 0;
-	while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
-		str.replace(start_pos, from.length(), to);
-		start_pos += to.length();
-	}
-}
-
-void split(const std::string& s, char delim, std::vector<std::string>& v) {
-    auto i = 0;
-    auto pos = s.find(delim);
-    while (pos != std::string::npos) {
-        v.push_back(s.substr(i, pos - i));
-        i = ++pos;
-        pos = s.find(delim, pos);
-
-        if (pos == std::string::npos)
-            v.push_back(s.substr(i, s.length()));
-    }
-}
+Mesh::~Mesh()
+{}
 
 bool Mesh::loadFromAssimp(aiMesh *mesh) {
-
-	
-		
-
-	std::cout << "MESH" << std::endl;
-	for (int j = 0; j < mesh->mNumVertices; j++)
+	for (unsigned int j = 0; j < mesh->mNumVertices; j++)
 	{
 		Vertex vertex;
 		Vector3f vertice;
@@ -79,25 +53,17 @@ bool Mesh::loadFromAssimp(aiMesh *mesh) {
 		vertex.normal = normal;
 		vertex.uv = uv;
 
-		_vertexs.push_back(vertex);
+		vertexs.push_back(vertex);
 	}
 
-	for (int j = 0; j < mesh->mNumFaces; j++)
+	for (unsigned int j = 0; j < mesh->mNumFaces; j++)
 	{
 		auto &&face = mesh->mFaces[j];
 		for (int k = 0; k < 3; k++)
 		{
-			_indices.push_back(face.mIndices[k]);
+			indices.push_back(face.mIndices[k]);
 		}
 	}
 
 	return true;
-}
-
-const std::vector<Vertex> &Mesh::getVertexs() const {
-	return _vertexs;
-}
-
-const std::vector<unsigned int> &Mesh::getIndices() const {
-	return _indices;
 }

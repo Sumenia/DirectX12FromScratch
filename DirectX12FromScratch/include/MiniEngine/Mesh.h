@@ -19,18 +19,15 @@ namespace MiniEngine
 	};
 
 	class Mesh {
-	public:
+    public:
 		Mesh();
 		virtual ~Mesh();
 
-		virtual bool loadFromAssimp(aiMesh *mesh);
-		const std::vector<unsigned int> &getIndices() const;
-		const std::vector<Vertex> &getVertexs() const;
+		virtual bool                    loadFromAssimp(aiMesh *mesh);
 
-	protected:
-		void replaceAll(std::string& str, const std::string& from, const std::string& to);
+		std::vector<Vertex>             vertexs;
+		std::vector<unsigned int>       indices;
 
-		std::vector<Vertex>         _vertexs;
-		std::vector<unsigned int>   _indices;
+        unsigned int                    offset;
 	};
 }
