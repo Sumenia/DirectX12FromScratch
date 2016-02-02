@@ -142,6 +142,14 @@ bool MainApplication::update()
         _window->destroy();
         return (false);
     }
+	else if (event == Window::EVENT_TYPE::ZOOM_IN)
+	{
+		_camera->lookAt({ 0.0f, _camera->getPos().y - 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+	}
+	else if (event == Window::EVENT_TYPE::ZOOM_OUT)
+	{
+		_camera->lookAt({ 0.0f, _camera->getPos().y + 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+	}
 
     return (true);
 }
