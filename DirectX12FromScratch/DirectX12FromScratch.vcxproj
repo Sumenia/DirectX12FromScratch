@@ -69,7 +69,6 @@
     <ClCompile Include="src\DynamicLibrary.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainApplication.cpp" />
-    <ClCompile Include="x64\MainApplication.cpp" />
     <ClCompile Include="src\MiniEngine\Application.cpp" />
     <ClCompile Include="src\MiniEngine\BasicSceneManager.cpp" />
     <ClCompile Include="src\MiniEngine\Camera.cpp" />
