@@ -30,6 +30,7 @@ bool Camera::render(CommandList &commandList)
 
 void Camera::lookAt(const Vector3f &eye, const Vector3f &target, const Vector3f &up)
 {
+	_pos = eye;
     _view = Matrix4f::createLookAt(eye, target, up);
     _needUpdate = true;
 }
@@ -63,4 +64,9 @@ void Camera::updateProjectionMatrix()
     _projection(3, 4) = (-_far * _near) * oneOverDepth;
     _projection(4, 3) = -1;
     _projection(4, 4) = 0;
+}
+
+const Vector3f		&Camera::getPos() const
+{
+	return _pos;
 }

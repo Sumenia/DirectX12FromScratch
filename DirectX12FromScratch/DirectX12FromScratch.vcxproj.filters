@@ -191,9 +191,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainApplication.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\MiniEngine\CommandQueue.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -276,6 +273,12 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableMesh.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="x64\MainApplication.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainApplication.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

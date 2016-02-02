@@ -22,13 +22,17 @@ namespace MiniEngine
         void            setRatio(float ratio);
 
         void            updateProjectionMatrix();
-    
+
+		const Vector3f	&getPos() const;
+
     protected:
         float           _fov;
         float           _ratio;
 
         float           _near;
         float           _far;
+
+		Vector3f		_pos;
 
         Matrix4f        _view;
         Matrix4f        _worldView;

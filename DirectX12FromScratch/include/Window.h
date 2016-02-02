@@ -12,6 +12,8 @@ public:
 		RIGHT,
 		LEFT,
 		ESCAPE,
+		ZOOM_IN,
+		ZOOM_OUT,
 		UNDEFINED
 	};
 

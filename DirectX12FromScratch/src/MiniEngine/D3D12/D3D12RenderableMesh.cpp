@@ -41,7 +41,7 @@ bool D3D12RenderableMesh::initVertexBuffer(D3D12RenderSystem &system, D3D12Graph
     }
 
     _vertexBuffer = new D3D12VertexBuffer(system);
-    return (_vertexBuffer->init(pipeline, sizeof(D3D12Vertex) * _vertexs.size(), _vertexData));
+	return (_vertexBuffer->init(pipeline, sizeof(D3D12Vertex) * _vertexs.size(), _vertexData));
 }
 
 bool D3D12RenderableMesh::initIndexBuffer(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline)
@@ -52,7 +52,7 @@ bool D3D12RenderableMesh::initIndexBuffer(D3D12RenderSystem &system, D3D12Graphi
         _indexData[i] = _indices[i];
 
     _indexBuffer = new D3D12IndexBuffer(system);
-    return (_indexBuffer->init(pipeline, sizeof(unsigned short) * _indices.size(), _indexData));
+	return (_indexBuffer->init(pipeline, sizeof(unsigned short) * _indices.size(), _indexData));
 }
 
 bool D3D12RenderableMesh::render(Camera &camera, CommandList &commandList)
