@@ -72,54 +72,52 @@ bool Mesh::loadObjFromFile(const std::string &path) {
 		auto &&mesh = scene->mMeshes[i];
 
 		std::cout << "MESH" << std::endl;
+		for (int j = 0; j < mesh->mNumVertices; j++)
+		{
+			Vertex vertex;
+			Vector3f vertice;
+			Vector2f uv;
+			Vector3f normal;
+
+			vertice.x = mesh->mVertices[j].x;
+			vertice.y = mesh->mVertices[j].y;
+			vertice.z = mesh->mVertices[j].z;
+
+			if (mesh->HasNormals())
+			{
+				normal.x = mesh->mNormals[j].x;
+				normal.y = mesh->mNormals[j].y;
+				normal.z = mesh->mNormals[j].z;
+			}
+			else
+				normal = Vector3f(1.0f, 1.0f, 1.0f);
+
+			if (mesh->HasTextureCoords(0))
+			{
+				uv.x = mesh->mTextureCoords[0][j].x;
+				uv.y = mesh->mTextureCoords[0][j].y;
+			}
+			else
+				uv = Vector2f(0, 0);
+
+			vertex.vertice = vertice;
+			vertex.normal = normal;
+			vertex.uv = uv;
+
+			_vertexs.push_back(vertex);
+		}
+
 		for (int j = 0; j < mesh->mNumFaces; j++)
 		{
 			auto &&face = mesh->mFaces[j];
 			for (int k = 2; k >= 0; k--)
 			{
-				Vertex vertex;
-				Vector3f vertice;
-				Vector2f uv;
-				Vector3f normal;
-
-				vertice.x = mesh->mVertices[face.mIndices[k]].x;
-				vertice.y = mesh->mVertices[face.mIndices[k]].y;
-				vertice.z = mesh->mVertices[face.mIndices[k]].z;
-
-				if (mesh->HasNormals())
-				{
-					normal.x = mesh->mNormals[face.mIndices[k]].x;
-					normal.y = mesh->mNormals[face.mIndices[k]].y;
-					normal.z = mesh->mNormals[face.mIndices[k]].z;
-				}
-				else
-					normal = Vector3f(1.0f, 1.0f, 1.0f);
-
-				if (mesh->HasTextureCoords(0))
-				{
-					uv.x = mesh->mTextureCoords[0][face.mIndices[k]].x;
-					uv.y = mesh->mTextureCoords[0][face.mIndices[k]].y;
-				}
-				else
-					uv = Vector2f(0, 0);
-
-				vertex.vertice = vertice;
-				vertex.normal = normal;
-				vertex.uv = uv;
-
-				auto it = std::find(_vertexs.begin(), _vertexs.end(), vertex);
-				if (it == _vertexs.end()) {
-					_vertexs.push_back(vertex);
-					_indices.push_back(_vertexs.size() - 1);
-				}
-				else {
-					unsigned int idx = it - _vertexs.begin();
-					_indices.push_back(idx);
-				}
+				_indices.push_back(face.mIndices[k]);
 			}
 		}
 	}
 
+	std::cout << "LOADED" << std::endl;
 	_isLoaded = true;
 	return true;
 }
