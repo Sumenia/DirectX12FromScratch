@@ -8,6 +8,7 @@
 # include "MiniEngine/D3D12/D3D12HLSLShader.h"
 # include "MiniEngine/D3D12/D3D12RenderWindow.h"
 # include "MiniEngine/D3D12/D3D12RenderableMesh.h"
+# include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 
 namespace MiniEngine
 {
@@ -30,6 +31,8 @@ namespace MiniEngine
         D3D12CommandQueue       *getCommandQueue();
         D3D12Fence              *getFence();
         D3D12RootSignature      *getRootSignature();
+
+        D3D12ConstantBuffer     *createConstantBuffer(unsigned int size, unsigned int nb);
 
         D3D12RenderWindow       *createRenderWindow(Window *window);
         D3D12HLSLShader         *createHLSLShader(std::string const &filename, std::string const &entry);

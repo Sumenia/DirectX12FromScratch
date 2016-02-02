@@ -96,6 +96,19 @@ D3D12RootSignature *D3D12RenderSystem::getRootSignature()
     return (_rootSignature);
 }
 
+D3D12ConstantBuffer *D3D12RenderSystem::createConstantBuffer(unsigned int size, unsigned int nb)
+{
+    D3D12ConstantBuffer *buffer = new D3D12ConstantBuffer(*this);
+
+    if (!buffer->init(size, nb))
+    {
+        delete buffer;
+        return (nullptr);
+    }
+
+    return (buffer);
+}
+
 D3D12RenderWindow *D3D12RenderSystem::createRenderWindow(Window *window)
 {
     return (new D3D12RenderWindow(*this, window));

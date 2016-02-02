@@ -10,6 +10,7 @@ namespace MiniEngine
     class RenderTarget;
     class RenderWindow;
     class RenderableMesh;
+    class ConstantBuffer;
 
     class RenderSystem
     {
@@ -22,6 +23,8 @@ namespace MiniEngine
 
         void                        addRenderTarget(RenderTarget *target);
         void                        clear();
+
+        virtual ConstantBuffer      *createConstantBuffer(unsigned int size, unsigned int nb) = 0;
 
         virtual RenderWindow        *createRenderWindow(Window *window) = 0;
         virtual HLSLShader          *createHLSLShader(std::string const &filename, std::string const &entry) = 0;

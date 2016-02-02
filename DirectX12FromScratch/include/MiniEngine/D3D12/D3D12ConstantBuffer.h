@@ -2,10 +2,12 @@
 
 #include <d3d12.h>
 #include "MiniEngine/ConstantBuffer.h"
-#include "MiniEngine/D3D12/D3D12RenderSystem.h"
+#include "MiniEngine/D3D12/D3D12RenderWindow.h"
 
 namespace MiniEngine
 {
+    class D3D12RenderSystem;
+
 	class D3D12ConstantBuffer : virtual public ConstantBuffer
 	{
 	public:
@@ -13,21 +15,17 @@ namespace MiniEngine
 		~D3D12ConstantBuffer();
 
 		bool                init(unsigned int size, unsigned int nb = D3D12RenderWindow::FrameCount);
-        bool                initHeap(unsigned int nb);
         bool                initRessources(unsigned int size, unsigned int nb);
-        bool                initView(unsigned int size, unsigned int nb);
 
-        void                update(CommandList &commandList, unsigned int size, void *data);
-        void                afterUpdate(CommandList &commandList);
+        bool                update(CommandList &commandList, unsigned int rootIdx, unsigned int size, void *data);
 
-        D3D12DescriptorHeap *getHeap();
+        ID3D12Resource      *getNative(unsigned int idx);
 
 	protected:
 		D3D12RenderSystem	&_system;
 		ID3D12Resource		**_constantBuffer;
-        ID3D12Resource		**_constantBufferUpload;
-        D3D12DescriptorHeap *_heap;
 
         unsigned int        _nb;
+        unsigned int        _size;
 	};
 };

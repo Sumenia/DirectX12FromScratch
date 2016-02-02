@@ -10,6 +10,7 @@
 namespace MiniEngine
 {
     class D3D12RenderSystem;
+    class D3D12CommandList;
 
     class D3D12RenderWindow : public RenderWindow, public D3D12RenderTarget
     {
@@ -26,7 +27,6 @@ namespace MiniEngine
         bool						initDsvDescriptorHeap();
         bool						initDsv();
         bool                        initCommandList();
-        bool                        initConstantBuffers();
 
         bool                        swap();
         bool                        waitPreviousFrame();

@@ -6,6 +6,7 @@
 # include "MiniEngine/MovableObject.h"
 # include "MiniEngine/CommandList.h"
 # include "MiniEngine/RenderableObject.h"
+# include "MiniEngine/ConstantBuffer.h"
 
 namespace MiniEngine
 {
@@ -66,5 +67,7 @@ namespace MiniEngine
 
         Matrix4f                _transform;
         bool                    _needUpdate;
+
+        ConstantBuffer          *_modelConstantBuffer;
     };
 }

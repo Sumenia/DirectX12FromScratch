@@ -13,6 +13,8 @@ D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) 
 	{
 		_rtvs[n] = nullptr;
 	}
+
+    _frameCount = FrameCount;
 }
 
 D3D12RenderWindow::~D3D12RenderWindow()
@@ -49,7 +51,6 @@ bool D3D12RenderWindow::init()
         && initDsvDescriptorHeap()
         && initDsv()
         && initCommandList()
-        && initConstantBuffers()
 	);
 }
 
@@ -64,28 +65,6 @@ bool D3D12RenderWindow::render()
     D3D12_RECT      scissorRect;
 
     _commandList->getNative()->SetGraphicsRootSignature(_system.getRootSignature()->getNative());
-
-    // Bind constant buffer heaps
-    D3D12DescriptorHeap *cameraHeap = dynamic_cast<D3D12ConstantBuffer*>(_cameraConstantBuffer)->getHeap();
-    D3D12DescriptorHeap *modelHeap = dynamic_cast<D3D12ConstantBuffer*>(_modelConstantBuffer)->getHeap();
-
-    // Bind camera constant buffer to slot 0
-    {
-        ID3D12DescriptorHeap* ppHeaps[] = { cameraHeap->getNative() };
-        _commandList->getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-
-        CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(cameraHeap->getNative()->GetGPUDescriptorHandleForHeapStart(), _frameIdx, cameraHeap->getSize());
-        _commandList->getNative()->SetGraphicsRootDescriptorTable(0, gpuHandle);
-    }
-
-    // Bind model constant buffer to slot 1
-    {
-        ID3D12DescriptorHeap* ppHeaps[] = { modelHeap->getNative() };
-        _commandList->getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-
-        CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(modelHeap->getNative()->GetGPUDescriptorHandleForHeapStart(), _frameIdx, modelHeap->getSize());
-        _commandList->getNative()->SetGraphicsRootDescriptorTable(1, gpuHandle);
-    }
 
     scissorRect.left = 0;
     scissorRect.top = 0;
@@ -281,14 +260,6 @@ bool D3D12RenderWindow::initCommandList()
 {
     _commandList = _system.getCommandQueue()->createCommandList(this, *_pipeline);
     return (_commandList->init());
-}
-
-bool D3D12RenderWindow::initConstantBuffers()
-{
-    _cameraConstantBuffer = new D3D12ConstantBuffer(_system);
-    _modelConstantBuffer = new D3D12ConstantBuffer(_system);
-
-    return (_cameraConstantBuffer->init(128, D3D12RenderWindow::FrameCount) && _modelConstantBuffer->init(64, D3D12RenderWindow::FrameCount));
 }
 
 bool D3D12RenderWindow::swap()

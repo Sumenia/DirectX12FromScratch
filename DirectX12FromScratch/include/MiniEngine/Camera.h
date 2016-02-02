@@ -33,5 +33,7 @@ namespace MiniEngine
         Matrix4f        _view;
         Matrix4f        _worldView;
         Matrix4f        _projection;
+
+        ConstantBuffer  *_cameraConstantBuffer;
     };
 }

@@ -1,13 +1,18 @@
 #include "MiniEngine/SceneNode.h"
 #include "MiniEngine/Camera.h"
+#include "MiniEngine/CommandList.h"
+#include "MiniEngine/RenderTarget.h"
 
 using namespace MiniEngine;
 
-SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0)), _needUpdate(true)
+SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0)), _needUpdate(true), _modelConstantBuffer(nullptr)
 {}
 
 SceneNode::~SceneNode()
 {
+    delete _modelConstantBuffer;
+    _modelConstantBuffer = nullptr;
+
     while (_childs.size())
     {
         delete _childs.front();
@@ -33,7 +38,16 @@ SceneNode *SceneNode::addChild(SceneNode *node)
 void SceneNode::attachObject(MovableObject *obj)
 {
     _obj.reset(obj);
-	_obj->setParent(this);
+
+    if (!_obj)
+    {
+        delete _modelConstantBuffer;
+        _modelConstantBuffer = nullptr;
+    }
+    else
+    {
+        _obj->setParent(this);
+    }
 }
 
 SceneNode *SceneNode::getParent()
@@ -50,12 +64,20 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
         if (_needUpdate)
             update();
 
-        commandList.setModelMatrix(_transform);
+        if (!_modelConstantBuffer)
+            _modelConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64, commandList.getRenderTarget().getFrameCount());
+
+        if (!_modelConstantBuffer)
+        {
+            std::cout << "Can't create constant buffer for this model" << std::endl;
+            return (false);
+        }
+
+        if (!commandList.setModelMatrix(*_modelConstantBuffer, _transform))
+            return (false);
 
         if (!object->render(camera, commandList))
             return (false);
-
-        commandList.afterModelRender();
     }
 
     for (auto &&child : _childs)

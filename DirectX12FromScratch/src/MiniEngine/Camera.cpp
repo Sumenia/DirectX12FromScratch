@@ -2,14 +2,19 @@
 #include "MiniEngine/Geometry.h"
 #include "MiniEngine/Camera.h"
 #include "MiniEngine/SceneManager.h"
+#include "MiniEngine/CommandList.h"
+#include "MiniEngine/RenderTarget.h"
 
 using namespace MiniEngine;
 
-Camera::Camera(SceneManager &manager) : SceneNode(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(1000.0f)
+Camera::Camera(SceneManager &manager) : SceneNode(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(1000.0f), _cameraConstantBuffer(nullptr)
 {}
 
 Camera::~Camera()
-{}
+{
+    delete _cameraConstantBuffer;
+    _cameraConstantBuffer = nullptr;
+}
 
 bool Camera::render(CommandList &commandList)
 {
@@ -21,11 +26,19 @@ bool Camera::render(CommandList &commandList)
         _needUpdate = false;
     }
 
-    commandList.setCameraMatrix(_worldView, _projection);
-    result = _manager.render(*this, commandList);
-    commandList.afterCameraRender();
+    if (!_cameraConstantBuffer)
+        _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(128, commandList.getRenderTarget().getFrameCount());
 
-    return (result);
+    if (!_cameraConstantBuffer)
+    {
+        std::cout << "Can't create constant buffer for this camera" << std::endl;
+        return (false);
+    }
+
+    if (!commandList.setCameraMatrix(*_cameraConstantBuffer, _worldView, _projection))
+        return (false);
+
+    return (_manager.render(*this, commandList));
 }
 
 void Camera::lookAt(const Vector3f &eye, const Vector3f &target, const Vector3f &up)

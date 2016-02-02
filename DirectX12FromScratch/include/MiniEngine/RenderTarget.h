@@ -19,21 +19,17 @@ namespace MiniEngine
         void                    addViewport(Viewport *viewport);
         void                    setClearColor(const float color[4]);
 
-        virtual ConstantBuffer  *getCameraBuffer();
-        virtual ConstantBuffer  *getModelBuffer();
-
         virtual GraphicPipeline *getGraphicPipeline() = 0;
 
         unsigned int            getFrameIdx();
+        unsigned int            getFrameCount();
 
     protected:
         RenderSystem            &_system;
         float                   _clearColor[4];
         std::list<Viewport*>    _viewports;
 
-        ConstantBuffer          *_cameraConstantBuffer;
-        ConstantBuffer          *_modelConstantBuffer;
-
         unsigned int            _frameIdx;
+        unsigned int            _frameCount;
     };
 }

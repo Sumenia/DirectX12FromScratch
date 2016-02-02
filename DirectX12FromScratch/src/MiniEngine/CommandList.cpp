@@ -12,3 +12,8 @@ RenderTarget &CommandList::getRenderTarget()
 {
     return (*_target);
 }
+
+RenderSystem &CommandList::getRenderSystem()
+{
+    return (_system);
+}
