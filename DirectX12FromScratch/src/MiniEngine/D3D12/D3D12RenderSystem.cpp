@@ -42,7 +42,7 @@ bool D3D12RenderSystem::initDevice()
         return (false);
     }
 
-    _device = D3D12Device::create();
+    _device = D3D12Device::create(_factory);
 
     if (!_device)
     {

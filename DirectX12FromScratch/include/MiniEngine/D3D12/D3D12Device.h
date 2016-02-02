@@ -1,6 +1,7 @@
 #pragma once
 
 #include <d3d12.h>
+# include <dxgi1_4.h>
 
 namespace MiniEngine
 {
@@ -12,7 +13,7 @@ namespace MiniEngine
 
         ID3D12Device            *getNative();
 
-        static D3D12Device      *create(D3D_FEATURE_LEVEL featureLevel = D3D_FEATURE_LEVEL_11_0);
+        static D3D12Device      *create(IDXGIFactory4* factory, D3D_FEATURE_LEVEL featureLevel = D3D_FEATURE_LEVEL_11_0);
 
     protected:
         ID3D12Device            *_device;
