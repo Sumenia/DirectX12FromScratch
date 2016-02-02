@@ -153,19 +153,22 @@ bool D3D12RenderWindow::render()
 bool D3D12RenderWindow::initSwapChain()
 {
     HRESULT                 result;
-    DXGI_SWAP_CHAIN_DESC    swapChainDesc = {};
+    DXGI_SWAP_CHAIN_DESC1   swapChainDesc = {};
 
-    swapChainDesc.BufferCount = D3D12RenderWindow::FrameCount;
-    swapChainDesc.BufferDesc.Width = _window->getWidth();
-    swapChainDesc.BufferDesc.Height = _window->getHeight();
-    swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.Width = _window->getWidth();
+	swapChainDesc.Height = _window->getHeight();
+	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.Stereo = false;
+	swapChainDesc.SampleDesc.Count = 1;
+	swapChainDesc.SampleDesc.Quality = 0;
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-    swapChainDesc.OutputWindow = (HWND)_window->getHandle();
-    swapChainDesc.SampleDesc.Count = 1;
-    swapChainDesc.Windowed = true;
+	swapChainDesc.BufferCount = D3D12RenderWindow::FrameCount;
+	swapChainDesc.Scaling = DXGI_SCALING_NONE;
+	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+	swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
+	swapChainDesc.Flags = 0;
 
-    result = _system.getFactory()->CreateSwapChain(_system.getCommandQueue()->getNative(), &swapChainDesc, (IDXGISwapChain**)&_swapChain);
+    result = _system.getFactory()->CreateSwapChainForHwnd(_system.getCommandQueue()->getNative(), (HWND)_window->getHandle(), &swapChainDesc, NULL, NULL, (IDXGISwapChain1**)&_swapChain);
 
     if (FAILED(result))
     {
