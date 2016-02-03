@@ -7,6 +7,8 @@
 # include "MiniEngine/D3D12/D3D12RenderTarget.h"
 # include "MiniEngine/D3D12/D3D12DescriptorHeap.h"
 
+#pragma warning( disable: 4250 )
+
 namespace MiniEngine
 {
     class D3D12RenderSystem;

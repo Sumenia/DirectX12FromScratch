@@ -291,7 +291,7 @@ namespace MiniEngine
 			double angleRad = DEG2RAD(angleDeg);
 			double sa2 = std::sin(angleRad / 2);
 			double ca2 = std::cos(angleRad / 2);
-			return Quaternion<T>(ca2, axis * sa2);
+			return Quaternion<T>((T) ca2, axis * (T) sa2);
 		}
 
 		/**

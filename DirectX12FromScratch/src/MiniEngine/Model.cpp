@@ -34,7 +34,7 @@ bool			Model::loadFromFile(const std::string &file)
 		return false;
 	}
 
-	for (int i = 0; i < scene->mNumMeshes; i++)
+	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 	{
 		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 
@@ -42,7 +42,7 @@ bool			Model::loadFromFile(const std::string &file)
 		_meshs.push_back(mesh);
 	}
 
-	/*for (int j = 0; j < scene->mNumMaterials; j++)
+	/*for (unsigned int j = 0; j < scene->mNumMaterials; j++)
 	{
 	auto &&material = scene->mMaterials[j];
 	int texIndex = 0;
@@ -69,7 +69,7 @@ unsigned int		Model::getVertexsSize() const
 
 	for (auto &&mesh : _meshs)
 	{
-		size += mesh->vertexs.size();
+		size += (unsigned int) mesh->vertexs.size();
 	}
 
 	return size;
@@ -83,7 +83,7 @@ unsigned int		Model::getIndicesSize() const
 
 	for (auto &&mesh : _meshs)
 	{
-		size += mesh->indices.size();
+		size += (unsigned int) mesh->indices.size();
 	}
 
 	return size;
