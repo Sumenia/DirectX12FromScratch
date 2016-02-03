@@ -1,22 +1,11 @@
 #pragma once
 
 #include <Windows.h>
+#include "Event.h"
 
 class Window 
 {
 public:
-	enum EVENT_TYPE
-	{
-		UP = 0,
-		DOWN,
-		RIGHT,
-		LEFT,
-		ESCAPE,
-		ZOOM_IN,
-		ZOOM_OUT,
-		UNDEFINED
-	};
-
     virtual ~Window() {}
 
 	virtual bool                create(unsigned int heigth, unsigned int width, HINSTANCE hInstance = nullptr) = 0;
@@ -27,7 +16,7 @@ public:
     virtual unsigned int        getWidth() const = 0;
     virtual unsigned int        getHeight() const = 0;
 
-	virtual Window::EVENT_TYPE getEvent() = 0;
+	virtual bool				getEvent(Event &) = 0;
 
 private:
 };

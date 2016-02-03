@@ -21,7 +21,7 @@ public:
     virtual unsigned int        getWidth() const;
     virtual unsigned int        getHeight() const;
 
-	virtual Window::EVENT_TYPE getEvent();
+	virtual bool				getEvent(Event &);
 
 private:
 	HWND        _handle;

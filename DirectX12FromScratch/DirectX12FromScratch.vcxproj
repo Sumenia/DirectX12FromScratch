@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="include\Config.h" />
     <ClInclude Include="include\DynamicLibrary.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\Keyboard.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
     <ClInclude Include="include\MiniEngine\BasicSceneManager.h" />
@@ -63,8 +65,9 @@
     <ClInclude Include="include\MiniEngine\SceneNode.h" />
     <ClInclude Include="include\MiniEngine\Shader.h" />
     <ClInclude Include="include\MiniEngine\Viewport.h" />
+    <ClInclude Include="include\Mouse.h" />
     <ClInclude Include="include\Window.h" />
-    <ClInclude Include="include\MiniEngine\Vector.h" />
+    <ClInclude Include="include\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DynamicLibrary.cpp" />
@@ -106,6 +109,7 @@
     <ClCompile Include="src\MiniEngine\Shader.cpp" />
     <ClCompile Include="src\MiniEngine\CommandList.cpp" />
     <ClCompile Include="src\MiniEngine\Viewport.cpp" />
+    <ClCompile Include="src\Mouse.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CD1E3FAC-98C1-4172-8CEB-B41CAB92CCC6}</ProjectGuid>

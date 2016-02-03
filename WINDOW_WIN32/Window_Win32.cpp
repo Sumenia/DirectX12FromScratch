@@ -107,7 +107,7 @@ unsigned int Window_Win32::getHeight() const
     return (rc.bottom);
 }
 
-Window::EVENT_TYPE Window_Win32::getEvent()
+bool Window_Win32::getEvent(Event &event)
 {
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
@@ -117,12 +117,13 @@ Window::EVENT_TYPE Window_Win32::getEvent()
 		if (msg.message == WM_QUIT)
 		{
 			_isOpen = false;
-			return (Window::EVENT_TYPE::ESCAPE);
+			event.type = Event::Closed;
+			return (true);
 		}
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	return Window::EVENT_TYPE::UNDEFINED;
+	return false;
 }
 
 LRESULT Window_Win32::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

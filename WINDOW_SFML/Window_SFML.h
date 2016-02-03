@@ -3,6 +3,7 @@
 # include <map>
 # include <SFML/Window.hpp>
 # include "Window.h"
+# include "Keyboard_SFML.h"
 
 class Window_SFML : public Window
 {
@@ -19,10 +20,14 @@ public:
     virtual unsigned int        getHeight() const;
 
 	// Inherited via IEvent
-	virtual Window::EVENT_TYPE getEvent();
+	virtual bool				getEvent(Event &event);
+
 
 private:
-	sf::Window			                                *_window;
-	std::map<sf::Keyboard::Key, Window::EVENT_TYPE>     _map;
+	void						initEventTypeMap();
 
+private:
+	sf::Window											*_window;
+	std::map<sf::Event::EventType, Event::EventType>	_eventTypeMap;
+	Keyboard_SFML										_keyboard;
 };

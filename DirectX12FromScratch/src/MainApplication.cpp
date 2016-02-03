@@ -116,39 +116,47 @@ bool MainApplication::update()
     if (!_window || !_window->isOpen())
         return (false);
 
-	Window::EVENT_TYPE event = _window->getEvent();
+	Event event;
+	while (_window->getEvent(event))
+	{
+		if (event.type == Event::KeyPressed)
+		{
+			if (event.key.code == Keyboard::Left)
+			{
+				_node->rotate(1, Vector3f(0, -1, 0), MiniEngine::TS_PARENT);
+			}
+			else if (event.key.code == Keyboard::Right)
+			{
+				_node->rotate(1, Vector3f(0, 1, 0), MiniEngine::TS_PARENT);
+			}
+			else if (event.key.code == Keyboard::Up)
+			{
+				_node->rotate(1, Vector3f(-1, 0, 0), MiniEngine::TS_PARENT);
+			}
+			else if (event.key.code == Keyboard::Down)
+			{
+				_node->rotate(1, Vector3f(1, 0, 0), MiniEngine::TS_PARENT);
+			}
+			else if (event.key.code == Keyboard::I)
+			{
+				_camera->lookAt({ 0.0f, _camera->getPos().y - 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+			}
+			else if (event.key.code == Keyboard::O)
+			{
+				_camera->lookAt({ 0.0f, _camera->getPos().y + 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+			}
+			else if (event.key.code == Keyboard::Escape)
+			{
+				_window->destroy();
+				return (false);
+			}
+		}
 
-	if (event == Window::EVENT_TYPE::LEFT)
-	{
-		_node->rotate(1, MiniEngine::Vector3f(0, -1, 0), MiniEngine::TS_PARENT);
-
-	}
-	else if (event == Window::EVENT_TYPE::RIGHT)
-	{
-        _node->rotate(1, MiniEngine::Vector3f(0, 1, 0), MiniEngine::TS_PARENT);
-
-	}
-	else if (event == Window::EVENT_TYPE::UP)
-	{
-        _node->rotate(1, MiniEngine::Vector3f(-1, 0, 0), MiniEngine::TS_PARENT);
-	}
-	else if (event == Window::EVENT_TYPE::DOWN)
-	{
-        _node->rotate(1, MiniEngine::Vector3f(1, 0, 0), MiniEngine::TS_PARENT);
-	}
-
-	else if (event == Window::EVENT_TYPE::ESCAPE)
-    {
-        _window->destroy();
-        return (false);
-    }
-	else if (event == Window::EVENT_TYPE::ZOOM_IN)
-	{
-		_camera->lookAt({ 0.0f, _camera->getPos().y - 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
-	}
-	else if (event == Window::EVENT_TYPE::ZOOM_OUT)
-	{
-		_camera->lookAt({ 0.0f, _camera->getPos().y + 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+		if (event.type == Event::Closed)
+		{
+			_window->destroy();
+			return (false);
+		}
 	}
 
     return (true);
