@@ -23,8 +23,6 @@ namespace MiniEngine
 
         void            updateProjectionMatrix();
 
-		const Vector3f	&getPos() const;
-
     protected:
         virtual void    update();
 

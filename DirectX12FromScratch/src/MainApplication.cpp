@@ -123,27 +123,27 @@ bool MainApplication::update()
 		{
 			if (event.key.code == Keyboard::Left)
 			{
-				_node->rotate(1, Vector3f(0, -1, 0), MiniEngine::TS_PARENT);
+				_camera->rotate(1, Vector3f(0, 1, 0), MiniEngine::TS_LOCAL);
 			}
 			else if (event.key.code == Keyboard::Right)
 			{
-				_node->rotate(1, Vector3f(0, 1, 0), MiniEngine::TS_PARENT);
+				_camera->rotate(1, Vector3f(0, -1, 0), MiniEngine::TS_LOCAL);
 			}
 			else if (event.key.code == Keyboard::Up)
 			{
-				_node->rotate(1, Vector3f(-1, 0, 0), MiniEngine::TS_PARENT);
+				_camera->rotate(1, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
 			}
 			else if (event.key.code == Keyboard::Down)
 			{
-				_node->rotate(1, Vector3f(1, 0, 0), MiniEngine::TS_PARENT);
+				_camera->rotate(1, Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
 			}
 			else if (event.key.code == Keyboard::I)
 			{
-				_camera->lookAt({ 0.0f, _camera->getPos().y - 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+				_camera->translate(Vector3f(0, 0, -1));
 			}
 			else if (event.key.code == Keyboard::O)
 			{
-				_camera->lookAt({ 0.0f, _camera->getPos().y + 0.5f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+				_camera->translate(Vector3f(0, 0, 1));
 			}
 			else if (event.key.code == Keyboard::Escape)
 			{

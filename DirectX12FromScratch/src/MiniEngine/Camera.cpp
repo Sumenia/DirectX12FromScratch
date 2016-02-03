@@ -41,9 +41,9 @@ bool Camera::render(CommandList &commandList)
 
 void Camera::lookAt(const Vector3f &eye, const Vector3f &target, const Vector3f &up)
 {
-	_pos = eye;
-    _view = Matrix4f::createLookAt(eye, target, up);
-    _needUpdate = true;
+	_position = eye;
+	_rotation = Quatf::fromMatrix(Matrix4f::createTranslation(-eye.x, -eye.y, -eye.z) * Matrix4f::createLookAt(eye, target, up).inverse());
+	_needUpdate = true;
 }
 
 void Camera::setFov(float fov)
@@ -79,19 +79,12 @@ void Camera::updateProjectionMatrix()
     update();
 }
 
-const Vector3f		&Camera::getPos() const
-{
-	return _pos;
-}
-
 void Camera::update()
 {
     SceneNode::update();
 
-    _worldView = getTransformationMatrix() * _view;
-
     if (_cameraConstantBuffer)
-        if (!_cameraConstantBuffer->updateCameraMatrix(_worldView, _projection))
+        if (!_cameraConstantBuffer->updateCameraMatrix(getTransformationMatrix().inverse(), _projection))
         {
             delete _cameraConstantBuffer;
             _cameraConstantBuffer = nullptr;
