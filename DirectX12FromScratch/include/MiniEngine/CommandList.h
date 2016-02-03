@@ -21,8 +21,8 @@ namespace MiniEngine
         virtual bool        begin() = 0;
         virtual bool        end() = 0;
 
-        virtual bool        setCameraMatrix(ConstantBuffer &buffer, Matrix4f const &view, Matrix4f const &projection) = 0;
-        virtual bool        setModelMatrix(ConstantBuffer &buffer, Matrix4f const &model) = 0;
+        virtual bool        bindCameraCBV(ConstantBuffer &buffer) = 0;
+        virtual bool        bindModelCBV(ConstantBuffer &buffer) = 0;
 
         RenderTarget        &getRenderTarget();
         RenderSystem        &getRenderSystem();

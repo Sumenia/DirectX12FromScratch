@@ -65,7 +65,10 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
             update();
 
         if (!_modelConstantBuffer)
+        {
             _modelConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64, commandList.getRenderTarget().getFrameCount());
+            update();
+        }
 
         if (!_modelConstantBuffer)
         {
@@ -73,7 +76,7 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
             return (false);
         }
 
-        if (!commandList.setModelMatrix(*_modelConstantBuffer, _transform))
+        if (!commandList.bindModelCBV(*_modelConstantBuffer))
             return (false);
 
         if (!object->render(camera, commandList))
@@ -190,4 +193,11 @@ void SceneNode::update()
 
     _needUpdate = false;
     _transform = Matrix4f::createTranslation(_derivedPosition.x, _derivedPosition.y, _derivedPosition.z) * _derivedRotation.transform() * Matrix4f::createScale(_derivedScaling.x, _derivedScaling.y, _derivedScaling.z);
+
+    if (_modelConstantBuffer)
+        if (!_modelConstantBuffer->updateModelMatrix(_transform))
+        {
+            delete _modelConstantBuffer;
+            _modelConstantBuffer = nullptr;
+        }
 }

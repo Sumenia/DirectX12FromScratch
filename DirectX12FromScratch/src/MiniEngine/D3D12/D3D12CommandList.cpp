@@ -1,5 +1,4 @@
 #include <iostream>
-#include <DirectXMath.h>
 #include "MiniEngine/D3D12/D3D12CommandList.h"
 #include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
@@ -74,37 +73,14 @@ bool D3D12CommandList::end()
     return (!FAILED(result));
 }
 
-bool D3D12CommandList::setCameraMatrix(ConstantBuffer &buffer, Matrix4f const &view, Matrix4f const &projection)
+bool D3D12CommandList::bindCameraCBV(ConstantBuffer &buffer)
 {
-    struct CameraMatrix
-    {
-        DirectX::XMFLOAT4X4  view;
-        DirectX::XMFLOAT4X4  projection;
-    }   camera;
-
-    for (unsigned int x = 0; x < 4; x++)
-        for (unsigned int y = 0; y < 4; y++)
-            camera.view.m[x][y] = view(x + 1, y + 1);
-
-    for (unsigned int x = 0; x < 4; x++)
-        for (unsigned int y = 0; y < 4; y++)
-            camera.projection.m[x][y] = projection(x + 1, y + 1);
-
-    return (buffer.update(*this, 0, sizeof(camera), &camera));
+    return (buffer.bind(*this, 0));
 }
 
-bool D3D12CommandList::setModelMatrix(ConstantBuffer &buffer, Matrix4f const &model)
+bool D3D12CommandList::bindModelCBV(ConstantBuffer &buffer)
 {
-    struct ModelMatrix
-    {
-        DirectX::XMFLOAT4X4  model;
-    }   data;
-
-    for (unsigned int x = 0; x < 4; x++)
-        for (unsigned int y = 0; y < 4; y++)
-            data.model.m[x][y] = model(x + 1, y + 1);
-
-    return (buffer.update(*this, 1, sizeof(data), &data));
+    return (buffer.bind(*this, 1));
 }
 
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()

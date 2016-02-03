@@ -12,7 +12,11 @@ namespace MiniEngine
 
 		virtual bool    init(unsigned int size, unsigned int nb) = 0;
 
-        virtual bool    update(CommandList &commandList, unsigned int rootIdx, unsigned int size, void *data) = 0;
+        virtual bool    update(unsigned int size, void *data) = 0;
+        virtual bool    bind(CommandList &commandList, unsigned int rootIdx) = 0;
+
+        virtual bool    updateCameraMatrix(Matrix4f const &view, Matrix4f const &projection) = 0;
+        virtual bool    updateModelMatrix(Matrix4f const &model) = 0;
 
 	protected:
 		RenderSystem	&_system;

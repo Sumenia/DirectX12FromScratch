@@ -26,6 +26,8 @@ namespace MiniEngine
 		const Vector3f	&getPos() const;
 
     protected:
+        virtual void    update();
+
         float           _fov;
         float           _ratio;
 

@@ -20,8 +20,8 @@ namespace MiniEngine
         bool                        begin();
         bool                        end();
 
-        bool                        setCameraMatrix(ConstantBuffer &buffer, Matrix4f const &view, Matrix4f const &projection);
-        bool                        setModelMatrix(ConstantBuffer &buffer, Matrix4f const &model);
+        bool                        bindCameraCBV(ConstantBuffer &buffer);
+        bool                        bindModelCBV(ConstantBuffer &buffer);
 
         ID3D12GraphicsCommandList   *getNative();
 
