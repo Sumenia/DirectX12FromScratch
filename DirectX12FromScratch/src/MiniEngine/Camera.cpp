@@ -21,13 +21,13 @@ bool Camera::render(CommandList &commandList)
     bool    result;
 
     if (_needUpdate)
-    {
-        _worldView = getTransformationMatrix() * _view;
-        _needUpdate = false;
-    }
+        update();
 
     if (!_cameraConstantBuffer)
+    {
         _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(128, commandList.getRenderTarget().getFrameCount());
+        update();
+    }
 
     if (!_cameraConstantBuffer)
     {
@@ -35,7 +35,7 @@ bool Camera::render(CommandList &commandList)
         return (false);
     }
 
-    if (!commandList.setCameraMatrix(*_cameraConstantBuffer, _worldView, _projection))
+    if (!commandList.bindCameraCBV(*_cameraConstantBuffer))
         return (false);
 
     return (_manager.render(*this, commandList));
@@ -77,9 +77,25 @@ void Camera::updateProjectionMatrix()
     _projection(3, 4) = (-_far * _near) * oneOverDepth;
     _projection(4, 3) = -1;
     _projection(4, 4) = 0;
+
+    update();
 }
 
 const Vector3f		&Camera::getPos() const
 {
 	return _pos;
+}
+
+void Camera::update()
+{
+    SceneNode::update();
+
+    _worldView = getTransformationMatrix() * _view;
+
+    if (_cameraConstantBuffer)
+        if (!_cameraConstantBuffer->updateCameraMatrix(_worldView, _projection))
+        {
+            delete _cameraConstantBuffer;
+            _cameraConstantBuffer = nullptr;
+        }
 }
