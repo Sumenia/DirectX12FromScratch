@@ -27,6 +27,7 @@
     <ClInclude Include="include\MiniEngine\Application.h" />
     <ClInclude Include="include\MiniEngine\BasicSceneManager.h" />
     <ClInclude Include="include\MiniEngine\Camera.h" />
+    <ClInclude Include="include\MiniEngine\Clock.h" />
     <ClInclude Include="include\MiniEngine\CommandList.h" />
     <ClInclude Include="include\MiniEngine\ConstantBuffer.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandList.h" />
@@ -76,6 +77,7 @@
     <ClCompile Include="src\MiniEngine\Application.cpp" />
     <ClCompile Include="src\MiniEngine\BasicSceneManager.cpp" />
     <ClCompile Include="src\MiniEngine\Camera.cpp" />
+    <ClCompile Include="src\MiniEngine\Clock.cpp" />
     <ClCompile Include="src\MiniEngine\CommandQueue.cpp" />
     <ClCompile Include="src\MiniEngine\ConstantBuffer.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandList.cpp" />
