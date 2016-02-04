@@ -18,8 +18,8 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             MiniEngine::RenderWindow        *renderTarget = _root->getRenderSystem()->createRenderWindow(_window);
             MiniEngine::GraphicPipeline     *pipeline;
 
-            MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders.hlsl", "VSMain");
-            MiniEngine::HLSLShader          *pixelShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders.hlsl", "PSMain");
+            MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders/shaders.hlsl", "VSMain");
+            MiniEngine::HLSLShader          *pixelShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders/shaders.hlsl", "PSMain");
 
             // Add render target
             _root->getRenderSystem()->addRenderTarget(renderTarget);
@@ -58,7 +58,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             renderTarget->getDefaultViewport()->attachCamera(_camera);
 
             // Load a cube
-			_node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/ant.txt"));
+			_node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/ant.txt"));
 
             //_node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
             //_node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
