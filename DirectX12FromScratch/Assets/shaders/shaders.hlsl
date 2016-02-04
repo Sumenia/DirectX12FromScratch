@@ -1,14 +1,18 @@
-cbuffer CameraConstantBuffer : register(b0)
+struct Camera
 {
     float4x4 view;
     float4x4 projection;
 };
 
-cbuffer ModelConstantBuffer : register(b1)
+ConstantBuffer<Camera> camera : register(b0);
+
+struct Model
 {
-    float4x4 model;
-    float4x4 modelNormal;
+    float4x4 transform;
+    float4x4 transformNormal;
 };
+
+ConstantBuffer<Model> model : register(b1);
 
 struct PSInput
 {
@@ -20,13 +24,13 @@ PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
 {
 	PSInput result;
 
-    normal = mul(float4(normal, 0), modelNormal);
+    normal = mul(float4(normal, 0), model.transformNormal);
 
     float4 worldPosition = float4(position, 1.0f);
 
-    worldPosition = mul(worldPosition, model);
-    worldPosition = mul(worldPosition, view);
-    worldPosition = mul(worldPosition, projection);
+    worldPosition = mul(worldPosition, model.transform);
+    worldPosition = mul(worldPosition, camera.view);
+    worldPosition = mul(worldPosition, camera.projection);
 
 	result.position = worldPosition;
 	result.color = float4(abs(normal.x), abs(normal.y), abs(normal.z), 1.0f);

@@ -28,6 +28,7 @@ size_t D3D12HLSLShader::getSize()
 
 bool D3D12HLSLShader::compile(Shader::Type type)
 {
+    ID3DBlob        *error = nullptr;
     HRESULT         result;
     std::wstring    filename(_filename.begin(), _filename.end());
 
@@ -37,10 +38,18 @@ bool D3D12HLSLShader::compile(Shader::Type type)
         UINT compileFlags = 0;
     #endif
 
-    result = D3DCompileFromFile(filename.c_str(), nullptr, nullptr, _entry.c_str(), type == VERTEX ? "vs_5_0" : "ps_5_0", compileFlags, 0, &_blob, nullptr);
+    result = D3DCompileFromFile(filename.c_str(), nullptr, nullptr, _entry.c_str(), type == VERTEX ? "vs_5_1" : "ps_5_1", compileFlags, 0, &_blob, &error);
 
     if (FAILED(result))
+    {
+        if (error)
+        {
+            std::cout << "Can't compile shader : " << (char*)error->GetBufferPointer() << std::endl;
+            error->Release();
+        }
+
         return (false);
+    }
 
     return (true);
 }
