@@ -27,7 +27,7 @@ namespace MiniEngine
         virtual ConstantBuffer      *createConstantBuffer(unsigned int size, unsigned int nb) = 0;
 
         virtual RenderWindow        *createRenderWindow(Window *window) = 0;
-        virtual HLSLShader          *createHLSLShader(std::string const &filename, std::string const &entry) = 0;
+        virtual HLSLShader          *createHLSLShader() = 0;
 
 		virtual RenderableModel     *loadModel(std::string const &filename) = 0;
 

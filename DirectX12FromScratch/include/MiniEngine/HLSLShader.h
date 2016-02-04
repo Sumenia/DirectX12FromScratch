@@ -31,7 +31,10 @@ namespace MiniEngine
         };
 
     public:
-        HLSLShader(std::string const &filename, std::string const &entry);
+        HLSLShader();
         virtual ~HLSLShader();
+
+        virtual bool                compile(Shader::Type type, std::string const &source, std::string const &entry, std::string const &filename = "./Assets/shaders/main.hlsl") = 0;
+
     };
 }

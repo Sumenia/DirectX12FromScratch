@@ -18,8 +18,8 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             MiniEngine::RenderWindow        *renderTarget = _root->getRenderSystem()->createRenderWindow(_window);
             MiniEngine::GraphicPipeline     *pipeline;
 
-            MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders/shaders.hlsl", "VSMain");
-            MiniEngine::HLSLShader          *pixelShader = _root->getRenderSystem()->createHLSLShader("./Assets/shaders/shaders.hlsl", "PSMain");
+            MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader();
+            MiniEngine::HLSLShader          *pixelShader = _root->getRenderSystem()->createHLSLShader();
 
             // Add render target
             _root->getRenderSystem()->addRenderTarget(renderTarget);
@@ -28,10 +28,10 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             renderTarget->setClearColor(clearColor);
 
             // Compile shader
-            if (!vertexShader->compile(MiniEngine::Shader::VERTEX))
+            if (!vertexShader->compileFromFile(MiniEngine::Shader::VERTEX, "./Assets/shaders/shaders.hlsl", "VSMain"))
                 std::cout << "Can't compile Vertex shader" << std::endl;
 
-            if (!pixelShader->compile(MiniEngine::Shader::PIXEL))
+            if (!pixelShader->compileFromFile(MiniEngine::Shader::PIXEL, "./Assets/shaders/shaders.hlsl", "PSMain"))
                 std::cout << "Can't compile Pixel shader" << std::endl;
 
             // Create pipeline

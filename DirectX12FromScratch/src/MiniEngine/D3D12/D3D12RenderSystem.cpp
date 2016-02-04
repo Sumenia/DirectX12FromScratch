@@ -114,9 +114,9 @@ D3D12RenderWindow *D3D12RenderSystem::createRenderWindow(Window *window)
     return (new D3D12RenderWindow(*this, window));
 }
 
-D3D12HLSLShader *D3D12RenderSystem::createHLSLShader(std::string const &filename, std::string const &entry)
+D3D12HLSLShader *D3D12RenderSystem::createHLSLShader()
 {
-    return (new D3D12HLSLShader(filename, entry));
+    return (new D3D12HLSLShader());
 }
 
 D3D12RenderableModel *D3D12RenderSystem::loadModel(std::string const &filename)

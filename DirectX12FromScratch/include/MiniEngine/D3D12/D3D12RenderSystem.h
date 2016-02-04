@@ -35,7 +35,7 @@ namespace MiniEngine
         D3D12ConstantBuffer     *createConstantBuffer(unsigned int size, unsigned int nb);
 
         D3D12RenderWindow       *createRenderWindow(Window *window);
-        D3D12HLSLShader         *createHLSLShader(std::string const &filename, std::string const &entry);
+        D3D12HLSLShader         *createHLSLShader();
 		D3D12RenderableModel    *loadModel(std::string const &filename);
 
     protected:

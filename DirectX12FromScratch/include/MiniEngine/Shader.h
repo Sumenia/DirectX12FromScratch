@@ -19,16 +19,13 @@ namespace MiniEngine
         };
 
     public:
-        Shader(std::string const &filename, std::string const &entry);
+        Shader();
         virtual ~Shader();
 
         virtual void        *getBytecode() = 0;
         virtual size_t      getSize() = 0;
 
-        virtual bool        compile(Shader::Type) = 0;
-
-    protected:
-        std::string         _filename;
-        std::string         _entry;
+        virtual bool        compile(Shader::Type type, std::string const &source, std::string const &entry, std::string const &filename = "./Assets/shaders/main") = 0;
+        virtual bool        compileFromFile(Shader::Type, std::string const &filename, std::string const &entry) = 0;
     };
 }
