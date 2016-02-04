@@ -46,7 +46,7 @@ namespace MiniEngine
         struct              ModelMatrix
         {
             DirectX::XMFLOAT4X4 model;
-            DirectX::XMFLOAT3X3 modelNormal;
+            DirectX::XMFLOAT4X4 modelNormal;
         }                   _model;
 
         enum Type

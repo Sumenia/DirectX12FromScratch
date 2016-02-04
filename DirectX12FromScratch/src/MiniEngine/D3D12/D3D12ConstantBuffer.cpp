@@ -129,20 +129,14 @@ bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f cons
 
 bool D3D12ConstantBuffer::updateModelMatrix(Matrix4f const &model)
 {
-    Matrix3f    modelNormal;
-
-    for (unsigned int x = 0; x < 3; x++)
-        for (unsigned int y = 0; y < 3; y++)
-            modelNormal(x + 1, y + 1) = model(x + 1, y + 1);
-
-    modelNormal = modelNormal.inverse().transpose();
+    Matrix4f    modelNormal = model.inverse().transpose();
 
     for (unsigned int x = 0; x < 4; x++)
         for (unsigned int y = 0; y < 4; y++)
             _model.model.m[x][y] = model(x + 1, y + 1);
 
-    for (unsigned int x = 0; x < 3; x++)
-        for (unsigned int y = 0; y < 3; y++)
+    for (unsigned int x = 0; x < 4; x++)
+        for (unsigned int y = 0; y < 4; y++)
             _model.modelNormal.m[x][y] = modelNormal(x + 1, y + 1);
 
     //mat3(transpose(inverse(model))) * normal;

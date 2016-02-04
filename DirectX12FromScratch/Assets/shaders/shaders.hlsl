@@ -7,7 +7,7 @@ cbuffer CameraConstantBuffer : register(b0)
 cbuffer ModelConstantBuffer : register(b1)
 {
     float4x4 model;
-    float3x3 modelNormal;
+    float4x4 modelNormal;
 };
 
 struct PSInput
@@ -20,7 +20,7 @@ PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
 {
 	PSInput result;
 
-    normal = mul(modelNormal, normal);
+    normal = mul(float4(normal, 0), modelNormal);
 
     float4 worldPosition = float4(position, 1.0f);
 

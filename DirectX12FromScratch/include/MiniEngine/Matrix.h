@@ -418,7 +418,7 @@ namespace MiniEngine
 			return ret;
 		}
 
-		T det()
+		T det() const
 		{
 			return +at(0, 0) * at(1, 1) * at(2, 2) + at(0, 1) * at(1, 2) * at(2, 0) + at(0, 2) * at(1, 0) * at(2, 1)
 				- at(0, 0) * at(1, 2) * at(2, 1) - at(0, 1) * at(1, 0) * at(2, 2) - at(0, 2) * at(1, 1) * at(2, 0);
@@ -428,7 +428,7 @@ namespace MiniEngine
 		* Computes inverse matrix
 		* @return Inverse matrix of this matrix.
 		*/
-		Matrix3<T> inverse()
+		Matrix3<T> inverse() const
 		{
 			Matrix3<T> ret;
 			ret.at(0, 0) = at(1, 1) * at(2, 2) - at(2, 1) * at(1, 2);
@@ -1163,7 +1163,7 @@ namespace MiniEngine
 		* @return Determinant of matrix
 		* @note This function does 3 * 4 * 6 muls, 3 * 6 adds.
 		*/
-		T det()
+		T det() const
 		{
 
 			return +at(3, 0) * at(2, 1) * at(1, 2) * at(0, 3) - at(2, 0) * at(3, 1) * at(1, 2) * at(0, 3)
@@ -1192,7 +1192,7 @@ namespace MiniEngine
 		* @note This is a little bit time consuming operation
 		* (16 * 6 * 3 muls, 16 * 5 adds + det() + mul() functions)
 		*/
-		Matrix4<T> inverse()
+		Matrix4<T> inverse() const
 		{
 			Matrix4<T> ret;
 

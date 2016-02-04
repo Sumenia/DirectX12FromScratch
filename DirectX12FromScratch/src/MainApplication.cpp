@@ -123,19 +123,19 @@ bool MainApplication::update()
 		{
 			if (event.key.code == Keyboard::Left)
 			{
-				_camera->rotate(1, Vector3f(0, 1, 0), MiniEngine::TS_LOCAL);
+                _node->rotate(1, Vector3f(0, 1, 0), MiniEngine::TS_PARENT);
 			}
 			else if (event.key.code == Keyboard::Right)
 			{
-				_camera->rotate(1, Vector3f(0, -1, 0), MiniEngine::TS_LOCAL);
+                _node->rotate(1, Vector3f(0, -1, 0), MiniEngine::TS_PARENT);
 			}
 			else if (event.key.code == Keyboard::Up)
 			{
-				_camera->rotate(1, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
+                _node->rotate(1, Vector3f(1, 0, 0), MiniEngine::TS_PARENT);
 			}
 			else if (event.key.code == Keyboard::Down)
 			{
-				_camera->rotate(1, Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
+                _node->rotate(1, Vector3f(-1, 0, 0), MiniEngine::TS_PARENT);
 			}
 			else if (event.key.code == Keyboard::I)
 			{

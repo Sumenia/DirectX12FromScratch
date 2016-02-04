@@ -66,7 +66,7 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
 
         if (!_modelConstantBuffer)
         {
-            _modelConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 36, commandList.getRenderTarget().getFrameCount());
+            _modelConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 64, commandList.getRenderTarget().getFrameCount());
             update();
         }
 
