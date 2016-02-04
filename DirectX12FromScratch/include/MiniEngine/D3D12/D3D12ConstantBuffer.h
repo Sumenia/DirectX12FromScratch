@@ -39,13 +39,14 @@ namespace MiniEngine
     protected:
         struct              CameraMatrix
         {
-            DirectX::XMFLOAT4X4  view;
-            DirectX::XMFLOAT4X4  projection;
+            DirectX::XMFLOAT4X4 view;
+            DirectX::XMFLOAT4X4 projection;
         }                   _camera;
 
         struct              ModelMatrix
         {
-            DirectX::XMFLOAT4X4  model;
+            DirectX::XMFLOAT4X4 model;
+            DirectX::XMFLOAT3X3 modelNormal;
         }                   _model;
 
         enum Type

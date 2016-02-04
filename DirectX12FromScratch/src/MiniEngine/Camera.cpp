@@ -23,7 +23,7 @@ bool Camera::render(CommandList &commandList)
 
     if (!_cameraConstantBuffer)
     {
-        _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(128, commandList.getRenderTarget().getFrameCount());
+        _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 64, commandList.getRenderTarget().getFrameCount());
         update();
     }
 

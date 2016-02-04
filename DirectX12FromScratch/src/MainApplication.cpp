@@ -39,7 +39,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
             const MiniEngine::HLSLShader::Input    inputs[] = {
                 { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
-                { "COLOR", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
+                { "NORMAL", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
             };
 
             pipeline->setInputs(2, inputs);
