@@ -24,7 +24,7 @@ namespace MiniEngine
     {
     public:
         SceneNode(SceneManager &manager, MovableObject *object = nullptr);
-        ~SceneNode();
+        virtual ~SceneNode();
 
         virtual SceneNode       *createChild(MovableObject *object = nullptr);
         virtual SceneNode       *addChild(SceneNode *node);

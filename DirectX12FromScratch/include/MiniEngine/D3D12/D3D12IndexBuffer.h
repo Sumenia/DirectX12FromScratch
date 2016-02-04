@@ -14,7 +14,7 @@ namespace MiniEngine
         D3D12IndexBuffer(D3D12RenderSystem &system);
         ~D3D12IndexBuffer();
 
-        bool                        init(GraphicPipeline &pipeline, unsigned int size, void *indexData);
+        bool                        init(unsigned int size, void *indexData);
 
         ID3D12Resource              *getBuffer();
 

@@ -119,11 +119,11 @@ D3D12HLSLShader *D3D12RenderSystem::createHLSLShader(std::string const &filename
     return (new D3D12HLSLShader(filename, entry));
 }
 
-D3D12RenderableModel *D3D12RenderSystem::loadModel(GraphicPipeline &pipeline, std::string const &filename)
+D3D12RenderableModel *D3D12RenderSystem::loadModel(std::string const &filename)
 {
 	D3D12RenderableModel *model = new D3D12RenderableModel;
 
-	if (!model->loadObjFromFile(*this, dynamic_cast<D3D12GraphicPipeline&>(pipeline), filename))
+	if (!model->loadFromFile(*this, filename))
 	{
 		std::cout << "Can't load model : " << filename << std::endl;
 

@@ -6,7 +6,7 @@
 
 using namespace MiniEngine;
 
-D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget *target, D3D12GraphicPipeline &pipeline) : CommandList(system, target, pipeline), _system(system), _pipeline(pipeline), _allocator(nullptr), _list(nullptr)
+D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget *target) : CommandList(system, target), _system(system), _allocator(nullptr), _list(nullptr)
 {}
 
 D3D12CommandList::~D3D12CommandList()
@@ -34,7 +34,7 @@ bool D3D12CommandList::init()
         return (false);
     }
 
-    result = _system.getDevice()->getNative()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, _allocator, _pipeline.getNative(), __uuidof(ID3D12GraphicsCommandList), (void**)&_list);
+    result = _system.getDevice()->getNative()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, _allocator, nullptr, __uuidof(ID3D12GraphicsCommandList), (void**)&_list);
 
     if (FAILED(result))
     {
@@ -54,7 +54,7 @@ bool D3D12CommandList::reset()
     if (FAILED(result))
         return (false);
 
-    result = _list->Reset(_allocator, _pipeline.getNative());
+    result = _list->Reset(_allocator, nullptr);
 
     return (!FAILED(result));
 }
@@ -81,6 +81,11 @@ bool D3D12CommandList::bindCameraCBV(ConstantBuffer &buffer)
 bool D3D12CommandList::bindModelCBV(ConstantBuffer &buffer)
 {
     return (buffer.bind(*this, 1));
+}
+
+void D3D12CommandList::setPipeline(GraphicPipeline &pipeline)
+{
+    _list->SetPipelineState(dynamic_cast<D3D12GraphicPipeline&>(pipeline).getNative());
 }
 
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()

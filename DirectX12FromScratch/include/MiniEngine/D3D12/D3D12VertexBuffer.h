@@ -14,7 +14,7 @@ namespace MiniEngine
         D3D12VertexBuffer(D3D12RenderSystem &system);
         ~D3D12VertexBuffer();
         
-        bool                        init(GraphicPipeline &pipeline, unsigned int size, void *vertexData);
+        bool                        init(unsigned int size, void *vertexData);
 
         ID3D12Resource              *getBuffer();
 

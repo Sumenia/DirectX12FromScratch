@@ -21,10 +21,10 @@ namespace MiniEngine
 		D3D12RenderableModel();
 		~D3D12RenderableModel();
 
-		virtual bool        loadObjFromFile(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline, const std::string &file);
+		virtual bool        loadFromFile(D3D12RenderSystem &system, const std::string &file);
 
-		bool                initVertexBuffer(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline);
-		bool                initIndexBuffer(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline);
+		bool                initVertexBuffer(D3D12RenderSystem &system);
+		bool                initIndexBuffer(D3D12RenderSystem &system);
 
 		bool                render(Camera &camera, CommandList &commandList);
 

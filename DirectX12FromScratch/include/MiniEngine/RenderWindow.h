@@ -9,7 +9,7 @@ namespace MiniEngine
     {
     public:
         RenderWindow(RenderSystem &system, Window *window);
-        ~RenderWindow();
+        virtual ~RenderWindow();
 
         Viewport            *getDefaultViewport();
 

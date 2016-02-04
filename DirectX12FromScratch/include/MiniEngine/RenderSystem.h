@@ -29,7 +29,7 @@ namespace MiniEngine
         virtual RenderWindow        *createRenderWindow(Window *window) = 0;
         virtual HLSLShader          *createHLSLShader(std::string const &filename, std::string const &entry) = 0;
 
-		virtual RenderableModel     *loadModel(GraphicPipeline &pipeline, std::string const &filename) = 0;
+		virtual RenderableModel     *loadModel(std::string const &filename) = 0;
 
         bool                        render();
 

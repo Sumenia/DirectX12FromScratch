@@ -21,7 +21,7 @@ D3D12VertexBuffer::~D3D12VertexBuffer()
     _bufferUpload = nullptr;
 }
 
-bool D3D12VertexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void *vertexData)
+bool D3D12VertexBuffer::init(unsigned int size, void *vertexData)
 {
     HRESULT                 result;
 
@@ -31,7 +31,7 @@ bool D3D12VertexBuffer::init(GraphicPipeline &pipeline, unsigned int size, void 
     CD3DX12_RESOURCE_DESC   vertexBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(size);
     D3D12_SUBRESOURCE_DATA  vertexDataDesc = {};
 
-    std::shared_ptr<D3D12CommandList>   commandList(_system.getCommandQueue()->createCommandList(nullptr, pipeline));
+    std::shared_ptr<D3D12CommandList>   commandList(_system.getCommandQueue()->createCommandList(nullptr));
 
     if (!commandList->init())
         return (false);

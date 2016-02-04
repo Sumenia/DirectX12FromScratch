@@ -16,7 +16,7 @@ namespace MiniEngine
         D3D12CommandQueue(D3D12RenderSystem &system);
         ~D3D12CommandQueue();
 
-        D3D12CommandList        *createCommandList(RenderTarget *target, GraphicPipeline &pipeline);
+        D3D12CommandList        *createCommandList(RenderTarget *target);
 
         bool                    wait(Fence &fence);
         bool                    wait(D3D12Fence &fence);

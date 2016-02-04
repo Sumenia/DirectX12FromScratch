@@ -71,6 +71,9 @@ bool D3D12RenderWindow::render()
 
     _commandList->getNative()->RSSetScissorRects(1, &scissorRect);
 
+    // Set pipeline state
+    _commandList->setPipeline(*_pipeline);
+
     // Set a ressource barrier
 	CD3DX12_RESOURCE_BARRIER renderTargetResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_rtvs[_frameIdx], D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
     _commandList->getNative()->ResourceBarrier(1, &renderTargetResourceBarrier);
@@ -249,7 +252,7 @@ bool D3D12RenderWindow::initDsv()
 
 bool D3D12RenderWindow::initCommandList()
 {
-    _commandList = _system.getCommandQueue()->createCommandList(this, *_pipeline);
+    _commandList = _system.getCommandQueue()->createCommandList(this);
     return (_commandList->init());
 }
 

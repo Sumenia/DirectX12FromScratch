@@ -21,15 +21,15 @@ D3D12RenderableModel::~D3D12RenderableModel()
 	_indexBuffer = nullptr;
 }
 
-bool D3D12RenderableModel::loadObjFromFile(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline, const std::string &file)
+bool D3D12RenderableModel::loadFromFile(D3D12RenderSystem &system, const std::string &file)
 {
 	if (!Model::loadFromFile(file))
 		return (false);
 
-	return (initVertexBuffer(system, pipeline) && initIndexBuffer(system, pipeline));
+	return (initVertexBuffer(system) && initIndexBuffer(system));
 }
 
-bool D3D12RenderableModel::initVertexBuffer(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline)
+bool D3D12RenderableModel::initVertexBuffer(D3D12RenderSystem &system)
 {
     unsigned int    i = 0;
 	unsigned int    size = getVertexsSize();
@@ -51,10 +51,10 @@ bool D3D12RenderableModel::initVertexBuffer(D3D12RenderSystem &system, D3D12Grap
 	}
 	
 	_vertexBuffer = new D3D12VertexBuffer(system);
-	return (_vertexBuffer->init(pipeline, sizeof(D3D12Vertex) * size, _vertexData));
+	return (_vertexBuffer->init(sizeof(D3D12Vertex) * size, _vertexData));
 }
 
-bool D3D12RenderableModel::initIndexBuffer(D3D12RenderSystem &system, D3D12GraphicPipeline &pipeline)
+bool D3D12RenderableModel::initIndexBuffer(D3D12RenderSystem &system)
 {
     unsigned int    i = 0;
 	unsigned int    size = getIndicesSize();
@@ -70,7 +70,7 @@ bool D3D12RenderableModel::initIndexBuffer(D3D12RenderSystem &system, D3D12Graph
 	}
 
 	_indexBuffer = new D3D12IndexBuffer(system);
-	return (_indexBuffer->init(pipeline, sizeof(unsigned int) * size, _indexData));
+	return (_indexBuffer->init(sizeof(unsigned int) * size, _indexData));
 }
 
 bool D3D12RenderableModel::render(Camera &camera, CommandList &commandList)
