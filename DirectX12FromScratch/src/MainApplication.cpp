@@ -28,10 +28,10 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             renderTarget->setClearColor(clearColor);
 
             // Compile shader
-            if (!vertexShader->compileFromFile(MiniEngine::Shader::VERTEX, "./Assets/shaders/shaders.hlsl", "VSMain"))
+            if (!vertexShader->compileFromFile(MiniEngine::Shader::VERTEX, "./Assets/shaders/vs.hlsl", "VSMain"))
                 std::cout << "Can't compile Vertex shader" << std::endl;
 
-            if (!pixelShader->compileFromFile(MiniEngine::Shader::PIXEL, "./Assets/shaders/shaders.hlsl", "PSMain"))
+            if (!pixelShader->compileFromFile(MiniEngine::Shader::PIXEL, "./Assets/shaders/ps.hlsl", "PSMain"))
                 std::cout << "Can't compile Pixel shader" << std::endl;
 
             // Create pipeline
