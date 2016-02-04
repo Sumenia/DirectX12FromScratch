@@ -341,6 +341,32 @@ public:
 		return (T)std::sqrt(x * x + y * y);
 	}
 
+	Vector2<T> toPolar()
+	{
+		T w;
+		if (x > 0)
+		{
+			if (y >= 0)
+				w = atan2(y, x);
+			else
+				w = atan2(y, x) + 2 * M_PI;
+		}
+		else if (x < 0)
+			w = atan2(y, x) + M_PI;
+		else if (y > 0)
+			w = M_PI_2;
+		else
+			w = 3 * M_PI_2;
+		Vector2<T> ret = Vector2<T>(sqrt(x * x + y * y), r * sin(w));
+		return ret;
+	}
+
+	static Vector2<T> fromPolar(T r, T w)
+	{
+		Vector2<T> ret = Vector2<T>(r * cos(w), r * sin(w));
+		return ret;
+	}
+
 	/**
 	* Normalize vector
 	*/
@@ -847,6 +873,30 @@ public:
 	T lengthSq() const
 	{
 		return x * x + y * y + z * z;
+	}
+
+	Vector3<T> toCylindrical()
+	{
+		T w;
+		if (x > 0)
+		{
+			if (y >= 0)
+				w = atan2(y, x);
+			else
+				w = atan2(y, x) + 2 * M_PI;
+		}
+		else if (x < 0)
+			w = atan2(y, x) + M_PI;
+		else if (y > 0)
+			w = M_PI_2;
+		else
+			w = 3 * M_PI_2;
+		return Vector3<T>(sqrt(x * x + y * y), r * sin(w), z);
+	}
+
+	static Vector3<T> fromCylindrical(T r, T w, T h)
+	{
+		return Vector3<T>(r * cos(w), r * sin(w), h);
 	}
 
 	/**
