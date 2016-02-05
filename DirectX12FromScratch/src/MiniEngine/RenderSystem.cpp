@@ -54,6 +54,15 @@ Material *RenderSystem::getMaterial(unsigned int id)
     return (nullptr);
 }
 
+void RenderSystem::deleteMaterial(unsigned int id)
+{
+    if (_materials.find(id) != _materials.end())
+    {
+        delete _materials.at(id);
+        _materials.erase(id);
+    }
+}
+
 bool RenderSystem::registerMaterial(Material *material)
 {
     if (_pipelines.find(material->getFlags()) == _pipelines.end())

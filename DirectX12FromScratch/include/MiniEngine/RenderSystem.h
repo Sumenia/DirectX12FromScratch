@@ -35,6 +35,7 @@ namespace MiniEngine
 		virtual RenderableModel             *loadModel(std::string const &filename) = 0;
 
         virtual Material                    *getMaterial(unsigned int id);
+        virtual void                        deleteMaterial(unsigned int id);
         virtual bool                        registerMaterial(Material *material);
         virtual GraphicPipeline             *getGraphicPipeline(DWORD64 type);
 
