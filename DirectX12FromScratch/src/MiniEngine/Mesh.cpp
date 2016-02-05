@@ -60,9 +60,7 @@ bool Mesh::loadFromAssimp(aiMesh *mesh) {
 	{
 		auto &&face = mesh->mFaces[j];
 		for (int k = 0; k < 3; k++)
-		{
 			indices.push_back(face.mIndices[k]);
-		}
 	}
 
 	return true;

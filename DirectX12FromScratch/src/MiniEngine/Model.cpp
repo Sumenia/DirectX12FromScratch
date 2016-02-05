@@ -28,6 +28,12 @@ bool			Model::loadFromFile(const std::string &file)
 		aiProcess_FixInfacingNormals |
 		aiProcess_GenUVCoords |
 		aiProcess_FlipWindingOrder |
+        aiProcess_ValidateDataStructure |
+        aiProcess_ImproveCacheLocality |
+        aiProcess_RemoveRedundantMaterials |
+        aiProcess_FindDegenerates |
+        aiProcess_FindInvalidData |
+        aiProcess_OptimizeMeshes |
 		aiProcess_GenSmoothNormals);
 
 	if (!scene)
