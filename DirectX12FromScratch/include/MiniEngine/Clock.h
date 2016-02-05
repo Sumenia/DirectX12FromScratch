@@ -1,30 +1,21 @@
 #pragma once
 
-#include <chrono>
+#include "MiniEngine/Time.h"
 
 namespace MiniEngine
 {
 
-	typedef std::chrono::system_clock::time_point t_time_point;
-//	typedef std::chrono::system_clock::duration t_duration;
-
 	class Clock
 	{
 	private:
-		t_time_point	_oldTime;
+		Time _startTime;
 
 	public:
 		Clock();
 		Clock(Clock &);
 		~Clock();
-		Clock & operator=(Clock &);
 
-		t_time_point	getOldTime() const;
-
-		void	update();
-		float	getElapsed();
-//		long long	getTimeAsSeconds() const;
-//		float	getTimeAsMilliseconds() const;
-//		float	getTimeAsMicroseconds() const;
+		Time getElapsedTime();
+		void reset();
 	};
 }

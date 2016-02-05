@@ -65,6 +65,8 @@
     <ClInclude Include="include\MiniEngine\SceneManager.h" />
     <ClInclude Include="include\MiniEngine\SceneNode.h" />
     <ClInclude Include="include\MiniEngine\Shader.h" />
+    <ClInclude Include="include\MiniEngine\SysClock.h" />
+    <ClInclude Include="include\MiniEngine\Time.h" />
     <ClInclude Include="include\MiniEngine\Viewport.h" />
     <ClInclude Include="include\Mouse.h" />
     <ClInclude Include="include\Window.h" />
@@ -110,6 +112,8 @@
     <ClCompile Include="src\MiniEngine\SceneNode.cpp" />
     <ClCompile Include="src\MiniEngine\Shader.cpp" />
     <ClCompile Include="src\MiniEngine\CommandList.cpp" />
+    <ClCompile Include="src\MiniEngine\SysClock.cpp" />
+    <ClCompile Include="src\MiniEngine\Time.cpp" />
     <ClCompile Include="src\MiniEngine\Viewport.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
   </ItemGroup>
