@@ -5,7 +5,7 @@
 
 using namespace MiniEngine;
 
-Model::Model() : _materialId(0), _isLoaded(false)
+Model::Model() : _isLoaded(false)
 {}
 
 Model::~Model()

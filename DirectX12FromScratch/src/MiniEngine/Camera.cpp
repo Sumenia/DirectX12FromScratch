@@ -33,6 +33,9 @@ bool Camera::render(CommandList &commandList)
         }
     }
 
+    if (!commandList.bindCameraCBV(*_cameraConstantBuffer))
+        return (false);
+
     return (_manager.render(*this, commandList));
 }
 

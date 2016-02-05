@@ -79,6 +79,9 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
             }
         }
 
+        if (!commandList.bindModelCBV(*_modelConstantBuffer))
+            return (false);
+
         if (!object->render(camera, commandList))
             return (false);
     }

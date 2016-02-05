@@ -29,5 +29,8 @@ namespace MiniEngine
 		std::vector<unsigned int>       indices;
 
         unsigned int                    offset;
+        unsigned int                    idxOffset;
+
+        unsigned int                    materialId;
 	};
 }

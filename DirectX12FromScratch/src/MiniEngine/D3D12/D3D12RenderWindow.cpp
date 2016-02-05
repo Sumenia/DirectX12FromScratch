@@ -59,6 +59,9 @@ bool D3D12RenderWindow::render()
     if (!_commandList->reset())
         return (false);
 
+    // Bind default material
+    _commandList->bindMaterial(0);
+
     // Set necessary state
     D3D12_RECT      scissorRect;
 

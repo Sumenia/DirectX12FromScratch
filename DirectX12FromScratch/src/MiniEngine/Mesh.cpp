@@ -14,7 +14,7 @@ bool Vertex::operator==(const Vertex& toCompare) const {
 		toCompare.vertice.z == vertice.z);
 }
 
-Mesh::Mesh() : offset(0)
+Mesh::Mesh() : offset(0), idxOffset(0), materialId(0)
 {}
 
 Mesh::~Mesh()

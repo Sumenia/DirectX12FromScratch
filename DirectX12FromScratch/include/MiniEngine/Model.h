@@ -18,7 +18,6 @@ namespace MiniEngine
 		const std::list<std::shared_ptr<Mesh> > &getMeshs();
 
 	protected:
-        unsigned int                        _materialId;
 		std::list<std::shared_ptr<Mesh> >	_meshs;
 		bool                                _isLoaded;
 	};

@@ -65,6 +65,8 @@ bool D3D12RenderableModel::initIndexBuffer(D3D12RenderSystem &system)
 	{
 		auto &&indices = mesh->indices;
 
+        mesh->idxOffset = i;
+
 		for (unsigned int k = 0; k < indices.size(); k++, i++)
 			_indexData[i] = indices[k] + mesh->offset;
 	}
@@ -80,12 +82,6 @@ bool D3D12RenderableModel::render(Camera &camera, CommandList &commandList)
 
 	D3D12CommandList            &d3d12CommandList = dynamic_cast<D3D12CommandList&>(commandList);
 
-    if (!commandList.bindMaterial(_materialId))
-        return (false);
-
-    if (!commandList.bindCameraCBV(*(camera.getCBV())) || !commandList.bindModelCBV(*(_parent->getCBV())))
-        return (false);
-
 	vertexView.BufferLocation = _vertexBuffer->getBuffer()->GetGPUVirtualAddress();
 	vertexView.StrideInBytes = sizeof(D3D12Vertex);
 	vertexView.SizeInBytes = sizeof(D3D12Vertex) * getVertexsSize();
@@ -94,10 +90,17 @@ bool D3D12RenderableModel::render(Camera &camera, CommandList &commandList)
 	indexView.SizeInBytes = sizeof(unsigned int) * getIndicesSize();
 	indexView.Format = DXGI_FORMAT_R32_UINT;
 
-	d3d12CommandList.getNative()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	d3d12CommandList.getNative()->IASetVertexBuffers(0, 1, &vertexView);
-	d3d12CommandList.getNative()->IASetIndexBuffer(&indexView);
-	d3d12CommandList.getNative()->DrawIndexedInstanced(getIndicesSize(), 1, 0, 0, 0);
+    d3d12CommandList.getNative()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    d3d12CommandList.getNative()->IASetVertexBuffers(0, 1, &vertexView);
+    d3d12CommandList.getNative()->IASetIndexBuffer(&indexView);
+
+    for (auto &&mesh : getMeshs())
+    {
+        if (!commandList.bindMaterial(mesh->materialId))
+            return (false);
+
+        d3d12CommandList.getNative()->DrawIndexedInstanced(mesh->indices.size(), 1, mesh->idxOffset, 0, 0);
+    }
 
 	return (true);
 }
