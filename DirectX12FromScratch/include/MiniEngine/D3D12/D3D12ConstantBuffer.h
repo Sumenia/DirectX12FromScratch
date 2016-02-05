@@ -22,7 +22,7 @@ namespace MiniEngine
         bool                update(unsigned int size, void *data);
         bool                bind(CommandList &commandList, unsigned int rootIdx);
 
-        bool                updateCameraMatrix(Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights);
+        bool                updateCameraMatrix(Vector3f const &position, Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights);
         bool                updateModelMatrix(Matrix4f const &model);
         bool                updateLights(std::list<Light*> &lights);
 

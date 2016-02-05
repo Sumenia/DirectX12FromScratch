@@ -19,3 +19,12 @@ float3 getMaterialColor(float3 normal)
     // TO-DO: RETURN TEXTURE
 #endif
 }
+
+float3 getMaterialNormal(float3 normal)
+{
+#if NORMAL_MAP
+    // TO-DO: Use normal map
+#else
+    return (normal);
+#endif
+}

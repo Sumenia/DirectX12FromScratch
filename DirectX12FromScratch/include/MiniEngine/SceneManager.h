@@ -21,7 +21,7 @@ namespace MiniEngine
         virtual SceneNode   *getRootNode();
 
         virtual Camera      *createCamera(SceneNode *node = nullptr);
-        virtual Light       *createLight(SceneNode *node = nullptr);
+        virtual Light       *createLight(SceneNode *node = nullptr); // TO-DO: Take a type of light as parameter and create the good type
         virtual void        removeLight(Light *light);
         virtual void        updateLightBuffer();
         std::list<Light*> const     getLights() const;

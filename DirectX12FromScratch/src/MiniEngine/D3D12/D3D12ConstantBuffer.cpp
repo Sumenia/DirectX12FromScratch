@@ -122,17 +122,16 @@ bool D3D12ConstantBuffer::bind(CommandList &commandList, unsigned int rootIdx)
     return (true);
 }
 
-bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights)
+bool D3D12ConstantBuffer::updateCameraMatrix(Vector3f const &position, Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights)
 {
-#pragma pack(push)
-#pragma pack(4)
     struct  CameraMatrix
     {
+        DirectX::XMFLOAT3   position;
+        float               pad1[1];
         DirectX::XMFLOAT4X4 view;
         DirectX::XMFLOAT4X4 projection;
         unsigned int        nb_lights;
     }       camera;
-#pragma pack(pop)
 
     for (unsigned int x = 0; x < 4; x++)
         for (unsigned int y = 0; y < 4; y++)
@@ -142,6 +141,7 @@ bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f cons
         for (unsigned int y = 0; y < 4; y++)
             camera.projection.m[x][y] = projection(x + 1, y + 1);
 
+    camera.position = {};
     camera.nb_lights = nb_lights;
 
     return (update(sizeof(camera), &camera));
@@ -149,14 +149,11 @@ bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f cons
 
 bool D3D12ConstantBuffer::updateModelMatrix(Matrix4f const &data)
 {
-#pragma pack(push)
-#pragma pack(4)
     struct  ModelMatrix
     {
         DirectX::XMFLOAT4X4 model;
         DirectX::XMFLOAT4X4 modelNormal;
     }       model;
-#pragma pack(pop)
 
     Matrix4f    modelNormal = data.inverse().transpose();
 
@@ -198,7 +195,21 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
 
     LightStructure  lightsData[MAX_LIGHTS];
 
-    // TO-DO: Update lightsData
+    // TO-DO: Pass all parameters for lights
+    unsigned int i = 0;
+    for (auto &&light : lights)
+    {
+        Vector3f    position = light->getParent()->getDerivedPosition();
+        //Vector4f    direction(light->getDirection().x, light->getDirection().y, light->getDirection().z, 0.0f);
+
+        lightsData[i].type = light->getType();
+        lightsData[i].position = { position.x, position.y, position.z };
+        lightsData[i].ambient = { light->getAmbient().x, light->getAmbient().y, light->getAmbient().z };
+        lightsData[i].diffuse = { light->getDiffuse().x, light->getDiffuse().y, light->getDiffuse().z };
+        lightsData[i].specular = { light->getSpecular().x, light->getSpecular().y, light->getSpecular().z };
+
+        i++;
+    }
 
     return (update(sizeof(lightsData), &lightsData));
 }

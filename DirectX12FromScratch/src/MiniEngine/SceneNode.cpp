@@ -125,7 +125,7 @@ Matrix4f &SceneNode::getTransformationMatrix()
     return (_transform);
 }
 
-void MiniEngine::SceneNode::rotate(float w, Vector3f &v, TransformSpace space)
+void MiniEngine::SceneNode::rotate(float w, Vector3f const &v, TransformSpace space)
 {
 	Quatf q = Quatf::fromAxisRot(v, w);
     q.normalize();
@@ -140,7 +140,7 @@ void MiniEngine::SceneNode::rotate(float w, Vector3f &v, TransformSpace space)
 	needUpdate();
 }
 
-void MiniEngine::SceneNode::translate(Vector3f &v, TransformSpace space)
+void MiniEngine::SceneNode::translate(Vector3f const &v, TransformSpace space)
 {
     if (space == TS_LOCAL)
         _position += _rotation.transform() * v;
@@ -157,7 +157,7 @@ void MiniEngine::SceneNode::translate(Vector3f &v, TransformSpace space)
     needUpdate();
 }
 
-void MiniEngine::SceneNode::scale(Vector3f &v)
+void MiniEngine::SceneNode::scale(Vector3f const &v)
 {
     _scaling *= v;
     needUpdate();

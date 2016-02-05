@@ -120,6 +120,7 @@
   <ItemGroup>
     <FxCompile Include="Assets\shaders\camera.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <DeploymentContent>false</DeploymentContent>
     </FxCompile>
     <FxCompile Include="Assets\shaders\lights.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -138,6 +139,7 @@
     </FxCompile>
     <FxCompile Include="Assets\shaders\vs.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <DeploymentContent>false</DeploymentContent>
     </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">

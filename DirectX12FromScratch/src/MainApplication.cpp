@@ -30,9 +30,17 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             {
                 _camera = _sceneManager->createCamera();
 
-                _camera->lookAt({ 0.0f, 150.7f, 1.5f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+                _camera->lookAt({ 80.0f, 120.0f, 20.0f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
 
                 renderTarget->getDefaultViewport()->attachCamera(_camera);
+
+                MiniEngine::Light   *light = _sceneManager->createLight();
+
+                light->setAmbient({0.05f, 0.05f, 0.05f});
+                light->setDiffuse({ 0.5f, 0.5f, 0.5f });
+                light->setSpecular({ 1.0f, 1.0f, 1.0f });
+
+                light->getParent()->translate({ -150.0f, -150.0f, 150.0f }, MiniEngine::TS_WORLD);
 
                 // Load a cube
                 _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));

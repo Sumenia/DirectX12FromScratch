@@ -14,8 +14,8 @@ namespace MiniEngine
     public:
         enum Type : unsigned int
         {
-            DIRECTIONAL = 0,
-            POINT = 1,
+            POINT = 0,
+            DIRECTIONAL = 1,
             SPOT = 2,
         };
 
@@ -24,6 +24,17 @@ namespace MiniEngine
         virtual ~Light();
 
         virtual void    needUpdate();
+
+        Type            getType();
+
+        Vector3f        &getAmbient();
+        void            setAmbient(Vector3f const &ambient);
+
+        Vector3f        &getDiffuse();
+        void            setDiffuse(Vector3f const &diffuse);
+
+        Vector3f        &getSpecular();
+        void            setSpecular(Vector3f const &specular);
 
     protected:
         SceneManager    &_manager;

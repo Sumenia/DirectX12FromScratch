@@ -26,7 +26,7 @@ bool Camera::render(CommandList &commandList)
 
     if (!_cameraConstantBuffer)
     {
-        _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 64 + 4, commandList.getRenderTarget().getFrameCount());
+        _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(16 + 64 + 64 + 4, commandList.getRenderTarget().getFrameCount());
         update();
 
         if (!_cameraConstantBuffer)
@@ -89,7 +89,7 @@ void Camera::update()
     _nbLights = _manager.getLights().size();
 
     if (_cameraConstantBuffer)
-        if (!_cameraConstantBuffer->updateCameraMatrix(getTransformationMatrix().inverse(), _projection, _nbLights))
+        if (!_cameraConstantBuffer->updateCameraMatrix(getDerivedPosition(), getTransformationMatrix().inverse(), _projection, _nbLights))
         {
             delete _cameraConstantBuffer;
             _cameraConstantBuffer = nullptr;

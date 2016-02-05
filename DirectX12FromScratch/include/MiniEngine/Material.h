@@ -8,6 +8,7 @@ namespace MiniEngine
 {
     class CommandList;
 
+    // TO-DO: Add flags and behaviours to this class and the associated shader
     class Material
     {
     public:

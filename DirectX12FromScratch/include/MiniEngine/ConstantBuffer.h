@@ -17,7 +17,7 @@ namespace MiniEngine
         virtual bool    update(unsigned int size, void *data) = 0;
         virtual bool    bind(CommandList &commandList, unsigned int rootIdx) = 0;
 
-        virtual bool    updateCameraMatrix(Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights) = 0;
+        virtual bool    updateCameraMatrix(Vector3f const &position, Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights) = 0;
         virtual bool    updateModelMatrix(Matrix4f const &model) = 0;
         virtual bool    updateLights(std::list<Light*> &lights) = 0;
 
