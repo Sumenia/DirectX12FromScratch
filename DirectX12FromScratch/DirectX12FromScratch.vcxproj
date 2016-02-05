@@ -38,6 +38,7 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12GraphicPipeline.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12HLSLShader.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12IndexBuffer.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Material.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableModel.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderTarget.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="include\MiniEngine\GraphicPipeline.h" />
     <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
     <ClInclude Include="include\MiniEngine\HLSLShader.h" />
+    <ClInclude Include="include\MiniEngine\Material.h" />
     <ClInclude Include="include\MiniEngine\Matrix.h" />
     <ClInclude Include="include\MiniEngine\Mesh.h" />
     <ClInclude Include="include\MiniEngine\Model.h" />
@@ -86,6 +88,7 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12GraphicPipeline.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12HLSLShader.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12IndexBuffer.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Material.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableModel.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderTarget.cpp" />
@@ -96,6 +99,7 @@
     <ClCompile Include="src\MiniEngine\Fence.cpp" />
     <ClCompile Include="src\MiniEngine\GraphicPipeline.cpp" />
     <ClCompile Include="src\MiniEngine\HLSLShader.cpp" />
+    <ClCompile Include="src\MiniEngine\Material.cpp" />
     <ClCompile Include="src\MiniEngine\Mesh.cpp" />
     <ClCompile Include="src\MiniEngine\Model.cpp" />
     <ClCompile Include="src\MiniEngine\MovableObject.cpp" />
@@ -110,6 +114,26 @@
     <ClCompile Include="src\MiniEngine\CommandList.cpp" />
     <ClCompile Include="src\MiniEngine\Viewport.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\shaders\camera.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Assets\shaders\material.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Assets\shaders\model.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Assets\shaders\ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Assets\shaders\psinput.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Assets\shaders\vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CD1E3FAC-98C1-4172-8CEB-B41CAB92CCC6}</ProjectGuid>

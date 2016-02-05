@@ -17,6 +17,7 @@ namespace MiniEngine
 
 		bool                init(unsigned int size, unsigned int nb = D3D12RenderWindow::FrameCount);
         bool                initRessources(unsigned int size, unsigned int nb);
+        bool                initData(unsigned int size);
 
         bool                update(unsigned int size, void *data);
         bool                bind(CommandList &commandList, unsigned int rootIdx);
@@ -35,25 +36,6 @@ namespace MiniEngine
         unsigned int        _size;
 
         unsigned int        _idx;
-
-    protected:
-        struct              CameraMatrix
-        {
-            DirectX::XMFLOAT4X4 view;
-            DirectX::XMFLOAT4X4 projection;
-        }                   _camera;
-
-        struct              ModelMatrix
-        {
-            DirectX::XMFLOAT4X4 model;
-            DirectX::XMFLOAT4X4 modelNormal;
-        }                   _model;
-
-        enum Type
-        {
-            NONE,
-            CAMERA,
-            MODEL
-        }                   _type;
+        void                *_data;
 	};
 };

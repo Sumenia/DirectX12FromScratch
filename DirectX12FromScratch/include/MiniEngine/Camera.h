@@ -23,6 +23,8 @@ namespace MiniEngine
 
         void            updateProjectionMatrix();
 
+        ConstantBuffer  *getCBV();
+
     protected:
         virtual void    update();
 

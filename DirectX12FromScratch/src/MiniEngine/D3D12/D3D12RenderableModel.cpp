@@ -80,6 +80,12 @@ bool D3D12RenderableModel::render(Camera &camera, CommandList &commandList)
 
 	D3D12CommandList            &d3d12CommandList = dynamic_cast<D3D12CommandList&>(commandList);
 
+    if (!commandList.bindMaterial(_materialId))
+        return (false);
+
+    if (!commandList.bindCameraCBV(*(camera.getCBV())) || !commandList.bindModelCBV(*(_parent->getCBV())))
+        return (false);
+
 	vertexView.BufferLocation = _vertexBuffer->getBuffer()->GetGPUVirtualAddress();
 	vertexView.StrideInBytes = sizeof(D3D12Vertex);
 	vertexView.SizeInBytes = sizeof(D3D12Vertex) * getVertexsSize();

@@ -6,7 +6,7 @@
 
 using namespace MiniEngine;
 
-D3D12GraphicPipeline::D3D12GraphicPipeline(D3D12RenderSystem &system) : GraphicPipeline(system), _system(system), _pipeline(nullptr)
+D3D12GraphicPipeline::D3D12GraphicPipeline(D3D12RenderSystem &system) : GraphicPipeline(system), _system(system), _pipeline(nullptr), _rootSignature(nullptr)
 {
     ZeroMemory(&_desc, sizeof(_desc));
 
@@ -14,7 +14,6 @@ D3D12GraphicPipeline::D3D12GraphicPipeline(D3D12RenderSystem &system) : GraphicP
     _desc.SampleMask = UINT_MAX;
     _desc.SampleDesc.Count = 1;
     _desc.InputLayout.NumElements = 0;
-    _desc.pRootSignature = _system.getRootSignature()->getNative();
     _desc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
     _desc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 	_desc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
@@ -30,6 +29,19 @@ D3D12GraphicPipeline::~D3D12GraphicPipeline()
         _pipeline->Release();
 
     _pipeline = nullptr;
+
+    delete _rootSignature;
+    _rootSignature = nullptr;
+}
+
+void D3D12GraphicPipeline::setRootSignature(D3D12RootSignature *rootSignature)
+{
+    _rootSignature = rootSignature;
+}
+
+D3D12RootSignature *D3D12GraphicPipeline::getRootSignature()
+{
+    return (_rootSignature);
 }
 
 void D3D12GraphicPipeline::setInputs(unsigned int nb, const void *inputs)
@@ -78,6 +90,10 @@ bool D3D12GraphicPipeline::finalize()
 {
     HRESULT result;
 
+    if (!_rootSignature)
+        return (false);
+
+    _desc.pRootSignature = _rootSignature->getNative();
     _desc.InputLayout.pInputElementDescs = _inputs.get();
     
     result = _system.getDevice()->getNative()->CreateGraphicsPipelineState(&_desc, __uuidof(ID3D12PipelineState), (void**)&_pipeline);

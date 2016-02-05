@@ -25,11 +25,16 @@ struct CD3D12_SHADER_BYTECODE : public D3D12_SHADER_BYTECODE
 
 namespace MiniEngine
 {
+    class D3D12RootSignature;
+
     class D3D12GraphicPipeline : public GraphicPipeline
     {
     public:
         D3D12GraphicPipeline(D3D12RenderSystem &system);
         ~D3D12GraphicPipeline();
+
+        void                                    setRootSignature(D3D12RootSignature *rootSignature);
+        D3D12RootSignature                      *getRootSignature();
 
         void                                    setInputs(unsigned int nb, const void *inputs);
         void                                    setInputs(unsigned int nb, const HLSLShader::Input *inputs);
@@ -45,6 +50,7 @@ namespace MiniEngine
         D3D12RenderSystem                       &_system;
         D3D12_GRAPHICS_PIPELINE_STATE_DESC      _desc;
         ID3D12PipelineState                     *_pipeline;
+        D3D12RootSignature                      *_rootSignature;
         std::shared_ptr<const D3D12_INPUT_ELEMENT_DESC>    _inputs;
     };
 }

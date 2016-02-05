@@ -1,6 +1,7 @@
 #include "camera.hlsl"
 #include "model.hlsl"
 #include "psinput.hlsl"
+#include "material.hlsl"
 
 PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
 {
@@ -15,7 +16,7 @@ PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
     worldPosition = mul(worldPosition, camera.projection);
 
 	result.position = worldPosition;
-	result.color = float4(abs(normal.x), abs(normal.y), abs(normal.z), 1.0f);
+    result.color = float4(getMaterialColor(normal), 1.0f);
 
 	return result;
 }

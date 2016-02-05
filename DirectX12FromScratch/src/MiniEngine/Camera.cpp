@@ -25,16 +25,13 @@ bool Camera::render(CommandList &commandList)
     {
         _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 64, commandList.getRenderTarget().getFrameCount());
         update();
-    }
 
-    if (!_cameraConstantBuffer)
-    {
-        std::cout << "Can't create constant buffer for this camera" << std::endl;
-        return (false);
+        if (!_cameraConstantBuffer)
+        {
+            std::cout << "Can't create constant buffer for this camera" << std::endl;
+            return (false);
+        }
     }
-
-    if (!commandList.bindCameraCBV(*_cameraConstantBuffer))
-        return (false);
 
     return (_manager.render(*this, commandList));
 }
@@ -89,4 +86,9 @@ void Camera::update()
             delete _cameraConstantBuffer;
             _cameraConstantBuffer = nullptr;
         }
+}
+
+ConstantBuffer *Camera::getCBV()
+{
+    return (_cameraConstantBuffer);
 }

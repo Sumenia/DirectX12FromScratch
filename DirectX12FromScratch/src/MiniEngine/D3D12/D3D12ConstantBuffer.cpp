@@ -4,7 +4,7 @@
 
 using namespace MiniEngine;
 
-D3D12ConstantBuffer::D3D12ConstantBuffer(D3D12RenderSystem &system) : ConstantBuffer(system), _system(system), _constantBuffer(nullptr), _nb(0), _size(0), _idx(0), _type(NONE)
+D3D12ConstantBuffer::D3D12ConstantBuffer(D3D12RenderSystem &system) : ConstantBuffer(system), _system(system), _constantBuffer(nullptr), _nb(0), _size(0), _idx(0), _data(nullptr)
 {
     for (auto &&needUpdate : _needUpdate)
         needUpdate = false;
@@ -12,6 +12,9 @@ D3D12ConstantBuffer::D3D12ConstantBuffer(D3D12RenderSystem &system) : ConstantBu
 
 D3D12ConstantBuffer::~D3D12ConstantBuffer()
 {
+    delete _data;
+    _data = nullptr;
+
     if (_constantBuffer)
         for (unsigned int i = 0; i < _nb; i++)
             if (_constantBuffer[i])
@@ -31,6 +34,7 @@ bool D3D12ConstantBuffer::init(unsigned int size, unsigned int nb)
 
     return (
         initRessources(size, nb)
+        && initData(size)
     );
 }
 
@@ -64,11 +68,23 @@ bool D3D12ConstantBuffer::initRessources(unsigned int size, unsigned int nb)
     return (true);
 }
 
+bool D3D12ConstantBuffer::initData(unsigned int size)
+{
+    _data = new char[size];
+    return (!!_data);
+}
+
 bool D3D12ConstantBuffer::update(unsigned int size, void *data)
 {
     CD3DX12_RANGE   readRange(0, 0);
     UINT8           *mappedMemory = nullptr;
     HRESULT         result;
+
+    if (size > _size)
+        return (false);
+
+    if (data != _data)
+        memcpy(_data, data, size);
 
     result = _constantBuffer[_idx]->Map(0, &readRange, reinterpret_cast<void**>(&mappedMemory));
 
@@ -93,17 +109,9 @@ bool D3D12ConstantBuffer::bind(CommandList &commandList, unsigned int rootIdx)
     if (_needUpdate[_idx])
     {
         _needUpdate[_idx] = false;
-
-        if (_type == CAMERA)
-        {
-            if (!update(sizeof(_camera), &_camera))
-                return (false);
-        }
-        else if (_type == MODEL)
-        {
-            if (!update(sizeof(_model), &_model))
-                return (false);
-        }
+        
+        if (!update(_size, _data))
+            return (false);
     }
 
     dynamic_cast<D3D12CommandList&>(commandList).getNative()->SetGraphicsRootConstantBufferView(rootIdx, _constantBuffer[_idx]->GetGPUVirtualAddress());
@@ -115,34 +123,42 @@ bool D3D12ConstantBuffer::bind(CommandList &commandList, unsigned int rootIdx)
 
 bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f const &projection)
 {
-    for (unsigned int x = 0; x < 4; x++)
-        for (unsigned int y = 0; y < 4; y++)
-            _camera.view.m[x][y] = view(x + 1, y + 1);
+    struct              CameraMatrix
+    {
+        DirectX::XMFLOAT4X4 view;
+        DirectX::XMFLOAT4X4 projection;
+    }                   camera;
 
     for (unsigned int x = 0; x < 4; x++)
         for (unsigned int y = 0; y < 4; y++)
-            _camera.projection.m[x][y] = projection(x + 1, y + 1);
+            camera.view.m[x][y] = view(x + 1, y + 1);
 
-    _type = CAMERA;
-    return (update(sizeof(_camera), &_camera));
+    for (unsigned int x = 0; x < 4; x++)
+        for (unsigned int y = 0; y < 4; y++)
+            camera.projection.m[x][y] = projection(x + 1, y + 1);
+
+    return (update(sizeof(camera), &camera));
 }
 
-bool D3D12ConstantBuffer::updateModelMatrix(Matrix4f const &model)
+bool D3D12ConstantBuffer::updateModelMatrix(Matrix4f const &data)
 {
-    Matrix4f    modelNormal = model.inverse().transpose();
+    struct              ModelMatrix
+    {
+        DirectX::XMFLOAT4X4 model;
+        DirectX::XMFLOAT4X4 modelNormal;
+    }                   model;
+
+    Matrix4f    modelNormal = data.inverse().transpose();
 
     for (unsigned int x = 0; x < 4; x++)
         for (unsigned int y = 0; y < 4; y++)
-            _model.model.m[x][y] = model(x + 1, y + 1);
+            model.model.m[x][y] = data(x + 1, y + 1);
 
     for (unsigned int x = 0; x < 4; x++)
         for (unsigned int y = 0; y < 4; y++)
-            _model.modelNormal.m[x][y] = modelNormal(x + 1, y + 1);
+            model.modelNormal.m[x][y] = modelNormal(x + 1, y + 1);
 
-    //mat3(transpose(inverse(model))) * normal;
-
-    _type = MODEL;
-    return (update(sizeof(_model), &_model));
+    return (update(sizeof(model), &model));
 }
 
 ID3D12Resource *D3D12ConstantBuffer::getNative()

@@ -46,6 +46,8 @@ namespace MiniEngine
 
         virtual void            needUpdate();
 
+        ConstantBuffer          *getCBV();
+
     protected:
         virtual void            setParent(SceneNode *node);
         virtual void            update();

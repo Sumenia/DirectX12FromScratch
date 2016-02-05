@@ -16,38 +16,12 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
         if (_root->getRenderSystem())
         {
             MiniEngine::RenderWindow        *renderTarget = _root->getRenderSystem()->createRenderWindow(_window);
-            MiniEngine::GraphicPipeline     *pipeline;
-
-            MiniEngine::HLSLShader          *vertexShader = _root->getRenderSystem()->createHLSLShader();
-            MiniEngine::HLSLShader          *pixelShader = _root->getRenderSystem()->createHLSLShader();
 
             // Add render target
             _root->getRenderSystem()->addRenderTarget(renderTarget);
 
             // Change clear color
             renderTarget->setClearColor(clearColor);
-
-            // Compile shader
-            if (!vertexShader->compileFromFile(MiniEngine::Shader::VERTEX, "./Assets/shaders/vs.hlsl", "VSMain"))
-                std::cout << "Can't compile Vertex shader" << std::endl;
-
-            if (!pixelShader->compileFromFile(MiniEngine::Shader::PIXEL, "./Assets/shaders/ps.hlsl", "PSMain"))
-                std::cout << "Can't compile Pixel shader" << std::endl;
-
-            // Create pipeline
-            pipeline = renderTarget->getGraphicPipeline();
-
-            const MiniEngine::HLSLShader::Input    inputs[] = {
-                { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
-                { "NORMAL", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
-            };
-
-            pipeline->setInputs(2, inputs);
-
-            pipeline->addVertexShader(*vertexShader);
-            pipeline->addPixelShader(*pixelShader);
-
-            pipeline->finalize();
 
             // Create Scene
             _sceneManager = _root->createSceneManager(MiniEngine::Root::SceneManagerType::BASIC);
@@ -62,9 +36,6 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
             //_node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
             //_node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
-
-            delete vertexShader;
-            delete pixelShader;
         }
     }
 }

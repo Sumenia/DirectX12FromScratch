@@ -15,10 +15,8 @@ namespace MiniEngine
 		~D3D12RenderTarget();
 
         virtual bool						    init() = 0;
-        D3D12GraphicPipeline                    *getGraphicPipeline();
 
 	protected:
 		D3D12RenderSystem						&_system;
-        D3D12GraphicPipeline                    *_pipeline;
 	};
 }

@@ -23,10 +23,10 @@ bool D3D12RenderSystem::init()
 {
     return (
         initDevice()
-        && initRootSignature()
         && initCommandQueue()
         && initFence()
         && _commandQueue->wait(*_fence)
+        && initDefaultMaterial()
     );
 }
 
@@ -65,10 +65,20 @@ bool D3D12RenderSystem::initFence()
     return (_fence->init());
 }
 
-bool D3D12RenderSystem::initRootSignature()
+bool D3D12RenderSystem::initDefaultMaterial()
 {
-    _rootSignature = new D3D12RootSignature();
-    return (_rootSignature->init(*this));
+    D3D12Material       *material = createMaterial();
+
+    if (!material)
+        return (false);
+
+    if (!material->finalize())
+    {
+        delete material;
+        return (false);
+    }
+
+    return (registerMaterial(material));
 }
 
 IDXGIFactory4 *D3D12RenderSystem::getFactory()
@@ -89,11 +99,6 @@ D3D12CommandQueue *D3D12RenderSystem::getCommandQueue()
 D3D12Fence *D3D12RenderSystem::getFence()
 {
     return (_fence);
-}
-
-D3D12RootSignature *D3D12RenderSystem::getRootSignature()
-{
-    return (_rootSignature);
 }
 
 D3D12ConstantBuffer *D3D12RenderSystem::createConstantBuffer(unsigned int size, unsigned int nb)
@@ -117,6 +122,93 @@ D3D12RenderWindow *D3D12RenderSystem::createRenderWindow(Window *window)
 D3D12HLSLShader *D3D12RenderSystem::createHLSLShader()
 {
     return (new D3D12HLSLShader());
+}
+
+D3D12Material *D3D12RenderSystem::createMaterial()
+{
+    return (new D3D12Material(*this));
+}
+
+D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &material)
+{
+    HLSLShader              *vertexShader = nullptr;
+    HLSLShader              *pixelShader = nullptr;
+
+    D3D12GraphicPipeline    *pipeline = new D3D12GraphicPipeline(*this);
+    
+    // Set root signature (TO-DO: Generate it correctly)
+    {
+        D3D12RootSignature      *rootSignature = new D3D12RootSignature();
+
+        if (!rootSignature->init(*this))
+        {
+            delete rootSignature;
+            delete pipeline;
+
+            return (nullptr);
+        }
+
+        pipeline->setRootSignature(rootSignature);
+    }
+
+    // Set input layouts
+    {
+        const HLSLShader::Input inputs[] = {
+            { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
+            { "NORMAL", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
+        };
+
+        pipeline->setInputs(_countof(inputs), inputs);
+    }
+
+    // Generate vertex shader
+    {
+        vertexShader = createHLSLShader();
+
+        if (!vertexShader->compile(MiniEngine::Shader::VERTEX, material.generateHLSLShader(Shader::VERTEX), "VSMain"))
+        {
+            std::cout << "Can't compile Vertex shader" << std::endl;
+
+            delete vertexShader;
+            delete pipeline;
+
+            return (nullptr);
+        }
+
+        pipeline->addVertexShader(*vertexShader);
+    }
+
+    // Generate pixel shader
+    {
+        pixelShader = createHLSLShader();
+
+        if (!pixelShader->compile(MiniEngine::Shader::PIXEL, material.generateHLSLShader(Shader::PIXEL), "PSMain"))
+        {
+            std::cout << "Can't compile Pixel shader" << std::endl;
+
+            delete vertexShader;
+            delete pixelShader;
+            delete pipeline;
+
+            return (nullptr);
+        }
+
+        pipeline->addPixelShader(*pixelShader);
+    }
+
+    if (!pipeline->finalize())
+    {
+        delete pipeline;
+        delete vertexShader;
+        delete pixelShader;
+
+        return (nullptr);
+    }
+
+    delete vertexShader;
+    delete pixelShader;
+
+    return (pipeline);
 }
 
 D3D12RenderableModel *D3D12RenderSystem::loadModel(std::string const &filename)

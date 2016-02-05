@@ -6,7 +6,10 @@
 using namespace MiniEngine;
 
 SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0)), _needUpdate(true), _modelConstantBuffer(nullptr)
-{}
+{
+    if (_obj)
+        _obj->setParent(this);
+}
 
 SceneNode::~SceneNode()
 {
@@ -68,16 +71,13 @@ bool SceneNode::render(Camera &camera, CommandList &commandList)
         {
             _modelConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 64, commandList.getRenderTarget().getFrameCount());
             update();
-        }
 
-        if (!_modelConstantBuffer)
-        {
-            std::cout << "Can't create constant buffer for this model" << std::endl;
-            return (false);
+            if (!_modelConstantBuffer)
+            {
+                std::cout << "Can't create constant buffer for this model" << std::endl;
+                return (false);
+            }
         }
-
-        if (!commandList.bindModelCBV(*_modelConstantBuffer))
-            return (false);
 
         if (!object->render(camera, commandList))
             return (false);
@@ -200,4 +200,9 @@ void SceneNode::update()
             delete _modelConstantBuffer;
             _modelConstantBuffer = nullptr;
         }
+}
+
+ConstantBuffer *SceneNode::getCBV()
+{
+    return (_modelConstantBuffer);
 }

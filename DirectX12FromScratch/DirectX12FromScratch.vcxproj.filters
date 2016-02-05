@@ -102,9 +102,6 @@
     <ClInclude Include="include\MiniEngine\RenderWindow.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="include\MiniEngine\Vector.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="include\MiniEngine\CommandList.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -163,6 +160,24 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableModel.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Keyboard.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mouse.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vector.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\Material.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Material.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -284,5 +299,22 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableModel.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mouse.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\Material.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Material.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\shaders\ps.hlsl" />
+    <FxCompile Include="Assets\shaders\camera.hlsl" />
+    <FxCompile Include="Assets\shaders\model.hlsl" />
+    <FxCompile Include="Assets\shaders\psinput.hlsl" />
+    <FxCompile Include="Assets\shaders\vs.hlsl" />
+    <FxCompile Include="Assets\shaders\material.hlsl" />
   </ItemGroup>
 </Project>

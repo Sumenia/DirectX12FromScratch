@@ -19,8 +19,6 @@ namespace MiniEngine
         void                    addViewport(Viewport *viewport);
         void                    setClearColor(const float color[4]);
 
-        virtual GraphicPipeline *getGraphicPipeline() = 0;
-
         unsigned int            getFrameIdx();
         unsigned int            getFrameCount();
 

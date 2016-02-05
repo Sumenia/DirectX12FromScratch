@@ -23,6 +23,9 @@ namespace MiniEngine
         bool                        bindCameraCBV(ConstantBuffer &buffer);
         bool                        bindModelCBV(ConstantBuffer &buffer);
 
+        bool                        bindMaterial(Material &material);
+        bool                        bindMaterial(unsigned int id);
+
         void                        setPipeline(GraphicPipeline &pipeline);
 
         ID3D12GraphicsCommandList   *getNative();

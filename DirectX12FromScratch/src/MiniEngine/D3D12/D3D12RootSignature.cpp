@@ -21,13 +21,14 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system)
     ID3DBlob                    *signature = nullptr;
     ID3DBlob                    *error = nullptr;
 
-    CD3DX12_ROOT_PARAMETER      parameters[2];
+    CD3DX12_ROOT_PARAMETER      parameters[3];
     
     parameters[0].InitAsConstantBufferView(0);
     parameters[1].InitAsConstantBufferView(1);
+    parameters[2].InitAsConstantBufferView(2);
 
     CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
-    rootSignatureDesc.Init(2, parameters, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+    rootSignatureDesc.Init(_countof(parameters), parameters, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
     result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error);
 

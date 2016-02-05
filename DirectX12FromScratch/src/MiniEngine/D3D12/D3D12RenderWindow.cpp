@@ -62,17 +62,12 @@ bool D3D12RenderWindow::render()
     // Set necessary state
     D3D12_RECT      scissorRect;
 
-    _commandList->getNative()->SetGraphicsRootSignature(_system.getRootSignature()->getNative());
-
     scissorRect.left = 0;
     scissorRect.top = 0;
     scissorRect.right = static_cast<LONG>(_window->getWidth());
     scissorRect.bottom = static_cast<LONG>(_window->getHeight());
 
     _commandList->getNative()->RSSetScissorRects(1, &scissorRect);
-
-    // Set pipeline state
-    _commandList->setPipeline(*_pipeline);
 
     // Set a ressource barrier
 	CD3DX12_RESOURCE_BARRIER renderTargetResourceBarrier = CD3DX12_RESOURCE_BARRIER::Transition(_rtvs[_frameIdx], D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -105,7 +100,8 @@ bool D3D12RenderWindow::render()
 
         _commandList->getNative()->RSSetViewports(1, &viewportRect);
 
-        viewport->render(*_commandList);
+        if (!viewport->render(*_commandList))
+            return (false);
     }
 
     // Reset viewport

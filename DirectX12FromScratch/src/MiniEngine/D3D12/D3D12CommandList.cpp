@@ -56,11 +56,14 @@ bool D3D12CommandList::reset()
 
     result = _list->Reset(_allocator, nullptr);
 
-    return (!FAILED(result));
+    return (!FAILED(result) && begin());
 }
 
 bool D3D12CommandList::begin()
 {
+    _previousMaterialType = -1;
+    _previousMaterialId = -1;
+
     return (true);
 }
 
@@ -83,8 +86,31 @@ bool D3D12CommandList::bindModelCBV(ConstantBuffer &buffer)
     return (buffer.bind(*this, 1));
 }
 
+bool D3D12CommandList::bindMaterial(unsigned int id)
+{
+    if (_previousMaterialId == id)
+        return (true);
+
+    if (!_system.getMaterial(id))
+        return (false);
+
+    return (bindMaterial(*_system.getMaterial(id)));
+}
+
+bool D3D12CommandList::bindMaterial(Material &material)
+{
+    if (_previousMaterialId == material.getId())
+        return (true);
+
+    if (!setMaterialPipeline(material.getFlags()))
+        return (false);
+
+    return (material.bind(*this, 2));
+}
+
 void D3D12CommandList::setPipeline(GraphicPipeline &pipeline)
 {
+    _list->SetGraphicsRootSignature(dynamic_cast<D3D12GraphicPipeline&>(pipeline).getRootSignature()->getNative());
     _list->SetPipelineState(dynamic_cast<D3D12GraphicPipeline&>(pipeline).getNative());
 }
 
