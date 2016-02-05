@@ -24,6 +24,7 @@ namespace MiniEngine
 
         virtual bool        bindCameraCBV(ConstantBuffer &buffer) = 0;
         virtual bool        bindModelCBV(ConstantBuffer &buffer) = 0;
+        virtual bool        bindLightsCBV(ConstantBuffer &buffer) = 0;
 
         virtual bool        bindMaterial(Material &material) = 0;
         virtual bool        bindMaterial(unsigned int id) = 0;

@@ -7,7 +7,7 @@ struct Material
 #endif
 };
 
-ConstantBuffer<Material> material : register(b2);
+ConstantBuffer<Material> material : register(b3);
 
 float3 getMaterialColor(float3 normal)
 {

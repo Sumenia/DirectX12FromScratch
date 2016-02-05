@@ -30,8 +30,16 @@ RenderSystem *Root::getRenderSystem() const
 
 SceneManager *Root::createSceneManager(SceneManagerType type)
 {
-    if (type == BASIC)
-        return (new BasicSceneManager());
+    SceneManager    *sceneManager = nullptr;
 
-    return (nullptr);
+    if (type == BASIC)
+        sceneManager = new BasicSceneManager(*_renderSystem);
+
+    if (!sceneManager || !sceneManager->init())
+    {
+        delete sceneManager;
+        return (nullptr);
+    }
+
+    return (sceneManager);
 }

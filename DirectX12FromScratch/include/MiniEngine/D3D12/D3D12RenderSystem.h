@@ -33,6 +33,7 @@ namespace MiniEngine
         D3D12Fence              *getFence();
 
         D3D12ConstantBuffer     *createConstantBuffer(unsigned int size, unsigned int nb);
+        D3D12ConstantBuffer     *createConstantBuffer(unsigned int size);
         D3D12RenderWindow       *createRenderWindow(Window *window);
         D3D12HLSLShader         *createHLSLShader();
         D3D12Material           *createMaterial();

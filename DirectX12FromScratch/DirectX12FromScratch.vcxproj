@@ -51,6 +51,7 @@
     <ClInclude Include="include\MiniEngine\GraphicPipeline.h" />
     <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
     <ClInclude Include="include\MiniEngine\HLSLShader.h" />
+    <ClInclude Include="include\MiniEngine\Light.h" />
     <ClInclude Include="include\MiniEngine\Material.h" />
     <ClInclude Include="include\MiniEngine\Matrix.h" />
     <ClInclude Include="include\MiniEngine\Mesh.h" />
@@ -99,6 +100,7 @@
     <ClCompile Include="src\MiniEngine\Fence.cpp" />
     <ClCompile Include="src\MiniEngine\GraphicPipeline.cpp" />
     <ClCompile Include="src\MiniEngine\HLSLShader.cpp" />
+    <ClCompile Include="src\MiniEngine\Light.cpp" />
     <ClCompile Include="src\MiniEngine\Material.cpp" />
     <ClCompile Include="src\MiniEngine\Mesh.cpp" />
     <ClCompile Include="src\MiniEngine\Model.cpp" />
@@ -117,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\shaders\camera.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Assets\shaders\lights.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Assets\shaders\material.hlsl">

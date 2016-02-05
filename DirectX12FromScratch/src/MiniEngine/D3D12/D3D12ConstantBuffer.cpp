@@ -1,3 +1,4 @@
+#include "MiniEngine/Light.h"
 #include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 #include "MiniEngine/D3D12/D3D12Device.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
@@ -121,13 +122,17 @@ bool D3D12ConstantBuffer::bind(CommandList &commandList, unsigned int rootIdx)
     return (true);
 }
 
-bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f const &projection)
+bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights)
 {
-    struct              CameraMatrix
+#pragma pack(push)
+#pragma pack(4)
+    struct  CameraMatrix
     {
         DirectX::XMFLOAT4X4 view;
         DirectX::XMFLOAT4X4 projection;
-    }                   camera;
+        unsigned int        nb_lights;
+    }       camera;
+#pragma pack(pop)
 
     for (unsigned int x = 0; x < 4; x++)
         for (unsigned int y = 0; y < 4; y++)
@@ -137,16 +142,21 @@ bool D3D12ConstantBuffer::updateCameraMatrix(Matrix4f const &view, Matrix4f cons
         for (unsigned int y = 0; y < 4; y++)
             camera.projection.m[x][y] = projection(x + 1, y + 1);
 
+    camera.nb_lights = nb_lights;
+
     return (update(sizeof(camera), &camera));
 }
 
 bool D3D12ConstantBuffer::updateModelMatrix(Matrix4f const &data)
 {
-    struct              ModelMatrix
+#pragma pack(push)
+#pragma pack(4)
+    struct  ModelMatrix
     {
         DirectX::XMFLOAT4X4 model;
         DirectX::XMFLOAT4X4 modelNormal;
-    }                   model;
+    }       model;
+#pragma pack(pop)
 
     Matrix4f    modelNormal = data.inverse().transpose();
 
@@ -159,6 +169,38 @@ bool D3D12ConstantBuffer::updateModelMatrix(Matrix4f const &data)
             model.modelNormal.m[x][y] = modelNormal(x + 1, y + 1);
 
     return (update(sizeof(model), &model));
+}
+
+bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
+{
+    struct  LightStructure
+    {
+        unsigned int        type;
+
+        DirectX::XMFLOAT3   position;
+        DirectX::XMFLOAT3   direction;
+
+        float               cutOff;
+        float               outerCutOff;
+
+        DirectX::XMFLOAT3   ambient;
+        DirectX::XMFLOAT3   diffuse;
+        float               pad1[1];
+
+        DirectX::XMFLOAT3   specular;
+
+        float               constant;
+        float               linear;
+        float               quadratic;
+
+        float               pad2[2];
+    };
+
+    LightStructure  lightsData[MAX_LIGHTS];
+
+    // TO-DO: Update lightsData
+
+    return (update(sizeof(lightsData), &lightsData));
 }
 
 ID3D12Resource *D3D12ConstantBuffer::getNative()

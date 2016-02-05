@@ -7,7 +7,7 @@
 
 using namespace MiniEngine;
 
-Camera::Camera(SceneManager &manager) : SceneNode(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(1000.0f), _cameraConstantBuffer(nullptr)
+Camera::Camera(SceneManager &manager) : SceneNode(manager), _fov(70.0f), _ratio(16.0f / 9.0f), _near(0.01f), _far(1000.0f), _cameraConstantBuffer(nullptr), _nbLights(0)
 {}
 
 Camera::~Camera()
@@ -18,12 +18,15 @@ Camera::~Camera()
 
 bool Camera::render(CommandList &commandList)
 {
+    if (_nbLights != _manager.getLights().size())
+        _needUpdate = true;
+
     if (_needUpdate)
         update();
 
     if (!_cameraConstantBuffer)
     {
-        _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 64, commandList.getRenderTarget().getFrameCount());
+        _cameraConstantBuffer = commandList.getRenderSystem().createConstantBuffer(64 + 64 + 4, commandList.getRenderTarget().getFrameCount());
         update();
 
         if (!_cameraConstantBuffer)
@@ -83,8 +86,10 @@ void Camera::update()
 {
     SceneNode::update();
 
+    _nbLights = _manager.getLights().size();
+
     if (_cameraConstantBuffer)
-        if (!_cameraConstantBuffer->updateCameraMatrix(getTransformationMatrix().inverse(), _projection))
+        if (!_cameraConstantBuffer->updateCameraMatrix(getTransformationMatrix().inverse(), _projection, _nbLights))
         {
             delete _cameraConstantBuffer;
             _cameraConstantBuffer = nullptr;

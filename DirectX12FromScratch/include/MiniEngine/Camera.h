@@ -41,5 +41,6 @@ namespace MiniEngine
         Matrix4f        _projection;
 
         ConstantBuffer  *_cameraConstantBuffer;
+        unsigned int    _nbLights;
     };
 }

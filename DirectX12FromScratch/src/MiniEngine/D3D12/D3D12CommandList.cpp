@@ -86,6 +86,11 @@ bool D3D12CommandList::bindModelCBV(ConstantBuffer &buffer)
     return (buffer.bind(*this, 1));
 }
 
+bool D3D12CommandList::bindLightsCBV(ConstantBuffer &buffer)
+{
+    return (buffer.bind(*this, 2));
+}
+
 bool D3D12CommandList::bindMaterial(unsigned int id)
 {
     if (_previousMaterialId == id)
@@ -105,7 +110,7 @@ bool D3D12CommandList::bindMaterial(Material &material)
     if (!setMaterialPipeline(material.getFlags()))
         return (false);
 
-    return (material.bind(*this, 2));
+    return (material.bind(*this, 3));
 }
 
 void D3D12CommandList::setPipeline(GraphicPipeline &pipeline)

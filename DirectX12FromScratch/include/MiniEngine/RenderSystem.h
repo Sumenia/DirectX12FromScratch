@@ -27,6 +27,7 @@ namespace MiniEngine
         void                                clear();
 
         virtual ConstantBuffer              *createConstantBuffer(unsigned int size, unsigned int nb) = 0;
+        virtual ConstantBuffer              *createConstantBuffer(unsigned int size) = 0;
         virtual RenderWindow                *createRenderWindow(Window *window) = 0;
         virtual HLSLShader                  *createHLSLShader() = 0;
         virtual Material                    *createMaterial() = 0;

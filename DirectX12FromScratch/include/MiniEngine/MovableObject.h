@@ -16,7 +16,7 @@ namespace MiniEngine
         virtual void        needUpdate();
 
     protected:
-        SceneNode       *_parent;
-        bool            _needUpdate;
+        SceneNode           *_parent;
+        bool                _needUpdate;
     };
 }

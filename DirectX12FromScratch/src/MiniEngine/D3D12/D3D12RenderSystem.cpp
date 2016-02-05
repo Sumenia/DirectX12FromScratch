@@ -101,6 +101,11 @@ D3D12Fence *D3D12RenderSystem::getFence()
     return (_fence);
 }
 
+D3D12ConstantBuffer *D3D12RenderSystem::createConstantBuffer(unsigned int size)
+{
+    return (createConstantBuffer(size, D3D12RenderWindow::FrameCount));
+}
+
 D3D12ConstantBuffer *D3D12RenderSystem::createConstantBuffer(unsigned int size, unsigned int nb)
 {
     D3D12ConstantBuffer *buffer = new D3D12ConstantBuffer(*this);
@@ -136,7 +141,7 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
 
     D3D12GraphicPipeline    *pipeline = new D3D12GraphicPipeline(*this);
     
-    // Set root signature (TO-DO: Generate it correctly)
+    // Set root signature (TO-DO: Generate it correctly with materials informations)
     {
         D3D12RootSignature      *rootSignature = new D3D12RootSignature();
 

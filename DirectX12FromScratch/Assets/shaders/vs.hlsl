@@ -2,6 +2,7 @@
 #include "model.hlsl"
 #include "psinput.hlsl"
 #include "material.hlsl"
+#include "lights.hlsl"
 
 PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
 {

@@ -7,7 +7,7 @@ namespace MiniEngine
     class BasicSceneManager : public SceneManager
     {
     public:
-        BasicSceneManager();
+        BasicSceneManager(RenderSystem &system);
         ~BasicSceneManager();
 
         bool    render(Camera &camera, CommandList &commandList);
