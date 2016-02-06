@@ -17,7 +17,7 @@ void Application::run()
 {
     while (true)
     {
-        if (!update())
+		if (!update())
             return;
 
         if (!renderOneFrame())
