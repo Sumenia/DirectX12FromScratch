@@ -2,6 +2,7 @@
 #include "MainApplication.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12RenderWindow.h"
+#include "MiniEngine/Texture.h"
 
 MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
 {
@@ -11,6 +12,9 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
     if (_window)
     {
+		MiniEngine::Texture text;
+
+		//text.loadFromFile("test.jpeg");
         _root->setRenderSystem(new MiniEngine::D3D12RenderSystem);
 
         if (_root->getRenderSystem())
