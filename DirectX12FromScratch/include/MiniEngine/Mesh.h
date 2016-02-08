@@ -6,6 +6,7 @@
 # include <iostream>
 # include <fstream>
 # include <assimp/scene.h>
+# include "MiniEngine/Material.h"
 # include "Vector.h"
 
 namespace MiniEngine
@@ -31,6 +32,7 @@ namespace MiniEngine
         unsigned int                    offset;
         unsigned int                    idxOffset;
 
+		unsigned int                    materialIdx;
         unsigned int                    materialId;
 	};
 }

@@ -5,11 +5,17 @@
 
 using namespace MiniEngine;
 
-Model::Model() : _isLoaded(false)
+Model::Model(RenderSystem& system) : _system(system), _isLoaded(false)
 {}
 
 Model::~Model()
-{}
+{
+	while (_materials.size() != 0)
+	{
+		delete (_materials.front());
+		_materials.pop_front();
+	}
+}
 
 bool			Model::isLoaded() const
 {
@@ -20,6 +26,8 @@ bool			Model::loadFromFile(const std::string &file)
 {
 	Assimp::Importer importer;
 
+	_path = file.substr(0, file.find_last_of('/'));
+	_file = file.substr(file.find_last_of('/') + 1);
 	const aiScene* scene = importer.ReadFile(file,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
@@ -48,6 +56,14 @@ bool			Model::loadFromFile(const std::string &file)
 
 		mesh->loadFromAssimp(scene->mMeshes[i]);
 		_meshs.push_back(mesh);
+	}
+
+	for (unsigned int i = 0; i < scene->mNumMaterials; i++)
+	{
+		Material *material = _system.createMaterial();
+
+		material->loadFromAssimp(scene->mMaterials[i], _path);
+		_materials.push_back(material);
 	}
 
 	/*for (unsigned int j = 0; j < scene->mNumMaterials; j++)
@@ -100,4 +116,14 @@ unsigned int		Model::getIndicesSize() const
 const std::list<std::shared_ptr<Mesh> >		&Model::getMeshs()
 {
 	return _meshs;
+}
+
+const std::list<Material*>& MiniEngine::Model::getMaterials()
+{
+	return _materials;
+}
+
+const std::string&			Model::getPath() const
+{
+	return (_path);
 }

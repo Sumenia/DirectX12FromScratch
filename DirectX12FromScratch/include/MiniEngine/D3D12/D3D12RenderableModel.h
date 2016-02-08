@@ -18,7 +18,7 @@ namespace MiniEngine
 	class D3D12RenderableModel : public RenderableModel
 	{
 	public:
-		D3D12RenderableModel();
+		D3D12RenderableModel(RenderSystem& system);
 		~D3D12RenderableModel();
 
 		virtual bool        loadFromFile(D3D12RenderSystem &system, const std::string &file);

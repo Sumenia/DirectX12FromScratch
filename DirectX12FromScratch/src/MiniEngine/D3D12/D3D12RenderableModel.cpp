@@ -3,7 +3,7 @@
 
 using namespace MiniEngine;
 
-D3D12RenderableModel::D3D12RenderableModel() : _vertexBuffer(nullptr), _indexBuffer(nullptr)
+D3D12RenderableModel::D3D12RenderableModel(RenderSystem& system) : RenderableModel(system), _vertexBuffer(nullptr), _indexBuffer(nullptr)
 {}
 
 D3D12RenderableModel::~D3D12RenderableModel()

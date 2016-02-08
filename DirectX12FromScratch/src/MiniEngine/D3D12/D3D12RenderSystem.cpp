@@ -218,7 +218,7 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
 
 D3D12RenderableModel *D3D12RenderSystem::loadModel(std::string const &filename)
 {
-	D3D12RenderableModel *model = new D3D12RenderableModel;
+	D3D12RenderableModel *model = new D3D12RenderableModel(*this);
 
 	if (!model->loadFromFile(*this, filename))
 	{

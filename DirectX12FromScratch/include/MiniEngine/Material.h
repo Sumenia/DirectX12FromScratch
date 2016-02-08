@@ -1,6 +1,10 @@
 #pragma once
 
 #include <windows.h>
+#include <map>
+#include <vector>
+#include <assimp/scene.h>
+#include "MiniEngine/Texture.h"
 #include "MiniEngine/Geometry.h"
 #include "MiniEngine/Shader.h"
 
@@ -23,9 +27,18 @@ namespace MiniEngine
             NORMAL_MAP = 0x8,
         };
 
+		enum TextureType
+		{
+			DIFFUSE,
+			SPECULAR,
+			AMBIENT
+		};
+
     public:
         Material();
         virtual ~Material();
+
+		bool			loadFromAssimp(aiMaterial* material, const std::string& path);
 
         void            useNormalColor();
         void            useUniformColor(Vector3f const &color);
@@ -49,7 +62,9 @@ namespace MiniEngine
         DWORD64         _flags;
 
         Vector3f        _color;
+		
         // Stock texture
+		std::map<TextureType, std::vector<Texture*>> _textures;
 
         // Stock normal map
 

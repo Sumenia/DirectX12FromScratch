@@ -2,6 +2,7 @@
 #include "MainApplication.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12RenderWindow.h"
+#include "MiniEngine/Texture.h"
 
 MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
 {
@@ -11,6 +12,9 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
     if (_window)
     {
+		MiniEngine::Texture text;
+
+		//text.loadFromFile("test.png");
         _root->setRenderSystem(new MiniEngine::D3D12RenderSystem);
 
         if (_root->getRenderSystem())
@@ -43,7 +47,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
                 light->getParent()->translate({ -150.0f, -150.0f, 150.0f }, MiniEngine::TS_WORLD);
 
                 // Load a cube
-                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/majora/Majora.obj"));
 
                 //_node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
                 //_node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
