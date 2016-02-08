@@ -38,7 +38,7 @@ namespace MiniEngine
         Material();
         virtual ~Material();
 
-		bool			loadFromAssimp(aiMaterial* material);
+		bool			loadFromAssimp(aiMaterial* material, const std::string& path);
 
         void            useNormalColor();
         void            useUniformColor(Vector3f const &color);

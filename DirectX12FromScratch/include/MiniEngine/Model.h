@@ -19,7 +19,11 @@ namespace MiniEngine
 		unsigned int                getIndicesSize() const;
 		const std::list<std::shared_ptr<Mesh> > &getMeshs();
 
+		const std::string&			getPath() const;
+
 	protected:
+		std::string							_path;
+		std::string							_file;
 		RenderSystem& 						_system;
 		std::list<std::shared_ptr<Mesh> >	_meshs;
 		std::list<Material*>				_materials;

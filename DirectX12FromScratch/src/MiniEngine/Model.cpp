@@ -26,6 +26,8 @@ bool			Model::loadFromFile(const std::string &file)
 {
 	Assimp::Importer importer;
 
+	_path = file.substr(0, file.find_last_of('/'));
+	_file = file.substr(file.find_last_of('/') + 1);
 	const aiScene* scene = importer.ReadFile(file,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
@@ -60,7 +62,7 @@ bool			Model::loadFromFile(const std::string &file)
 	{
 		Material *material = _system.createMaterial();
 
-		material->loadFromAssimp(scene->mMaterials[i]);
+		material->loadFromAssimp(scene->mMaterials[i], _path);
 		_materials.push_back(material);
 	}
 
@@ -114,4 +116,9 @@ unsigned int		Model::getIndicesSize() const
 const std::list<std::shared_ptr<Mesh> >		&Model::getMeshs()
 {
 	return _meshs;
+}
+
+const std::string&			Model::getPath() const
+{
+	return (_path);
 }

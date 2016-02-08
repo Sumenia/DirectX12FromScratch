@@ -14,19 +14,19 @@ Material::~Material()
 	// TO-DO delete Textures for each type.
 }
 
-bool	Material::loadFromAssimp(aiMaterial* material)
+bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 {
-	aiString path;
+	aiString file;
 
 	std::cout << material->GetTextureCount(aiTextureType_DIFFUSE) << " DIFFUSE" << std::endl;
 	std::vector<Texture*> diffuses;
 	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_DIFFUSE); i++)
 	{
-		if (material->GetTexture(aiTextureType_DIFFUSE, i, &path) == AI_SUCCESS)
+		if (material->GetTexture(aiTextureType_DIFFUSE, i, &file) == AI_SUCCESS)
 		{
 			Texture *tex = new Texture();
-			tex->loadFromFile(path.C_Str());
-			std::cout << "Diffuse " << i << " : " << path.C_Str() << std::endl;
+			tex->loadFromFile(path + "/" + file.C_Str());
+			std::cout << "Diffuse " << i << " : " << file.C_Str() << std::endl;
 			diffuses.push_back(tex);
 		}
 	}
@@ -36,14 +36,14 @@ bool	Material::loadFromAssimp(aiMaterial* material)
 	std::cout << material->GetTextureCount(aiTextureType_SPECULAR) << " SPECULAR" << std::endl;
 	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_SPECULAR); i++)
 	{
-		if (material->GetTexture(aiTextureType_SPECULAR, i, &path) == AI_SUCCESS)
-			std::cout << "Specular " << i << " : " << path.C_Str() << std::endl;
+		if (material->GetTexture(aiTextureType_SPECULAR, i, &file) == AI_SUCCESS)
+			std::cout << "Specular " << i << " : " << file.C_Str() << std::endl;
 	}
 	std::cout << material->GetTextureCount(aiTextureType_AMBIENT) << " AMBIENT" << std::endl;
 	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_AMBIENT); i++)
 	{
-		if (material->GetTexture(aiTextureType_AMBIENT, i, &path) == AI_SUCCESS)
-			std::cout << "Ambient " << i << " : " << path.C_Str() << std::endl;
+		if (material->GetTexture(aiTextureType_AMBIENT, i, &file) == AI_SUCCESS)
+			std::cout << "Ambient " << i << " : " << file.C_Str() << std::endl;
 	}
 	return false;
 }
