@@ -28,7 +28,7 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 		Texture *tex = new Texture();
 		tex->loadFromFile(path + "/" + file.C_Str());
 		std::cout << "Diffuse : " << file.C_Str() << std::endl;
-		_textures.insert(std::pair<TextureType, Texture*>(DIFFUSE, tex));
+		useTexture(DIFFUSE, tex);
 	}
 
 	if (material->GetTextureCount(aiTextureType_SPECULAR) > 0 &&
@@ -37,7 +37,7 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 		Texture *tex = new Texture();
 		tex->loadFromFile(path + "/" + file.C_Str());
 		std::cout << "Specular : " << file.C_Str() << std::endl;
-		_textures.insert(std::pair<TextureType, Texture*>(SPECULAR, tex));
+		useTexture(SPECULAR, tex);
 	}
 	
 	if (material->GetTextureCount(aiTextureType_AMBIENT) > 0 &&
@@ -46,7 +46,7 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 		Texture *tex = new Texture();
 		tex->loadFromFile(path + "/" + file.C_Str());
 		std::cout << "Ambient : " << file.C_Str() << std::endl;
-		_textures.insert(std::pair<TextureType, Texture*>(AMBIENT, tex));
+		useTexture(AMBIENT, tex);
 	}
 	return true;
 }
@@ -67,13 +67,16 @@ void Material::useUniformColor(Vector3f const &color)
     _flags &= ~NORMAL_COLOR;
 }
 
-void Material::useTexture(/* TEXTURE */)
+void Material::useTexture(TextureType t, Texture *tex)
 {
-    // SET TEXTURE
-
-    _flags |= TEXTURE;
-    _flags &= ~UNIFORM_COLOR;
-    _flags &= ~NORMAL_COLOR;
+	if (t == DIFFUSE)
+	{
+		_flags |= TEXTURE;
+		_flags &= ~UNIFORM_COLOR;
+		_flags &= ~NORMAL_COLOR;
+	}
+	// TO-DO : other cases of types
+	_textures.insert(std::pair<TextureType, Texture*>(t, tex));
 }
 
 void Material::useNormalScalar()

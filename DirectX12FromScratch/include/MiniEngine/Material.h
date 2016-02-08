@@ -16,15 +16,17 @@ namespace MiniEngine
     class Material
     {
     public:
-        enum Flag : DWORD64
-        {
-            // Method to retrieve the color of the fragment
-            NORMAL_COLOR = 0x1,
-            UNIFORM_COLOR = 0x2,
-            TEXTURE = 0x4,
+		enum Flag : DWORD64
+		{
+			// Method to retrieve the color of the fragment
+			NORMAL_COLOR = 0x1,
+			UNIFORM_COLOR = 0x2,
+			TEXTURE = 0x4,
 
-            // Method to retrieve the normal of the vertice
-            NORMAL_MAP = 0x8,
+			// Method to retrieve the normal of the vertice
+			NORMAL_MAP = 0x8,
+			// Method to retrieve ambient coef
+			TEXTURE_AMBIENT = 0x16
         };
 
 		enum TextureType
@@ -42,7 +44,7 @@ namespace MiniEngine
 
         void            useNormalColor();
         void            useUniformColor(Vector3f const &color);
-        void            useTexture(/* TEXTURE */);
+        void            useTexture(TextureType t, Texture *tex);
 
         void            useNormalScalar();
         void            useNormalMap(/* NORMAL MAP */);
