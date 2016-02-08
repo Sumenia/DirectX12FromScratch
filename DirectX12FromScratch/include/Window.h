@@ -18,6 +18,7 @@ public:
 
 	virtual bool				getEvent(Event &) = 0;
 
+	virtual bool                isKeyPressed(Keyboard::Key key) = 0;
 private:
 };
 

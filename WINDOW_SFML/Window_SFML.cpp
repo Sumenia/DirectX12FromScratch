@@ -101,3 +101,9 @@ bool Window_SFML::getEvent(Event &event)
 
 	return (false);
 }
+
+
+bool Window_SFML::isKeyPressed(Keyboard::Key key)
+{
+	return _keyboard.isKeyPressed(key);
+}
