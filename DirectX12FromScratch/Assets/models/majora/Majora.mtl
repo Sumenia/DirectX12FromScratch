@@ -1,0 +1,65 @@
+# Material file for Majora.obj
+
+newmtl mtl_060067E0
+	Ns 96
+	d 1
+	illum 2
+	Kd 0.64 0.64 0.64
+	Ks 0.5 0.5 0.5
+	Ka 0.0 0.0 0.0
+	map_Kd 060067E0.png
+
+newmtl mtl_060077E0
+	Ns 96
+	d 1
+	illum 2
+	Kd 0.64 0.64 0.64
+	Ks 0.5 0.5 0.5
+	Ka 0.0 0.0 0.0
+	map_Kd 060077E0.png
+
+newmtl mtl_060079E0
+	Ns 96
+	d 1
+	illum 2
+	Kd 0.64 0.64 0.64
+	Ks 0.5 0.5 0.5
+	Ka 0.0 0.0 0.0
+	map_Kd 060079E0.png
+
+newmtl mtl_06007BE0
+	Ns 96
+	d 1
+	illum 2
+	Kd 0.64 0.64 0.64
+	Ks 0.5 0.5 0.5
+	Ka 0.0 0.0 0.0
+	map_Kd 06007BE0.png
+
+newmtl mtl_06007DE0
+	Ns 96
+	d 1
+	illum 2
+	Kd 0.64 0.64 0.64
+	Ks 0.5 0.5 0.5
+	Ka 0.0 0.0 0.0
+	map_Kd 06007DE0.png
+
+newmtl mtl_06007FE0
+	Ns 96
+	d 1
+	illum 2
+	Kd 0.64 0.64 0.64
+	Ks 0.5 0.5 0.5
+	Ka 0.0 0.0 0.0
+	map_Kd 06007FE0.png
+
+newmtl mtl_060087E0
+	Ns 96
+	d 1
+	illum 2
+	Kd 0.64 0.64 0.64
+	Ks 0.5 0.5 0.5
+	Ka 0.0 0.0 0.0
+	map_Kd 060087E0.png
+
