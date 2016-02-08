@@ -118,6 +118,11 @@ const std::list<std::shared_ptr<Mesh> >		&Model::getMeshs()
 	return _meshs;
 }
 
+const std::list<Material*>& MiniEngine::Model::getMaterials()
+{
+	return _materials;
+}
+
 const std::string&			Model::getPath() const
 {
 	return (_path);

@@ -21,6 +21,9 @@ Mesh::~Mesh()
 {}
 
 bool Mesh::loadFromAssimp(aiMesh *mesh) {
+
+	materialIdx = mesh->mMaterialIndex;
+
 	for (unsigned int j = 0; j < mesh->mNumVertices; j++)
 	{
 		Vertex vertex;

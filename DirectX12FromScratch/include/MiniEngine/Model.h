@@ -18,6 +18,7 @@ namespace MiniEngine
 		unsigned int                getVertexsSize() const;
 		unsigned int                getIndicesSize() const;
 		const std::list<std::shared_ptr<Mesh> > &getMeshs();
+		const std::list<Material*>				&getMaterials();
 
 		const std::string&			getPath() const;
 
