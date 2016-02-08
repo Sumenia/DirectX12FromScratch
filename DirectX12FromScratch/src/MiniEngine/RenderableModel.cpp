@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-RenderableModel::RenderableModel()
+RenderableModel::RenderableModel(RenderSystem& system) : Model(system)
 {}
 
 RenderableModel::~RenderableModel()

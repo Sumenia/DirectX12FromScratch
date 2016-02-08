@@ -9,7 +9,7 @@ namespace MiniEngine
 	class RenderableModel : public Model, public RenderableObject, public MovableObject
 	{
 	public:
-		RenderableModel();
+		RenderableModel(RenderSystem& system);
 		virtual ~RenderableModel();
 	};
 }

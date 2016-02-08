@@ -12,6 +12,34 @@ Material::Material() : _id(Material::id_count), _flags(NORMAL_COLOR), _color(1.0
 Material::~Material()
 {}
 
+bool	Material::loadFromAssimp(aiMaterial* material)
+{
+	aiString path;
+
+	std::cout << material->GetTextureCount(aiTextureType_DIFFUSE) << " DIFFUSE" << std::endl;
+	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_DIFFUSE); i++)
+	{
+		if (material->GetTexture(aiTextureType_DIFFUSE, i, &path) == AI_SUCCESS)
+		{
+			std::cout << "Diffuse " << i << " : " << path.C_Str() << std::endl;
+			//_textures.insert();
+		}
+	}
+	std::cout << material->GetTextureCount(aiTextureType_SPECULAR) << " SPECULAR" << std::endl;
+	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_SPECULAR); i++)
+	{
+		if (material->GetTexture(aiTextureType_SPECULAR, i, &path) == AI_SUCCESS)
+			std::cout << "Specular " << i << " : " << path.C_Str() << std::endl;
+	}
+	std::cout << material->GetTextureCount(aiTextureType_AMBIENT) << " AMBIENT" << std::endl;
+	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_AMBIENT); i++)
+	{
+		if (material->GetTexture(aiTextureType_AMBIENT, i, &path) == AI_SUCCESS)
+			std::cout << "Ambient " << i << " : " << path.C_Str() << std::endl;
+	}
+	return false;
+}
+
 void Material::useNormalColor()
 {
     _flags |= NORMAL_COLOR;

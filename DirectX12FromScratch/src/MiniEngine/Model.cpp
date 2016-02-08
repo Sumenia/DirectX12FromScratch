@@ -5,11 +5,17 @@
 
 using namespace MiniEngine;
 
-Model::Model() : _isLoaded(false)
+Model::Model(RenderSystem& system) : _system(system), _isLoaded(false)
 {}
 
 Model::~Model()
-{}
+{
+	while (_materials.size() != 0)
+	{
+		delete (_materials.front());
+		_materials.pop_front();
+	}
+}
 
 bool			Model::isLoaded() const
 {
@@ -48,6 +54,14 @@ bool			Model::loadFromFile(const std::string &file)
 
 		mesh->loadFromAssimp(scene->mMeshes[i]);
 		_meshs.push_back(mesh);
+	}
+
+	for (unsigned int i = 0; i < scene->mNumMaterials; i++)
+	{
+		Material *material = _system.createMaterial();
+
+		material->loadFromAssimp(scene->mMaterials[i]);
+		_materials.push_back(material);
 	}
 
 	/*for (unsigned int j = 0; j < scene->mNumMaterials; j++)
