@@ -14,7 +14,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
     {
 		MiniEngine::Texture text;
 
-		//text.loadFromFile("test.jpeg");
+		//text.loadFromFile("test.png");
         _root->setRenderSystem(new MiniEngine::D3D12RenderSystem);
 
         if (_root->getRenderSystem())

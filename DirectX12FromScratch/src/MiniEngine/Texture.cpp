@@ -14,7 +14,7 @@ bool				Texture::loadFromFile(const std::string &filename)
 		Magick::Image	image;
 
 		image.read(filename);
-		image.magick("RGBA");
+		image.magick("RGB");
 		image.write(&_blob);
 	}
 	catch (Magick::Exception &error_)
