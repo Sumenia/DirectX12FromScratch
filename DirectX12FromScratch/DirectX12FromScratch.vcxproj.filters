@@ -1,11 +1,11 @@
-ï»¿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Fichiers sources">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Fichiers d%27en-tÃªte">
+    <Filter Include="Fichiers d%27en-tête">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
@@ -13,13 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Fichiers d%27en-tÃªte\MiniEngine">
+    <Filter Include="Fichiers d%27en-tête\MiniEngine">
       <UniqueIdentifier>{7c596753-f0ed-42f7-a82d-1a6dba213afe}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers sources\MiniEngine">
       <UniqueIdentifier>{7acc00ef-52f9-4c05-b723-9a27a5e1975b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tÃªte\MiniEngine\D3D12">
+    <Filter Include="Fichiers d%27en-tête\MiniEngine\D3D12">
       <UniqueIdentifier>{f36db23a-f8b9-4252-8e2f-cf1f7967082a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers sources\MiniEngine\D3D12">
@@ -28,172 +28,175 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Application.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\RenderSystem.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\RenderTarget.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Root.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\Config.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\DynamicLibrary.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MainApplication.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\Window.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\CommandQueue.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandQueue.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RootSignature.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Helper\d3dx12.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Fence.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Fence.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderTarget.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12DescriptorHeap.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\GraphicPipeline.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12GraphicPipeline.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Shader.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\HLSLShader.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12HLSLShader.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\RenderWindow.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\CommandList.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandList.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\SceneManager.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\MovableObject.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Camera.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\BasicSceneManager.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\SceneNode.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Mesh.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Matrix.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Geometry.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Quaternion.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\RenderableObject.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Viewport.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\ConstantBuffer.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12ConstantBuffer.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12VertexBuffer.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12IndexBuffer.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Model.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\RenderableModel.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableModel.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\Event.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\Keyboard.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\Mouse.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\Vector.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Material.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Material.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Light.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Clock.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Time.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\SysClock.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="include\MiniEngine\Texture.h">
-      <Filter>Fichiers d%27en-tÃªte</Filter>
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImageLoader\IImageLoader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -327,6 +330,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\MiniEngine\Texture.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImageLoader\IImageLoader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
