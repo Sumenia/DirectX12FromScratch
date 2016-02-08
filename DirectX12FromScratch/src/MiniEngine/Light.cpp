@@ -4,9 +4,9 @@
 using namespace MiniEngine;
 
 Light::Light(SceneManager &manager) : _manager(manager),
-    _type(POINT), 
-    _direction(0.0f, 0.0f, 0.0f), 
-    _cutOff(0.0f), _outerCutOff(0.0f), 
+    _type(SPOT), 
+    _direction(0.0f, -0.1f, 0.0f), 
+    _cutOff(25.0f), _outerCutOff(30.0f), 
     _ambient(0.0f, 0.0f, 0.0f), _diffuse(0.0f, 0.0f, 0.0f), _specular(0.0f, 0.0f, 0.0f), 
     _constant(1.0f), _linear(0.0f), _quadratic(0.0f)
 {}
