@@ -64,7 +64,7 @@ namespace MiniEngine
         Vector3f        _color;
 		
         // Stock texture
-		std::map<TextureType, std::vector<Texture>> _textures;
+		std::map<TextureType, std::vector<Texture*>> _textures;
 
         // Stock normal map
 

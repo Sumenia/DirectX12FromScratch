@@ -10,21 +10,29 @@ Material::Material() : _id(Material::id_count), _flags(NORMAL_COLOR), _color(1.0
 }
 
 Material::~Material()
-{}
+{
+	// TO-DO delete Textures for each type.
+}
 
 bool	Material::loadFromAssimp(aiMaterial* material)
 {
 	aiString path;
 
 	std::cout << material->GetTextureCount(aiTextureType_DIFFUSE) << " DIFFUSE" << std::endl;
+	std::vector<Texture*> diffuses;
 	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_DIFFUSE); i++)
 	{
 		if (material->GetTexture(aiTextureType_DIFFUSE, i, &path) == AI_SUCCESS)
 		{
+			Texture *tex = new Texture();
+			tex->loadFromFile(path.C_Str());
 			std::cout << "Diffuse " << i << " : " << path.C_Str() << std::endl;
-			//_textures.insert();
+			diffuses.push_back(tex);
 		}
 	}
+	if (diffuses.size() != 0)
+		_textures.insert(std::pair<TextureType, std::vector<Texture*>>(DIFFUSE, diffuses));
+
 	std::cout << material->GetTextureCount(aiTextureType_SPECULAR) << " SPECULAR" << std::endl;
 	for (unsigned int i = 0; i < material->GetTextureCount(aiTextureType_SPECULAR); i++)
 	{
