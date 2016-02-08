@@ -10,11 +10,11 @@ Model::Model(RenderSystem& system) : _system(system), _isLoaded(false)
 
 Model::~Model()
 {
-	while (_materials.size() != 0)
+	/*while (_materials.size() != 0)
 	{
 		delete (_materials.front());
 		_materials.pop_front();
-	}
+	}*/
 }
 
 bool			Model::isLoaded() const
@@ -24,7 +24,8 @@ bool			Model::isLoaded() const
 
 bool			Model::loadFromFile(const std::string &file)
 {
-	Assimp::Importer importer;
+	Assimp::Importer		importer;
+	std::vector<Material*>	materials;
 
 	_path = file.substr(0, file.find_last_of('/'));
 	_file = file.substr(file.find_last_of('/') + 1);
@@ -50,35 +51,27 @@ bool			Model::loadFromFile(const std::string &file)
 		return false;
 	}
 
-	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
-	{
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-
-		mesh->loadFromAssimp(scene->mMeshes[i]);
-		_meshs.push_back(mesh);
-	}
-
+	materials.resize(scene->mNumMaterials);
 	for (unsigned int i = 0; i < scene->mNumMaterials; i++)
 	{
 		Material *material = _system.createMaterial();
 
-		material->loadFromAssimp(scene->mMaterials[i], _path);
-		_materials.push_back(material);
+		if (!material->loadFromAssimp(scene->mMaterials[i], _path) || !material->finalize())
+		{
+			delete material;
+			return (false);
+		}
+		_system.registerMaterial(material);
+		materials[i] = material;
 	}
 
-	/*for (unsigned int j = 0; j < scene->mNumMaterials; j++)
+	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 	{
-	auto &&material = scene->mMaterials[j];
-	int texIndex = 0;
-	aiString path;
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 
-	if (material->GetTexture(aiTextureType_DIFFUSE, texIndex, &path) == AI_SUCCESS)
-	{
-	std::cout << "TEXTURE PATH: " << path.C_Str() << std::endl;
+		mesh->loadFromAssimp(scene->mMeshes[i], materials);
+		_meshs.push_back(mesh);
 	}
-	else
-	std::cout << "NO DIFFUSE TEXTURE" << std::endl;
-	}*/
 
 	_isLoaded = true;
 
@@ -116,11 +109,6 @@ unsigned int		Model::getIndicesSize() const
 const std::list<std::shared_ptr<Mesh> >		&Model::getMeshs()
 {
 	return _meshs;
-}
-
-const std::list<Material*>& MiniEngine::Model::getMaterials()
-{
-	return _materials;
 }
 
 const std::string&			Model::getPath() const

@@ -18,7 +18,6 @@ namespace MiniEngine
 		unsigned int                getVertexsSize() const;
 		unsigned int                getIndicesSize() const;
 		const std::list<std::shared_ptr<Mesh> > &getMeshs();
-		const std::list<Material*>				&getMaterials();
 
 		const std::string&			getPath() const;
 
@@ -27,7 +26,6 @@ namespace MiniEngine
 		std::string							_file;
 		RenderSystem& 						_system;
 		std::list<std::shared_ptr<Mesh> >	_meshs;
-		std::list<Material*>				_materials;
 		bool                                _isLoaded;
 	};
 }

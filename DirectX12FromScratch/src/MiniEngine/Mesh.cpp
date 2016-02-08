@@ -20,10 +20,9 @@ Mesh::Mesh() : offset(0), idxOffset(0), materialId(0)
 Mesh::~Mesh()
 {}
 
-bool Mesh::loadFromAssimp(aiMesh *mesh) {
-
-	materialIdx = mesh->mMaterialIndex;
-
+bool Mesh::loadFromAssimp(aiMesh *mesh, const std::vector<Material*> &materials)
+{
+	materialId = materials[mesh->mMaterialIndex]->getId();
 	for (unsigned int j = 0; j < mesh->mNumVertices; j++)
 	{
 		Vertex vertex;

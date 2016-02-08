@@ -24,7 +24,7 @@ namespace MiniEngine
 		Mesh();
 		virtual ~Mesh();
 
-		virtual bool                    loadFromAssimp(aiMesh *mesh);
+		virtual bool                    loadFromAssimp(aiMesh *mesh, const std::vector<Material*> &materials);
 
 		std::vector<Vertex>             vertexs;
 		std::vector<unsigned int>       indices;
@@ -32,7 +32,6 @@ namespace MiniEngine
         unsigned int                    offset;
         unsigned int                    idxOffset;
 
-		unsigned int                    materialIdx;
         unsigned int                    materialId;
 	};
 }

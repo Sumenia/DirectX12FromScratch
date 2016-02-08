@@ -96,11 +96,12 @@ bool D3D12RenderableModel::render(Camera &camera, CommandList &commandList)
 
     for (auto &&mesh : getMeshs())
     {
+		OutputDebugString("test1\n");
         if (!commandList.bindMaterial(mesh->materialId))
             return (false);
+		OutputDebugString("test2\n");
 
         d3d12CommandList.getNative()->DrawIndexedInstanced(mesh->indices.size(), 1, mesh->idxOffset, 0, 0);
     }
-
 	return (true);
 }
