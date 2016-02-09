@@ -1,20 +1,17 @@
-#include "DirectionalLight.h"
+#include "MiniEngine/DirectionalLight.h"
 
 using namespace MiniEngine;
 
-DirectionalLight::DirectionalLight(SceneManager &manager, float angle) : Light(manager), _angle(angle)
+DirectionalLight::DirectionalLight(SceneManager &manager, Vector3f direction) : Light(manager)
 {
+	_direction = direction;
 }
 
 DirectionalLight::~DirectionalLight()
 {
 }
 
-float DirectionalLight::getAngle() const
+void	DirectionalLight::setDirection(Vector3f direction)
 {
-	return _angle;
-}
-
-void DirectionalLight::setAngle()
-{
+	_direction = direction;
 }

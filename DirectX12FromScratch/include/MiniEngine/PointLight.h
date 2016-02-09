@@ -6,12 +6,9 @@ namespace MiniEngine
 	class PointLight : public Light
 	{
 	public:
-		PointLight(SceneManager &manager, float intansity);
+		PointLight(SceneManager &manager, float range);
 		~PointLight();
 
-		void	setIntansity(float intensity);
-		float	getIntansity() const;
-	private:
-		float		_intancity;
+		void	setRange(float range);
 	};
 }

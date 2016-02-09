@@ -1,23 +1,17 @@
-#include "PointLight.h"
+#include "MiniEngine/PointLight.h"
 
 using namespace MiniEngine;
 
-PointLight::PointLight(SceneManager &manager, float intancity) : Light(manager), _intancity(intancity)
+PointLight::PointLight(SceneManager &manager, float range) : Light(manager)
 {
+	_range = range;
 }
 
 PointLight::~PointLight()
 {
 }
 
-void PointLight::setIntansity(float intensity)
+void PointLight::setRange(float intensity)
 {
-	_intancity = intensity;
+	_range = intensity;
 }
-
-
-float PointLight::getIntansity() const
-{
-	return _intancity;
-}
-

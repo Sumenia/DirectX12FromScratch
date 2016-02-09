@@ -48,46 +48,60 @@ void Light::setSpecular(Vector3f const &specular)
     _specular = specular;
 }
 
-void MiniEngine::Light::setConstant(float constant)
+void	Light::setConstant(float constant)
 {
 	_constant = constant;
 }
 
-float MiniEngine::Light::getConstant()
+float	Light::getConstant()
 {
 	return (_constant);
 }
 
-void MiniEngine::Light::setLinear(float linear)
+void	Light::setLinear(float linear)
 {
 	_linear = linear;
 }
 
-float MiniEngine::Light::getLinear()
+float	Light::getLinear()
 {
 	return (_linear);
 }
 
-void MiniEngine::Light::setQuadratic(float quadratic)
+void	Light::setQuadratic(float quadratic)
 {
 	_quadratic = quadratic;
 }
 
-float MiniEngine::Light::getQuadratic()
+float	Light::getQuadratic()
 {
 	return (_quadratic);
 }
 
-float MiniEngine::Light::getCosineLightAngle()
+/* Directional + Spot */
+Vector3f	Light::getDirection() const
 {
-	float  cosine = cos(_cutOff);
-	std::cout << cosine << std::endl;
-	return cosine;
+	return _direction;
 }
 
-float MiniEngine::Light::getCosineBigAngle()
+/* Spot */
+float Light::getOuterCutOff() const
 {
-	float  cosine = cos(_outerCutOff);
-	std::cout << cosine << std::endl;
-	return cosine;
+	return _outerCutOffAngle;
+}
+
+float Light::getInnerCutOff() const
+{
+	return _innerCutOffAngle;
+}
+
+Vector3f Light::getDirection() const
+{
+	return _direction;
+}
+
+/* Point */
+float Light::getRange() const
+{
+	return _range;
 }

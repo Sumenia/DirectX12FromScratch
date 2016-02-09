@@ -47,6 +47,19 @@ namespace MiniEngine
 
 		float			getCosineLightAngle();
 		float			getCosineBigAngle();
+
+		/* DirectionalLight */
+		Vector3f		getDirection() const;
+
+		/* SpotLight */
+		float			getOuterCutOff() const;
+		float			getInnerCutOff() const;
+		Vector3f		getDirection() const;
+
+		/* Point */
+		float			getRange() const;
+
+
     protected:
         SceneManager    &_manager;
 
@@ -57,5 +70,15 @@ namespace MiniEngine
         float           _constant;
         float           _linear;
         float           _quadratic;
+
+		/* DirectionalLight + SpotLight */
+		Vector3f		_direction;
+
+		/* SpotLight */
+		float           _outerCutOffAngle;
+		float           _innerCutOffAngle;
+
+		/* Point */
+		float			_range;
     };
 }

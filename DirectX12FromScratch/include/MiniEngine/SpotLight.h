@@ -1,5 +1,5 @@
 #pragma once
-#include "Light.h"
+#include "MiniEngine/Light.h"
 
 namespace MiniEngine
 {
@@ -7,20 +7,16 @@ namespace MiniEngine
 	{
 	public:
 		SpotLight(SceneManager &manager, Vector3f direction, float innerCutOffAngle, float outterCutOffAngle);
+		SpotLight(SceneManager &manager, Vector3f direction, float innerCutOffAngle);
+
 		~SpotLight();
 
-		float		getOuterCutOff() const;
 		void		setOuterCutOff(float outerCutOff);
 
-		float		getInnerCutOff() const;
 		void		setInnerCutOff(float cutOff);
 
-		Vector3f	getDirection() const;
 		void		setDirection(Vector3f direction);
 
 	private:
-		float           _outerCutOffAngle;
-		float           _innerCutOffAngle;
-		Vector3f        _direction;
 	};
 }

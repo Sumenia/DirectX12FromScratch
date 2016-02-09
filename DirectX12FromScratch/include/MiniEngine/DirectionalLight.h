@@ -6,12 +6,10 @@ namespace MiniEngine
 	class DirectionalLight : public Light
 	{
 	public:
-		DirectionalLight(SceneManager &manager, float angle);
+		DirectionalLight(SceneManager &manager, Vector3f direction);
 		~DirectionalLight();
 
-		float	getAngle() const;
-		void	setAngle();
+		void		setDirection(Vector3f direction);
 	private:
-		float	_angle;
 	};
 }
