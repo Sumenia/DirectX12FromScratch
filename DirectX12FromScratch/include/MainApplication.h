@@ -3,7 +3,6 @@
 # include <string>
 # include "Window.h"
 # include "MiniEngine/Application.h"
-# include "MiniEngine/SpotLight.h"
 # include "DynamicLibrary.h"
 
 class MainApplication : public MiniEngine::Application
@@ -24,5 +23,4 @@ protected:
 	MiniEngine::SceneManager	*_sceneManager;
 	MiniEngine::Camera			*_camera;
     MiniEngine::SceneNode       *_node;
-    MiniEngine::SpotLight       *_light;
 };
