@@ -4,6 +4,7 @@
 # include <SFML/Window.hpp>
 # include "Window.h"
 # include "Keyboard_SFML.h"
+# include "Mouse_SFML.h"
 
 class Window_SFML : public Window
 {
@@ -31,4 +32,5 @@ private:
 	sf::Window											*_window;
 	std::map<sf::Event::EventType, Event::EventType>	_eventTypeMap;
 	Keyboard_SFML										_keyboard;
+	Mouse_SFML											_mouse;
 };

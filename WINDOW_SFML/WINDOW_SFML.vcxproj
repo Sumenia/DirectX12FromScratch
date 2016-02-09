@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Keyboard_SFML.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mouse_SFML.cpp" />
     <ClCompile Include="Window_SFML.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="..\DirectX12FromScratch\include\DynamicLibrary.h" />
     <ClInclude Include="..\DirectX12FromScratch\include\Window.h" />
     <ClInclude Include="Keyboard_SFML.h" />
+    <ClInclude Include="Mouse_SFML.h" />
     <ClInclude Include="Window_SFML.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
