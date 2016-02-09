@@ -1,6 +1,6 @@
 #pragma once
 
-# include <Magick++.h>
+#include "ImageLoader/PngImageLoader.h"
 
 namespace MiniEngine
 {
@@ -9,10 +9,10 @@ namespace MiniEngine
 	public:
 		Texture();
 		~Texture();
-		bool loadFromFile(const std::string &filename);
-		const Magick::Blob	&getblob();
+		bool					loadFromFile(const std::string &filename);
+		AImageLoader			*getImage();
 
 	private:
-		Magick::Blob		_blob;
+		AImageLoader			*_loader;
 	};
 }

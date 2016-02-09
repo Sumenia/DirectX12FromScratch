@@ -11,7 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DynamicLibrary.cpp" />
-    <ClCompile Include="src\ImageLoader\IImageLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainApplication.cpp" />
     <ClCompile Include="src\MiniEngine\Application.cpp" />
@@ -59,12 +58,12 @@
     <ClCompile Include="src\MiniEngine\Viewport.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\AImageLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Config.h" />
     <ClInclude Include="include\DynamicLibrary.h" />
     <ClInclude Include="include\Event.h" />
-    <ClInclude Include="include\ImageLoader\IImageLoader.h" />
     <ClInclude Include="include\Keyboard.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
@@ -119,5 +118,6 @@
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\Vector.h" />
     <ClInclude Include="include\ImageLoader\PngImageloader.h" />
+    <ClInclude Include="include\ImageLoader\AImageLoader.h" />
   </ItemGroup>
 </Project>

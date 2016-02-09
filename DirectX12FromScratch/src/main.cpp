@@ -1,7 +1,6 @@
 #include <iostream>
 #include "MainApplication.h"
 #include "MiniEngine\Mesh.h"
-# include <Magick++.h>
 
 # if defined(SYSTEM_WINDOWS)
 int WINAPI WinMain(HINSTANCE hInstance, 
@@ -16,7 +15,6 @@ int	main()
 
 int	main(int ac, char **av)
 {
-	Magick::InitializeMagick(*av);
     MainApplication application("WINDOW_SFML");
 
 	//MiniEngine::Mesh mesh;

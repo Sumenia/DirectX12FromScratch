@@ -1,9 +1,11 @@
 #include "ImageLoader/PngImageloader.h"
 #include <iostream>
 
-PngImageLoader::PngImageLoader() : IImageLoader(IImageLoader::Format::PNG) {}
+PngImageLoader::PngImageLoader() : AImageLoader(EImageFormat::Type::PNG) {}
 
-PngImageLoader::~PngImageLoader() {}
+PngImageLoader::~PngImageLoader()
+{
+}
 
 bool			PngImageLoader::writeToFile(const std::string &filename)
 {
@@ -109,8 +111,8 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	_bitDepth = png_get_bit_depth(png_ptr, png_info);
 	setColorType(png_get_color_type(png_ptr, png_info), png_ptr);
 
-	if (_rgbFormat == IImageLoader::RGBFormat::GRAY ||
-		_rgbFormat == IImageLoader::RGBFormat::GRAY_ALPHA)
+	if (_rgbFormat == ERGBFormat::Type::GRAY ||
+		_rgbFormat == ERGBFormat::Type::GRAY_ALPHA)
 		png_set_gray_to_rgb(png_ptr);
 
 	if (!removeAlphaChannel(fp, png_info, png_ptr))
@@ -131,20 +133,20 @@ void			PngImageLoader::setColorType(png_byte colorType, png_structp &png_ptr)
 	switch (colorType)
 	{
 	case PNG_COLOR_TYPE_GRAY:
-		_rgbFormat = IImageLoader::RGBFormat::GRAY;
+		_rgbFormat = ERGBFormat::Type::GRAY;
 		break;
 	case PNG_COLOR_TYPE_GRAY_ALPHA:
-		_rgbFormat = IImageLoader::RGBFormat::GRAY_ALPHA;
+		_rgbFormat = ERGBFormat::Type::GRAY_ALPHA;
 		break;
 	case PNG_COLOR_TYPE_PALETTE:
 		png_set_palette_to_rgb(png_ptr);
-		_rgbFormat = IImageLoader::RGBFormat::RGB;
+		_rgbFormat = ERGBFormat::Type::RGB;
 		break;
 	case PNG_COLOR_TYPE_RGB:
-		_rgbFormat = IImageLoader::RGBFormat::RGB;
+		_rgbFormat = ERGBFormat::Type::RGB;
 		break;
 	case PNG_COLOR_TYPE_RGBA:
-		_rgbFormat = IImageLoader::RGBFormat::RGBA;
+		_rgbFormat = ERGBFormat::Type::RGBA;
 		break;
 	default:
 		break;
