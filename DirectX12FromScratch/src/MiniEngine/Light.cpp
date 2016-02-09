@@ -5,7 +5,8 @@ using namespace MiniEngine;
 
 Light::Light(SceneManager &manager) : _manager(manager),
     _ambient(0.0f, 0.0f, 0.0f), _diffuse(0.0f, 0.0f, 0.0f), _specular(0.0f, 0.0f, 0.0f), 
-    _constant(1.0f), _linear(0.0f), _quadratic(0.0f)
+    _constant(1.0f), _linear(0.0f), _quadratic(0.0f),
+    _range(-1.0f)
 {}
 
 Light::~Light()

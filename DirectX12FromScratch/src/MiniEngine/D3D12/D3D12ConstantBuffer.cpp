@@ -203,7 +203,7 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
     for (auto &&light : lights)
     {
         Vector3f    position = light->getParent()->getDerivedPosition();
-        //Vector4f    direction(light->getDirection().x, light->getDirection().y, light->getDirection().z, 0.0f);
+        Vector4f    direction = light->getParent()->getTransformationMatrix() * Vector4f(light->getDirection().x, light->getDirection().y, light->getDirection().z, 0.0f);
 
         lightsData[i].type = light->getType();
         lightsData[i].position = { position.x, position.y, position.z };
@@ -212,7 +212,7 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
         lightsData[i].specular = { light->getSpecular().x, light->getSpecular().y, light->getSpecular().z };
         lightsData[i].cutOff = light->getInnerCutOff();
         lightsData[i].outerCutOff = light->getOuterCutOff();
-        lightsData[i].direction = { light->getDirection().x, light->getDirection().y, light->getDirection().z };
+        lightsData[i].direction = { direction.x, direction.y, direction.z };
         lightsData[i].quadratic = light->getQuadratic();
         lightsData[i].constant = light->getConstant();
         lightsData[i].linear = light->getLinear();

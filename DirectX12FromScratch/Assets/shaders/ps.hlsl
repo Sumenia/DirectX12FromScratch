@@ -27,11 +27,13 @@ float3 computePointLight(float3 materialColor, Light light, PSInput input)
     float3  normal = normalize(input.normal);
     float3  position = float3(input.worldPosition.x, input.worldPosition.y, input.worldPosition.z);
 
+    float3  lightDirection = normalize(position - light.position);
+    float	distance = length(light.position - position);
+
     // Compute ambient color
     float3  ambient = light.ambient * materialColor; // TO-DO: Use ka
 
     // Compute diffuse color
-    float3  lightDirection = normalize(light.position - position);
     float   diff = max(dot(normal, lightDirection), 0.0f);
     float3  diffuse = light.diffuse * diff * materialColor; // TO-DO: Use kd
 
@@ -42,7 +44,6 @@ float3 computePointLight(float3 materialColor, Light light, PSInput input)
     float3  specular = light.specular * spec * materialColor; // TO-DO: Use ks
 
     // Compute attenuation
-    float	distance = length(light.position - position);
     float	attenuationFactor = 1 / (light.constantAttenuation + light.linearAttenuation * distance + light.quadraticAttenuation * distance * distance);
 
     return (attenuationFactor * (ambient + diffuse + specular));
@@ -51,7 +52,7 @@ float3 computePointLight(float3 materialColor, Light light, PSInput input)
 float computeDirectionalLight(float3 materialColor, Light light, PSInput input)
 {
 	float3  diffuse = float3(0, 0, 0);
-	float3 specular = float3(0, 0, 0);
+	float3  specular = float3(0, 0, 0);
 	float3  position = float3(input.worldPosition.x, input.worldPosition.y, input.worldPosition.z);
 
 	//The light vector aims opposite the direction the light rays travel.
@@ -78,23 +79,37 @@ float computeDirectionalLight(float3 materialColor, Light light, PSInput input)
 
 float3 computeSpotLigth(float3 materialColor, Light light, PSInput input)
 {
-	float3  position = float3(input.worldPosition.x, input.worldPosition.y, input.worldPosition.z);
+    float3  normal = normalize(input.normal);
+    float3  position = float3(input.worldPosition.x, input.worldPosition.y, input.worldPosition.z);
 
-	float3  lightDirection = normalize(light.direction);//light.position - position;
+    float3  lightDirection = normalize(position - light.position);
+    float	distance = length(light.position - position);
 
-	float3  V = normalize(position - light.position);
+    // Compute ambient color
+    float3  ambient = light.ambient * materialColor; // TO-DO: Use ka
 
-	float cosDirection = dot(V, lightDirection);
+    // Compute diffuse color
+    float   diff = max(dot(normal, lightDirection), 0.0f);
+    float3  diffuse = light.diffuse * diff * materialColor; // TO-DO: Use kd
 
-	float cosInnerCutOff = cos(light.cutOff);
+    // Compute specular color
+    float3  viewDir = normalize(camera.position - position);
+    float3  reflectionDirection = reflect(lightDirection, normal);
+    float   spec = pow(max(dot(viewDir, reflectionDirection), 0.0), 32.0f/* TO-DO: Replace by shininess */);
+    float3  specular = light.specular * spec * materialColor; // TO-DO: Use ks
 
-	float cosOuterCutOff = cos(light.outerCutOff);
+    // Soft edges
+    float   theta = dot(lightDirection, normalize(-light.direction));
+    float   epsilon = light.cutOff - light.outerCutOff;
+    float   intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0f, 1.0f);
 
-	float spotEffect = smoothStep(light.outerCutOff, light.cutOff, cosDirection);
+    diffuse *= intensity;
+    specular *= intensity;
 
-	float3  normal = normalize(input.normal);
-	
-	return  computePointLight(materialColor, light, input) * spotEffect;
+    // Compute attenuation
+    float	attenuationFactor = 1 / (light.constantAttenuation + light.linearAttenuation * distance + light.quadraticAttenuation * distance * distance);
+
+    return (attenuationFactor * (ambient + diffuse + specular));
 }
 
 float3 computeLight(float3 materialColor, Light light, PSInput input)

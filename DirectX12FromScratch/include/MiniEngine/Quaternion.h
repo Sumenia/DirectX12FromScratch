@@ -298,7 +298,7 @@ namespace MiniEngine
 		* Converts quaternion into rotation matrix.
 		* @return Rotation matrix expressing this quaternion.
 		*/
-		Matrix3<T> rotMatrix()
+		Matrix3<T> rotMatrix() const
 		{
 			Matrix3<T> ret;
 
