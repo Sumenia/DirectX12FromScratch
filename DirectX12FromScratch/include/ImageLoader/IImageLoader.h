@@ -2,7 +2,6 @@
 
 # include <string>
 # include "stdint.h"
-# include "libPNG/lpng1621/png.h"
 
 class IImageLoader
 {
