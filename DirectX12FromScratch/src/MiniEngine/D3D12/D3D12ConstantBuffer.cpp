@@ -191,7 +191,9 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
         float               linear;
         float               quadratic;
 
-        float               pad2[2];
+        float               range;
+
+        float               pad2[1];
     };
 
     LightStructure  lightsData[MAX_LIGHTS];
@@ -203,19 +205,21 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
         Vector3f    position = light->getParent()->getDerivedPosition();
         //Vector4f    direction(light->getDirection().x, light->getDirection().y, light->getDirection().z, 0.0f);
 
-//        lightsData[i].type = light->getType();
+        lightsData[i].type = light->getType();
         lightsData[i].position = { position.x, position.y, position.z };
         lightsData[i].ambient = { light->getAmbient().x, light->getAmbient().y, light->getAmbient().z };
         lightsData[i].diffuse = { light->getDiffuse().x, light->getDiffuse().y, light->getDiffuse().z };
         lightsData[i].specular = { light->getSpecular().x, light->getSpecular().y, light->getSpecular().z };
-		lightsData[i].cutOff = light->getInnerCutOff();
-		lightsData[i].outerCutOff = light->getOuterCutOff();
-		lightsData[i].direction = { light->getDirection().x, light->getDirection().y, light->getDirection().z };
-		lightsData[i].quadratic = light->getQuadratic();
-		lightsData[i].constant = light->getConstant();
-		lightsData[i].linear = light->getLinear();
-		lightsData[i].cutOff = light->getCosineLightAngle();
-		lightsData[i].outerCutOff = light->getCosineBigAngle();
+        lightsData[i].cutOff = light->getInnerCutOff();
+        lightsData[i].outerCutOff = light->getOuterCutOff();
+        lightsData[i].direction = { light->getDirection().x, light->getDirection().y, light->getDirection().z };
+        lightsData[i].quadratic = light->getQuadratic();
+        lightsData[i].constant = light->getConstant();
+        lightsData[i].linear = light->getLinear();
+        lightsData[i].cutOff = light->getCosineLightAngle();
+        lightsData[i].outerCutOff = light->getCosineBigAngle();
+        lightsData[i].range = light->getRange();
+
         i++;
     }
 

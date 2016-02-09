@@ -2,6 +2,9 @@
 
 using namespace MiniEngine;
 
+DirectionalLight::DirectionalLight(SceneManager &manager) : Light(manager)
+{}
+
 DirectionalLight::DirectionalLight(SceneManager &manager, Vector3f direction) : Light(manager)
 {
 	_direction = direction;

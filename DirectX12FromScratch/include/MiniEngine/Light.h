@@ -25,7 +25,7 @@ namespace MiniEngine
 
         virtual void    needUpdate();
 
-        virtual Type            getType() const = 0;
+        virtual Type    getType() const = 0;
 
         Vector3f        &getAmbient();
         void            setAmbient(Vector3f const &ambient);
@@ -45,8 +45,6 @@ namespace MiniEngine
 		void			setQuadratic(float quadratic);
 		float			getQuadratic();
 
-	
-
 		/* DirectionalLight */
 		Vector3f		getDirection() const;
 
@@ -56,9 +54,8 @@ namespace MiniEngine
 		float			getCosineBigAngle() const;
 		float			getCosineLightAngle() const;
 
-		/* Point */
+		/* PointLight + Spotlight */
 		float			getRange() const;
-
 
     protected:
         SceneManager    &_manager;
@@ -78,7 +75,7 @@ namespace MiniEngine
 		float           _outerCutOffAngle;
 		float           _innerCutOffAngle;
 
-		/* Point */
+		/* PointLight + Spotlight */
 		float			_range;
     };
 }

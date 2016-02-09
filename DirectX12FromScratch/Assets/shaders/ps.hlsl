@@ -25,23 +25,10 @@ float computeDirectionalLight(float3 materialColor, Light light, PSInput input)
 		//pow(max(dot(viewDir, reflectionDirection), 0.0), 32.0f/ TO-DO: Replace by shininess /);
 		float specularFactor = pow(max(dot(vect, position), 0.0f), 32.0f);
 
-		diffuse = light.diffuse  diffuseFactor  materialColor;
-		specular = light.specular  specularFactor  materialColor;
+		diffuse = light.diffuse * diffuseFactor * materialColor;
+		specular = light.specular * specularFactor * materialColor;
 	}
 	return (diffuse + specular);
-}
-
-float3 computeLight(float3 materialColor, Light light, PSInput input)
-{
-	// TO-DO: Manage others types
-	if (light.type == 0) // POINT
-		return (computePointLight(materialColor, light, input));
-	else if (light.type == 2)
-		return (computeSpotLigth(materialColor, light, input));
-	else if (light.type == 1)
-		return (computeDirectionalLight(materialColor, light, input));
-	else
-		return (float3(0.0f, 0.0f, 0.0f));
 }
 
 float3 computePointLight(float3 materialColor, Light light, PSInput input)
@@ -113,17 +100,17 @@ float3 computeSpotLigth(float3 materialColor, Light light, PSInput input)
 
 }
 
-
-
 float3 computeLight(float3 materialColor, Light light, PSInput input)
 {
-	// TO-DO: Manage others types
-	if (light.type == 0) // POINT
-		return (computePointLight(materialColor, light, input));
-	else if (light.type == 2)
-		return (computeSpotLigth(materialColor, light, input));
-	else
-		return (float3(0.0f, 0.0f, 0.0f));
+    // TO-DO: Manage others types
+    if (light.type == 0) // POINT
+        return (computePointLight(materialColor, light, input));
+    else if (light.type == 1) // DIRECTIONAL
+        return (computeDirectionalLight(materialColor, light, input));
+    else if (light.type == 2) // SPOT
+        return (computeSpotLigth(materialColor, light, input));
+    else
+        return (float3(0.0f, 0.0f, 0.0f));
 }
 
 float4 PSMain(PSInput input) : SV_TARGET

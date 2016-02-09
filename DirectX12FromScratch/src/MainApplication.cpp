@@ -34,16 +34,16 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
                 renderTarget->getDefaultViewport()->attachCamera(_camera);
 
-                MiniEngine::Light   *light = _sceneManager->createLight();
+                MiniEngine::Light   *light = _sceneManager->createLight(MiniEngine::Light::POINT);
 
-                light->setAmbient({1.0f, 1.0f, 1.0f});
+                light->setAmbient({0.05f, 0.05f, 0.05f});
                 light->setDiffuse({ 0.5f, 0.5f, 0.5f });
                 light->setSpecular({ 1.0f, 1.0f, 1.0f });
 
-                light->getParent()->translate( { 40.0f , 80.0f , 0.0f } , MiniEngine::TS_WORLD);
+                light->getParent()->translate( { -150.0f, -150.0f, 150.0f } , MiniEngine::TS_WORLD);
 
                 // Load a cube
-                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/cube.txt"));
 
                 //_node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
                 //_node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
