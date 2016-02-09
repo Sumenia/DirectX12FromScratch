@@ -32,3 +32,8 @@ void SpotLight::setDirection(Vector3f direction)
 {
 	_direction = direction;
 }
+
+Light::Type	SpotLight::getType() const
+{
+	return Light::SPOT;
+}

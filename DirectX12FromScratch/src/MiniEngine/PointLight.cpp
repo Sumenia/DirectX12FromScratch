@@ -15,3 +15,8 @@ void PointLight::setRange(float intensity)
 {
 	_range = intensity;
 }
+
+Light::Type	PointLight::getType() const
+{
+	return Light::POINT;
+}

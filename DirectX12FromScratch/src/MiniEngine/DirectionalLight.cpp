@@ -11,6 +11,11 @@ DirectionalLight::~DirectionalLight()
 {
 }
 
+Light::Type	DirectionalLight::getType() const
+{
+	return Light::DIRECTIONAL;
+}
+
 void	DirectionalLight::setDirection(Vector3f direction)
 {
 	_direction = direction;

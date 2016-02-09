@@ -10,6 +10,8 @@ namespace MiniEngine
 		~DirectionalLight();
 
 		void		setDirection(Vector3f direction);
+		Light::Type	getType() const;
+
 	private:
 	};
 }

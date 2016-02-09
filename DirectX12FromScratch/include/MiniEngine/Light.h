@@ -25,7 +25,7 @@ namespace MiniEngine
 
         virtual void    needUpdate();
 
-        Type            getType();
+        virtual Type            getType() const = 0;
 
         Vector3f        &getAmbient();
         void            setAmbient(Vector3f const &ambient);

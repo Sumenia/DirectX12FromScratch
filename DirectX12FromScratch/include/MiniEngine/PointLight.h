@@ -10,5 +10,6 @@ namespace MiniEngine
 		~PointLight();
 
 		void	setRange(float range);
+		Light::Type	getType() const;
 	};
 }
