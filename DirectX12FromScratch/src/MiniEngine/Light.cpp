@@ -4,9 +4,6 @@
 using namespace MiniEngine;
 
 Light::Light(SceneManager &manager) : _manager(manager),
-    _type(SPOT), 
-    _direction(-0.1f, -0.1f, 0.0f), 
-    _cutOff(1.0f), _outerCutOff(5.0f), 
     _ambient(0.0f, 0.0f, 0.0f), _diffuse(0.0f, 0.0f, 0.0f), _specular(0.0f, 0.0f, 0.0f), 
     _constant(1.0f), _linear(0.0f), _quadratic(0.0f)
 {}
@@ -19,11 +16,6 @@ Light::~Light()
 void Light::needUpdate()
 {
     _manager.updateLightBuffer();
-}
-
-Light::Type Light::getType()
-{
-    return (_type);
 }
 
 Vector3f &Light::getAmbient()
@@ -54,36 +46,6 @@ Vector3f &Light::getSpecular()
 void Light::setSpecular(Vector3f const &specular)
 {
     _specular = specular;
-}
-
-float Light::getCutOff()
-{
-	return	(_cutOff);
-}
-void Light::setCutOff(float cutOff) 
-{
-	_cutOff = cutOff;
-}
-
-float Light::getOuterCutOff()
-{
-	return (_outerCutOff);
-}
-
-void Light::setOuterCutOff(float outerCutOff) 
-{
-	_outerCutOff = outerCutOff;
-}
-
-
-Vector3f &Light::getDirection()
-{
-	return (_direction);
-}
-
-void Light::setDirection(Vector3f const &direction)
-{
-	_direction = direction;
 }
 
 void MiniEngine::Light::setConstant(float constant)
