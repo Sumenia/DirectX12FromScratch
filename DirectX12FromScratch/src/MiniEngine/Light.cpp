@@ -115,3 +115,17 @@ float MiniEngine::Light::getQuadratic()
 {
 	return (_quadratic);
 }
+
+float MiniEngine::Light::getCosineLightAngle()
+{
+	float  cosine = cos(_cutOff);
+	std::cout << cosine << std::endl;
+	return cosine;
+}
+
+float MiniEngine::Light::getCosineBigAngle()
+{
+	float  cosine = cos(_outerCutOff);
+	std::cout << cosine << std::endl;
+	return cosine;
+}

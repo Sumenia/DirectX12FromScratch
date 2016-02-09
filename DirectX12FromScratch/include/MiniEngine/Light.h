@@ -54,6 +54,8 @@ namespace MiniEngine
 		void			setQuadratic(float quadratic);
 		float			getQuadratic();
 
+		float			getCosineLightAngle();
+		float			getCosineBigAngle();
     protected:
         SceneManager    &_manager;
 

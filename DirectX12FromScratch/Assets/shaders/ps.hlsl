@@ -64,7 +64,7 @@ float3 computeSpotLigth(float3 materialColor, Light light, PSInput input)
 
 	float cosOuterCutOff = cos(light.outerCutOff);
 
-	float spotEffect = smoothStep(0.70,0.99, cosDirection);
+	float spotEffect = smoothStep(light.outerCutOff, light.cutOff, cosDirection);
 
 	float3  normal = normalize(input.normal);
 	

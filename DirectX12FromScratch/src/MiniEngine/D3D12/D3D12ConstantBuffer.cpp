@@ -179,6 +179,7 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
 
         float               cutOff;
         float               outerCutOff;
+		
 
         DirectX::XMFLOAT3   ambient;
         DirectX::XMFLOAT3   diffuse;
@@ -213,6 +214,8 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
 		lightsData[i].quadratic = light->getQuadratic();
 		lightsData[i].constant = light->getConstant();
 		lightsData[i].linear = light->getLinear();
+		lightsData[i].cutOff = light->getCosineLightAngle();
+		lightsData[i].outerCutOff = light->getCosineBigAngle();
         i++;
     }
 
