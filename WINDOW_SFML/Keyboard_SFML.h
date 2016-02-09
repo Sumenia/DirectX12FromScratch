@@ -4,7 +4,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include "Keyboard.h"
 
-class Keyboard_SFML : Keyboard
+class Keyboard_SFML : public Keyboard
 {
 public:
 	Keyboard_SFML();

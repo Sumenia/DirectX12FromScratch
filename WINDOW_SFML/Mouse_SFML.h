@@ -4,7 +4,7 @@
 #include <SFML/Window/Mouse.hpp>
 #include "Mouse.h"
 
-class Mouse_SFML : Mouse
+class Mouse_SFML : public Mouse
 {
 public:
 	Mouse_SFML();

@@ -23,8 +23,8 @@ public:
 	// Inherited via IEvent
 	virtual bool				getEvent(Event &event);
 
-	virtual bool				isKeyPressed(Keyboard::Key key);
-
+	virtual Keyboard			*getKeyboard();
+	virtual Mouse				*getMouse();
 private:
 	void						initEventTypeMap();
 

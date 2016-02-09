@@ -128,8 +128,12 @@ bool Window_SFML::getEvent(Event &event)
 	return (false);
 }
 
-
-bool Window_SFML::isKeyPressed(Keyboard::Key key)
+Keyboard *Window_SFML::getKeyboard()
 {
-	return _keyboard.isKeyPressed(key);
+	return &_keyboard;
+}
+
+Mouse *Window_SFML::getMouse()
+{
+	return &_mouse;
 }

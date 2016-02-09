@@ -102,27 +102,27 @@ bool MainApplication::update(MiniEngine::Time elapsedTime)
 
 	float elapsedSeconds = elapsedTime.getSeconds();
 
-	if (_window->isKeyPressed(Keyboard::Left))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Left))
 		_camera->rotate(100 * elapsedSeconds, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
-	if (_window->isKeyPressed(Keyboard::Right))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Right))
 		_camera->rotate(100 * elapsedSeconds, Vector3f(0, -1, 0), MiniEngine::TS_WORLD);
-	if (_window->isKeyPressed(Keyboard::Up))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Up))
 		_camera->rotate(100 * elapsedSeconds, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::Down))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Down))
 		_camera->rotate(100 * elapsedSeconds, Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
 
-	if (_window->isKeyPressed(Keyboard::Z))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Z))
 		_camera->translate(Vector3f(0, 0, -100 * elapsedSeconds), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::S))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::S))
 		_camera->translate(Vector3f(0, 0, 100 * elapsedSeconds), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::Q))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Q))
 		_camera->translate(Vector3f(-100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::D))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::D))
 		_camera->translate(Vector3f(100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
 
-	if (_window->isKeyPressed(Keyboard::Space))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Space))
 		_camera->translate(Vector3f(0, 100 * elapsedSeconds, 0), MiniEngine::TS_WORLD);
-	if (_window->isKeyPressed(Keyboard::LShift))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::LShift))
 		_camera->translate(Vector3f(0, -100 * elapsedSeconds, 0), MiniEngine::TS_WORLD);
 
 	Event event;
