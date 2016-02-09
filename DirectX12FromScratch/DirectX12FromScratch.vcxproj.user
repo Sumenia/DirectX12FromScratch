@@ -4,13 +4,8 @@
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerEnvironment>MAGICK_CODER_MODULE_PATH=$(SolutionDir)ImageMagick-6.9.3-Q16\modules\coders
-PATH=%PATH%;$(SolutionDir)ImageMagick-6.9.3-Q16</LocalDebuggerEnvironment>
-    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerEnvironment>MAGICK_CODER_MODULE_PATH=$(SolutionDir)ImageMagick-6.9.3-Q16\modules\coders
-PATH=%PATH%;$(SolutionDir)ImageMagick-6.9.3-Q16</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>
+    </LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
