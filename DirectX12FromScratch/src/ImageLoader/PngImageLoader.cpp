@@ -119,6 +119,8 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 		return (false);
 
 	_data = (png_bytep*)malloc(sizeof(png_bytep) * _height);
+	_length = png_get_rowbytes(png_ptr, png_info) * _height;
+
 	for (int y = 0; y < _height; y++)
 		((png_bytep*)_data)[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, png_info));
 
