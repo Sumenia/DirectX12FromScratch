@@ -205,6 +205,8 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
         Vector3f    position = light->getParent()->getDerivedPosition();
         Vector4f    direction = light->getParent()->getTransformationMatrix() * Vector4f(light->getDirection().x, light->getDirection().y, light->getDirection().z, 0.0f);
 
+        std::cout << direction << std::endl;
+
         lightsData[i].type = light->getType();
         lightsData[i].position = { position.x, position.y, position.z };
         lightsData[i].ambient = { light->getAmbient().x, light->getAmbient().y, light->getAmbient().z };

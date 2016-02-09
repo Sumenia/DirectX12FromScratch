@@ -49,32 +49,27 @@ float3 computePointLight(float3 materialColor, Light light, PSInput input)
     return (attenuationFactor * (ambient + diffuse + specular));
 }
 
-float computeDirectionalLight(float3 materialColor, Light light, PSInput input)
+float3 computeDirectionalLight(float3 materialColor, Light light, PSInput input)
 {
-	float3  diffuse = float3(0, 0, 0);
-	float3  specular = float3(0, 0, 0);
-	float3  position = float3(input.worldPosition.x, input.worldPosition.y, input.worldPosition.z);
+    float3  normal = normalize(input.normal);
+    float3  position = float3(input.worldPosition.x, input.worldPosition.y, input.worldPosition.z);
 
-	//The light vector aims opposite the direction the light rays travel.
-	float3 lightVector = -1 * (light.position - position);
+    float3  lightDirection = normalize(light.direction);
 
-	// Add ambient term.
-	float3  ambient = light.ambient * materialColor;
+    // Compute ambient color
+    float3  ambient = light.ambient * materialColor; // TO-DO: Use ka
 
-	// Add diffuse and specular term, provided the surface is in 
-	// the line of site of the light
-	float3  normal = normalize(input.normal);
+    // Compute diffuse color
+    float   diff = max(dot(normal, lightDirection), 0.0f);
+    float3  diffuse = light.diffuse * diff * materialColor; // TO-DO: Use kd
 
-	float diffuseFactor = dot(lightVector, normal);
-	if (diffuseFactor > 0.0f) {
-		float3 vect = reflect(-lightVector, normal);
-		//pow(max(dot(viewDir, reflectionDirection), 0.0), 32.0f/ TO-DO: Replace by shininess /);
-		float specularFactor = pow(max(dot(vect, position), 0.0f), 32.0f);
+    // Compute specular color
+    float3  viewDir = normalize(camera.position - position);
+    float3  reflectionDirection = reflect(lightDirection, normal);
+    float   spec = pow(max(dot(viewDir, reflectionDirection), 0.0), 32.0f/* TO-DO: Replace by shininess */);
+    float3  specular = light.specular * spec * materialColor; // TO-DO: Use ks
 
-		diffuse = light.diffuse * diffuseFactor * materialColor;
-		specular = light.specular * specularFactor * materialColor;
-	}
-	return (diffuse + specular);
+    return (ambient + diffuse + specular);
 }
 
 float3 computeSpotLigth(float3 materialColor, Light light, PSInput input)
