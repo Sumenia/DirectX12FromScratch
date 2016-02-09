@@ -10,9 +10,9 @@ namespace MiniEngine
 		Texture();
 		~Texture();
 		bool					loadFromFile(const std::string &filename);
-		AImageLoader			*getImage();
+		ImageLoader				*getImage();
 
 	private:
-		AImageLoader			*_loader;
+		ImageLoader				*_loader;
 	};
 }

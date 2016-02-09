@@ -1,9 +1,9 @@
 #pragma once
 
-# include "AImageLoader.h"
+# include "ImageLoader.h"
 # include "libPNG/lpng1621/png.h"
 
-class PngImageLoader : public AImageLoader
+class PngImageLoader : public ImageLoader
 {
 public:
 	PngImageLoader();

@@ -22,7 +22,7 @@
     <ClInclude Include="include\Config.h" />
     <ClInclude Include="include\DynamicLibrary.h" />
     <ClInclude Include="include\Event.h" />
-    <ClInclude Include="include\ImageLoader\AImageLoader.h" />
+    <ClInclude Include="include\ImageLoader\ImageLoader.h" />
     <ClInclude Include="include\ImageLoader\PngImageloader.h" />
     <ClInclude Include="include\ImageLoader\JpgImageLoader.h" />
     <ClInclude Include="include\Keyboard.h" />
@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DynamicLibrary.cpp" />
-    <ClCompile Include="src\ImageLoader\AImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\ImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\JpgImageLoader.cpp" />
     <ClCompile Include="src\main.cpp" />

@@ -1,7 +1,7 @@
 #include "ImageLoader/PngImageloader.h"
 #include <iostream>
 
-PngImageLoader::PngImageLoader() : AImageLoader(EImageFormat::Type::PNG) {}
+PngImageLoader::PngImageLoader() : ImageLoader(EImageFormat::Type::PNG) {}
 
 PngImageLoader::~PngImageLoader()
 {
