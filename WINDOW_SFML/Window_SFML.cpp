@@ -9,7 +9,6 @@ void Window_SFML::initEventTypeMap() {
 	_eventTypeMap[sf::Event::TextEntered] = Event::TextEntered;
 	_eventTypeMap[sf::Event::KeyPressed] = Event::KeyPressed;
 	_eventTypeMap[sf::Event::KeyReleased] = Event::KeyReleased;
-	_eventTypeMap[sf::Event::MouseWheelMoved] = Event::MouseWheelMoved;
 	_eventTypeMap[sf::Event::MouseWheelScrolled] = Event::MouseWheelScrolled;
 	_eventTypeMap[sf::Event::MouseButtonPressed] = Event::MouseButtonPressed;
 	_eventTypeMap[sf::Event::MouseButtonReleased] = Event::MouseButtonReleased;

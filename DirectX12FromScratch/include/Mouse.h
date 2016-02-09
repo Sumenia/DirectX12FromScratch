@@ -67,7 +67,7 @@ public:
 	/// \return True if the button is pressed, false otherwise
 	///
 	////////////////////////////////////////////////////////////
-	static bool isButtonPressed(Button button);
+	virtual bool isButtonPressed(Button button) = 0;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Get the current position of the mouse in desktop coordinates
@@ -78,7 +78,7 @@ public:
 	/// \return Current position of the mouse
 	///
 	////////////////////////////////////////////////////////////
-	static Vector2i getPosition();
+	virtual Vector2i getPosition() = 0;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Get the current position of the mouse in window coordinates
@@ -102,7 +102,7 @@ public:
 	/// \param position New position of the mouse
 	///
 	////////////////////////////////////////////////////////////
-	static void setPosition(const Vector2i& position);
+	virtual void setPosition(const Vector2i& position) = 0;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Set the current position of the mouse in window coordinates
