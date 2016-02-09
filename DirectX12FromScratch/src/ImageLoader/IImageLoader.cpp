@@ -2,7 +2,13 @@
 
 
 
-IImageLoader::IImageLoader(Format format): _format(format) {}
+IImageLoader::IImageLoader(Format format):	 _data(NULL),
+											_length(0),
+											_format(format),
+											_rgbFormat(RGBFormat::INVALID),
+											_bitDepth(0),
+											_width(0),
+											_height(0) {}
 
 
 IImageLoader::~IImageLoader() {}
