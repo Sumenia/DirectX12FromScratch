@@ -26,11 +26,11 @@ namespace ERGBFormat
 	};
 }
 
-class AImageLoader
+class ImageLoader
 {
 public:
-	AImageLoader(EImageFormat::Type format);
-	virtual ~AImageLoader();
+	ImageLoader(EImageFormat::Type format);
+	virtual ~ImageLoader();
 	void					*getData() const;
 	int						getDataLength() const;
 	int8_t					getBitpDepth() const;

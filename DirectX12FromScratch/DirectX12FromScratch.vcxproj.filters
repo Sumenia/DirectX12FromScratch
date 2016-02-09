@@ -58,7 +58,7 @@
     <ClCompile Include="src\MiniEngine\Viewport.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
-    <ClCompile Include="src\ImageLoader\AImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\ImageLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Config.h" />
@@ -118,6 +118,6 @@
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="include\Vector.h" />
     <ClInclude Include="include\ImageLoader\PngImageloader.h" />
-    <ClInclude Include="include\ImageLoader\AImageLoader.h" />
+    <ClInclude Include="include\ImageLoader\ImageLoader.h" />
   </ItemGroup>
 </Project>

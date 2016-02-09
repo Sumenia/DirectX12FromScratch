@@ -14,7 +14,7 @@ bool				Texture::loadFromFile(const std::string &filename)
 	return (_loader->loadFromFile(filename));
 }
 
-AImageLoader		*Texture::getImage()
+ImageLoader			*Texture::getImage()
 {
 	return _loader;
 }
