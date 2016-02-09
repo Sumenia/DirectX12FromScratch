@@ -44,6 +44,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
                 _light->setInnerCutOff(10.0f);
                 _light->setOuterCutOff(25.0f);
 
+                //_light->setRange(100.0f);
                 _light->setDirection({ 0.0f, 0.0f, 1.0f });
 
                 // Load a cube

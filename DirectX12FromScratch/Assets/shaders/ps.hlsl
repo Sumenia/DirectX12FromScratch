@@ -36,6 +36,9 @@ float3 computePointLight(float3 materialColor, Light light, float3 position, flo
     float3  lightDirection = normalize(position - light.position);
     float	distance = length(light.position - position);
 
+    if (light.range >= 0.0f && distance > light.range)
+        return (float3(0.0f, 0.0f, 0.0f));
+
     // Compute different colors
     float3  ambient = calcAmbientColor(light, materialColor);
     float3  diffuse = calcDiffuseColor(light, materialColor, normal, lightDirection);
@@ -60,6 +63,9 @@ float3 computeSpotLigth(float3 materialColor, Light light, float3 position, floa
 {
     float3  lightDirection = normalize(position - light.position);
     float	distance = length(light.position - position);
+
+    if (light.range >= 0.0f && distance > light.range)
+        return (float3(0.0f, 0.0f, 0.0f));
 
     // Compute different colors
     float3  ambient = calcAmbientColor(light, materialColor);
