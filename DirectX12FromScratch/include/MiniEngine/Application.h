@@ -1,6 +1,7 @@
 #pragma once
 
 # include "Root.h"
+# include "Time.h"
 
 namespace MiniEngine
 {
@@ -11,7 +12,7 @@ namespace MiniEngine
         virtual ~Application();
 
         void            run();
-        virtual bool    update() = 0;
+        virtual bool    update(Time elapsedTime) = 0;
 
     protected:
         bool            renderOneFrame();
