@@ -97,15 +97,13 @@ float Light::getInnerCutOff() const
 
 float	Light::getCosineLightAngle() const
 {
-	float  cosine = cos(_innerCutOffAngle);
-	std::cout << cosine << std::endl;
+    float  cosine = cos((_innerCutOffAngle * M_PI) / 180.0f);
 	return cosine;
 }
 
 float	Light::getCosineBigAngle() const
 {
-	float  cosine = cos(_outerCutOffAngle);
-	std::cout << cosine << std::endl;
+	float  cosine = cos((_outerCutOffAngle * M_PI) / 180.0f);
 	return cosine;
 }
 
