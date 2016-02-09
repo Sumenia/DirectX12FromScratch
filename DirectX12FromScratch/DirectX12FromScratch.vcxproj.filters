@@ -59,6 +59,7 @@
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\AImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\JpgImageLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Config.h" />
@@ -119,5 +120,6 @@
     <ClInclude Include="include\Vector.h" />
     <ClInclude Include="include\ImageLoader\PngImageloader.h" />
     <ClInclude Include="include\ImageLoader\AImageLoader.h" />
+    <ClInclude Include="include\ImageLoader\JpgImageLoader.h" />
   </ItemGroup>
 </Project>

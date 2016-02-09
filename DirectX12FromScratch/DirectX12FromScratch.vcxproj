@@ -24,6 +24,7 @@
     <ClInclude Include="include\Event.h" />
     <ClInclude Include="include\ImageLoader\AImageLoader.h" />
     <ClInclude Include="include\ImageLoader\PngImageloader.h" />
+    <ClInclude Include="include\ImageLoader\JpgImageLoader.h" />
     <ClInclude Include="include\Keyboard.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
@@ -82,6 +83,7 @@
     <ClCompile Include="src\DynamicLibrary.cpp" />
     <ClCompile Include="src\ImageLoader\AImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\JpgImageLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainApplication.cpp" />
     <ClCompile Include="src\MiniEngine\Application.cpp" />
@@ -242,8 +244,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\zlib\zlib-1.2.8;$(SolutionDir)ThirdParty;$(SolutionDir)assimp-3.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(OutDir);C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10586.0\um\x64;%(AdditionalLibraryDirectories);$(SolutionDir)\SFML-2.3.2\lib;$(SolutionDir)assimp-3.1.1\lib64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;libpng.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)ImageMagick-6.9.3-Q16\lib;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10586.0\um\x64;%(AdditionalLibraryDirectories);$(SolutionDir)\SFML-2.3.2\lib;$(SolutionDir)assimp-3.1.1\lib64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libjpeg.lib;d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;CORE_RL_magick_.lib;CORE_RL_Magick++_.lib;CORE_RL_wand_.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
     <PreBuildEvent>
