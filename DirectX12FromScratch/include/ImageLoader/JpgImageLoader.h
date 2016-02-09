@@ -1,9 +1,9 @@
 #pragma once
 
-# include "ImageLoader/IImageLoader.h"
+# include "ImageLoader/ImageLoader.h"
 # include "libJPG/libjpeg/jpeglib.h"
 
-class		JpgImageLoader : public IImageLoader
+class		JpgImageLoader : public ImageLoader
 {
 public:
 	JpgImageLoader();

@@ -1,6 +1,7 @@
+#include <iostream>
 #include "ImageLoader/JpgImageLoader.h"
 
-JpgImageLoader::JpgImageLoader() : IImageLoader(IImageLoader::Format::JPG) {}
+JpgImageLoader::JpgImageLoader() : ImageLoader(EImageFormat::Type::JPG) {}
 
 JpgImageLoader::~JpgImageLoader() {}
 

@@ -241,11 +241,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\zlib\zlib-1.2.8;$(SolutionDir)ThirdParty;$(SolutionDir)assimp-3.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty;$(SolutionDir)assimp-3.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)ImageMagick-6.9.3-Q16\lib;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10586.0\um\x64;%(AdditionalLibraryDirectories);$(SolutionDir)\SFML-2.3.2\lib;$(SolutionDir)assimp-3.1.1\lib64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libjpeg.lib;d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;CORE_RL_magick_.lib;CORE_RL_Magick++_.lib;CORE_RL_wand_.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libjpeg.lib;d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
     <PreBuildEvent>
