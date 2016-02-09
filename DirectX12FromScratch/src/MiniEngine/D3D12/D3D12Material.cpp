@@ -25,27 +25,48 @@ bool D3D12Material::finalize()
 {
     DWORD32 id = _id;
     size_t  cursor = 0;
-    size_t  size = sizeof(id);
+    size_t  size = 0;
     char    *materialData = nullptr;
 
     // Get size of material struct
-    if (_flags & Material::UNIFORM_COLOR)
-        size += sizeof(DirectX::XMFLOAT3);
+    padSize(size, sizeof(id));
+
+    if (!(_flags & Material::TEXTURE_AMBIENT))
+        padSize(size, sizeof(DirectX::XMFLOAT3));
+
+    if (!(_flags & Material::NORMAL_COLOR) && !(_flags & Material::TEXTURE_DIFFUSE))
+        padSize(size, sizeof(DirectX::XMFLOAT3));
+
+    if (!(_flags & Material::TEXTURE_SPECULAR))
+        padSize(size, sizeof(DirectX::XMFLOAT3));
+
+    padSize(size, sizeof(float));
 
     // Allocate material structure
     materialData = new char[size];
 
-    memcpy(materialData + cursor, &id, sizeof(id));
-    cursor += sizeof(id);
-
     // Fill material structure
-    if (_flags & Material::UNIFORM_COLOR)
-    {
-        DirectX::XMFLOAT3 color(_color.x, _color.y, _color.z);
+    pad(size, cursor, materialData, &id, sizeof(id));
 
-        memcpy(materialData + cursor, &color, sizeof(color));
-        cursor += sizeof(color);
+    if (!(_flags & Material::TEXTURE_AMBIENT))
+    {
+        DirectX::XMFLOAT3 color(_ka.x, _ka.y, _ka.z);
+        pad(size, cursor, materialData, &color, sizeof(color));
     }
+
+    if (!(_flags & Material::NORMAL_COLOR) && !(_flags & Material::TEXTURE_DIFFUSE))
+    {
+        DirectX::XMFLOAT3 color(_kd.x, _kd.y, _kd.z);
+        pad(size, cursor, materialData, &color, sizeof(color));
+    }
+
+    if (!(_flags & Material::TEXTURE_SPECULAR))
+    {
+        DirectX::XMFLOAT3 color(_ks.x, _ks.y, _ks.z);
+        pad(size, cursor, materialData, &color, sizeof(color));
+    }
+
+    pad(size, cursor, materialData, &_shininess, sizeof(float));
 
     // Create constant buffer
     _material = new D3D12ConstantBuffer(_system);
@@ -64,4 +85,25 @@ bool D3D12Material::finalize()
 
     delete[] materialData;
     return (true);
+}
+
+void D3D12Material::padSize(size_t &size, size_t sizeData)
+{
+    if ((size + sizeData) % 16 == 0 || size / 16 == (size + sizeData) / 16)
+    {
+        size += sizeData;
+        return;
+    }
+
+    size = ((size + 16) / 16) * 16;
+    size += sizeData;
+}
+
+void D3D12Material::pad(size_t size, size_t &cursor, char *materialData, void *data, size_t sizeData)
+{
+    if ((cursor + sizeData) % 16 != 0 && cursor / 16 != (cursor + sizeData) / 16)
+        cursor = ((cursor + 16) / 16) * 16;
+
+    memcpy(materialData + cursor, data, sizeData);
+    cursor += sizeData;
 }

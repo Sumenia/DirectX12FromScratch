@@ -2,25 +2,35 @@ struct Material
 {
     uint    id;
 
-#if UNIFORM_COLOR 
-    float3  color;
+#if !TEXTURE_AMBIENT
+    float3  ka;
 #endif
+
+#if !NORMAL && !TEXTURE_DIFFUSE 
+    float3  kd;
+#endif
+
+#if !TEXTURE_SPECULAR
+    float3  ks;
+#endif
+
+    float   shininess;
 };
 
 ConstantBuffer<Material> material : register(b3);
 
-float3 getMaterialColor(float3 normal)
+float3 getDiffuseColor(float3 normal)
 {
 #if NORMAL_COLOR
     return (float3(abs(normal.x), abs(normal.y), abs(normal.z)));
-#elif UNIFORM_COLOR
-    return (material.color);
-#elif TEXTURE
+#elif TEXTURE_DIFFUSE
     // TO-DO: RETURN TEXTURE
+#else
+    return (material.kd);
 #endif
 }
 
-float3 getMaterialNormal(float3 normal)
+float3 getNormal(float3 normal)
 {
 #if NORMAL_MAP
     // TO-DO: Use normal map

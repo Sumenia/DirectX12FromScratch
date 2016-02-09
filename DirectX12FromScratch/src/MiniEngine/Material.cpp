@@ -4,7 +4,7 @@ using namespace MiniEngine;
 
 unsigned int Material::id_count = 0;
 
-Material::Material() : _id(Material::id_count), _flags(NORMAL_COLOR), _color(1.0f, 1.0f, 1.0f)
+Material::Material() : _id(Material::id_count), _flags(0), _ka(1.0f, 1.0f, 1.0f), _kd(1.0f, 1.0f, 1.0f), _ks(1.0f, 1.0f, 1.0f), _shininess(32)
 {
     Material::id_count++;
 }
@@ -54,28 +54,45 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 void Material::useNormalColor()
 {
     _flags |= NORMAL_COLOR;
-    _flags &= ~TEXTURE;
-    _flags &= ~UNIFORM_COLOR;
+    _flags &= ~TEXTURE_DIFFUSE;
 }
 
-void Material::useUniformColor(Vector3f const &color)
+void Material::useDiffuseColor(Vector3f const &color)
 {
-    _color = color;
-
-    _flags |= UNIFORM_COLOR;
-    _flags &= ~TEXTURE;
+    _kd = color;
+    
+    _flags &= ~TEXTURE_DIFFUSE;
     _flags &= ~NORMAL_COLOR;
+}
+
+void Material::useAmbientColor(Vector3f const &color)
+{
+    _ka = color;
+    _flags &= ~TEXTURE_AMBIENT;
+}
+
+void Material::useSpecularColor(Vector3f const &color) {
+    _ks = color;
+    _flags &= ~TEXTURE_SPECULAR;
+}
+
+void Material::setShininess(float shininess)
+{
+    _shininess = shininess;
 }
 
 void Material::useTexture(TextureType t, Texture *tex)
 {
-	if (t == DIFFUSE)
-	{
-		_flags |= TEXTURE;
-		_flags &= ~UNIFORM_COLOR;
-		_flags &= ~NORMAL_COLOR;
-	}
-	// TO-DO : other cases of types
+    if (t == DIFFUSE)
+    {
+        _flags |= TEXTURE_DIFFUSE;
+        _flags &= ~NORMAL_COLOR;
+    }
+    else if (t == AMBIENT)
+        _flags |= TEXTURE_AMBIENT;
+    else if (t == SPECULAR)
+        _flags |= TEXTURE_SPECULAR;
+
 	_textures.insert(std::pair<TextureType, Texture*>(t, tex));
 }
 
@@ -106,8 +123,9 @@ std::string Material::generateHLSLShader(Shader::Type type)
     std::stringstream   source;
 
     setFlagToShader(source, "NORMAL_COLOR", NORMAL_COLOR);
-    setFlagToShader(source, "UNIFORM_COLOR", UNIFORM_COLOR);
-    setFlagToShader(source, "TEXTURE", TEXTURE);
+    setFlagToShader(source, "TEXTURE_AMBIENT", TEXTURE_AMBIENT);
+    setFlagToShader(source, "TEXTURE_DIFFUSE", TEXTURE_DIFFUSE);
+    setFlagToShader(source, "TEXTURE_SPECULAR", TEXTURE_SPECULAR);
     setFlagToShader(source, "NORMAL_MAP", NORMAL_MAP);
 
     if (type == Shader::VERTEX)

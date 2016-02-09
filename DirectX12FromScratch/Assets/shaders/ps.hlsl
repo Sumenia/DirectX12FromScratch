@@ -38,7 +38,7 @@ float3 computeLight(float3 materialColor, Light light, PSInput input)
 
 float4 PSMain(PSInput input) : SV_TARGET
 {
-    float3  materialColor = getMaterialColor(input.normal);
+    float3  materialColor = getDiffuseColor(input.normal);
     float3  color;
 
     for (uint i = 0; i < camera.nb_lights; i++)

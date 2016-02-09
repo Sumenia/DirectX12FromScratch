@@ -17,6 +17,9 @@ namespace MiniEngine
         bool                finalize();
 
     protected:
+        void                padSize(size_t &size, size_t sizeData);
+        void                pad(size_t size, size_t &cursor, char *materialData, void *data, size_t sizeData);
+
         D3D12RenderSystem   &_system;
         D3D12ConstantBuffer *_material;
     };
