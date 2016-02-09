@@ -13,10 +13,11 @@ public:
 
     void            initWindow(const std::string &windowType, HINSTANCE hInstance);
 
-    bool            update();
+    bool            update(MiniEngine::Time elapsedTime);
 
 protected:
-    Window          *_window;
+	Window          *_window;
+	Keyboard		*_keyboard;
     DynamicLibrary  _dllWindow;
 
 	MiniEngine::SceneManager	*_sceneManager;

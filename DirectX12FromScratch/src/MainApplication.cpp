@@ -47,6 +47,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
                 //_node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
                 //_node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
+
             }
         }
     }
@@ -94,41 +95,43 @@ void MainApplication::initWindow(const std::string &windowType, HINSTANCE hInsta
     }
 }
 
-bool MainApplication::update()
+bool MainApplication::update(MiniEngine::Time elapsedTime)
 {
     if (!_window || !_window->isOpen())
         return (false);
 
+	float elapsedSeconds = elapsedTime.getSeconds();
+
+	if (_window->isKeyPressed(Keyboard::Left))
+		_camera->rotate(100 * elapsedSeconds, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
+	if (_window->isKeyPressed(Keyboard::Right))
+		_camera->rotate(100 * elapsedSeconds, Vector3f(0, -1, 0), MiniEngine::TS_WORLD);
+	if (_window->isKeyPressed(Keyboard::Up))
+		_camera->rotate(100 * elapsedSeconds, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
+	if (_window->isKeyPressed(Keyboard::Down))
+		_camera->rotate(100 * elapsedSeconds, Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
+
+	if (_window->isKeyPressed(Keyboard::Z))
+		_camera->translate(Vector3f(0, 0, -100 * elapsedSeconds), MiniEngine::TS_LOCAL);
+	if (_window->isKeyPressed(Keyboard::S))
+		_camera->translate(Vector3f(0, 0, 100 * elapsedSeconds), MiniEngine::TS_LOCAL);
+	if (_window->isKeyPressed(Keyboard::Q))
+		_camera->translate(Vector3f(-100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
+	if (_window->isKeyPressed(Keyboard::D))
+		_camera->translate(Vector3f(100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
+
+	if (_window->isKeyPressed(Keyboard::Space))
+		_camera->translate(Vector3f(0, 100 * elapsedSeconds, 0), MiniEngine::TS_WORLD);
+	if (_window->isKeyPressed(Keyboard::LShift))
+		_camera->translate(Vector3f(0, -100 * elapsedSeconds, 0), MiniEngine::TS_WORLD);
+
 	Event event;
+
 	while (_window->getEvent(event))
 	{
 		if (event.type == Event::KeyPressed)
 		{
-			if (event.key.code == Keyboard::Left)
-			{
-                _camera->rotate(1, Vector3f(0, 1, 0), MiniEngine::TS_LOCAL);
-			}
-			else if (event.key.code == Keyboard::Right)
-			{
-                _camera->rotate(1, Vector3f(0, -1, 0), MiniEngine::TS_LOCAL);
-			}
-			else if (event.key.code == Keyboard::Up)
-			{
-                _camera->rotate(1, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
-			}
-			else if (event.key.code == Keyboard::Down)
-			{
-                _camera->rotate(1, Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
-			}
-			else if (event.key.code == Keyboard::I)
-			{
-				_camera->translate(Vector3f(0, 0, -1));
-			}
-			else if (event.key.code == Keyboard::O)
-			{
-				_camera->translate(Vector3f(0, 0, 1));
-			}
-			else if (event.key.code == Keyboard::Escape)
+			if (event.key.code == Keyboard::Escape)
 			{
 				_window->destroy();
 				return (false);

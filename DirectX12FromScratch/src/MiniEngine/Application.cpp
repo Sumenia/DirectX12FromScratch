@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MiniEngine/Application.h"
+#include "MiniEngine/Clock.h"
 
 using namespace MiniEngine;
 
@@ -15,13 +16,19 @@ Application::~Application()
 
 void Application::run()
 {
+	Clock clock;
+	int interval = 1000000 / 60;
     while (true)
     {
-		if (!update())
-            return;
+		if (clock.getElapsedTime().getMicroseconds() > interval) {
+			if (!update(clock.getElapsedTime()))
+				return;
 
-        if (!renderOneFrame())
-            return;
+			if (!renderOneFrame())
+				return;
+		
+			clock.reset();
+		}
     }
 }
 
