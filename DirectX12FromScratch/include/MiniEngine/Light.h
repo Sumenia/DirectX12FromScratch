@@ -45,6 +45,14 @@ namespace MiniEngine
 		Vector3f        &getDirection();
 		void            setDirection(Vector3f const &direction);
 
+		void			setConstant(float constant);
+		float			getConstant();
+
+		void			setLinear(float linear);
+		float			getLinear();
+
+		void			setQuadratic(float quadratic);
+		float			getQuadratic();
 
     protected:
         SceneManager    &_manager;
@@ -62,4 +70,5 @@ namespace MiniEngine
         float           _linear;
         float           _quadratic;
     };
+
 }

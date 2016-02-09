@@ -210,6 +210,9 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
 		lightsData[i].cutOff = light->getCutOff();
 		lightsData[i].outerCutOff = light->getOuterCutOff();
 		lightsData[i].direction = { light->getDirection().x, light->getDirection().y, light->getDirection().z };
+		lightsData[i].quadratic = light->getQuadratic();
+		lightsData[i].constant = light->getConstant();
+		lightsData[i].linear = light->getLinear();
         i++;
     }
 

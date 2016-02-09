@@ -11,11 +11,11 @@ float3 computePointLight(float3 materialColor, Light light, PSInput input)
 	// Compute ambient color
 	float3  ambient = light.ambient * materialColor; // TO-DO: Use ka
 
-													 // Compute diffuse color
+	// Compute diffuse color
 	float3  lightDirection = normalize(light.position - position);
 	float   diff = max(dot(normal, lightDirection), 0.0f);
 	float3  diffuse = light.diffuse * diff * materialColor; // TO-DO: Use kd
-
+	
 															// Compute specular color
 	float3  viewDir = normalize(camera.position - position);
 	float3  reflectionDirection = reflect(-lightDirection, normal);
@@ -25,7 +25,7 @@ float3 computePointLight(float3 materialColor, Light light, PSInput input)
 															  // TO-DO: Compute attenuation
 	float3	lightToPosition = position - light.position;
 	float	distance = sqrt(dot(lightToPosition, lightToPosition));
-	float	attenuationFactor = 1;// / (light.constantAttenuation + light.linearAttenuation * distance + light.quadraticAttenuation * pow(distance, 2.0));
+	float	attenuationFactor = 1 / (light.constantAttenuation + light.linearAttenuation * distance + light.quadraticAttenuation * pow(distance, 2.0));
 	return (ambient + attenuationFactor * (diffuse + specular)); // TO-DO add Ke
 }
 

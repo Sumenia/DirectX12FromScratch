@@ -6,7 +6,7 @@ using namespace MiniEngine;
 Light::Light(SceneManager &manager) : _manager(manager),
     _type(SPOT), 
     _direction(-0.1f, -0.1f, 0.0f), 
-    _cutOff(5.0f), _outerCutOff(10.0f), 
+    _cutOff(1.0f), _outerCutOff(5.0f), 
     _ambient(0.0f, 0.0f, 0.0f), _diffuse(0.0f, 0.0f, 0.0f), _specular(0.0f, 0.0f, 0.0f), 
     _constant(1.0f), _linear(0.0f), _quadratic(0.0f)
 {}
@@ -84,4 +84,34 @@ Vector3f &Light::getDirection()
 void Light::setDirection(Vector3f const &direction)
 {
 	_direction = direction;
+}
+
+void MiniEngine::Light::setConstant(float constant)
+{
+	_constant = constant;
+}
+
+float MiniEngine::Light::getConstant()
+{
+	return (_constant);
+}
+
+void MiniEngine::Light::setLinear(float linear)
+{
+	_linear = linear;
+}
+
+float MiniEngine::Light::getLinear()
+{
+	return (_linear);
+}
+
+void MiniEngine::Light::setQuadratic(float quadratic)
+{
+	_quadratic = quadratic;
+}
+
+float MiniEngine::Light::getQuadratic()
+{
+	return (_quadratic);
 }
