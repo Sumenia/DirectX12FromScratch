@@ -95,9 +95,18 @@ float Light::getInnerCutOff() const
 	return _innerCutOffAngle;
 }
 
-Vector3f Light::getDirection() const
+float	Light::getCosineLightAngle() const
 {
-	return _direction;
+	float  cosine = cos(_innerCutOffAngle);
+	std::cout << cosine << std::endl;
+	return cosine;
+}
+
+float	Light::getCosineBigAngle() const
+{
+	float  cosine = cos(_outerCutOffAngle);
+	std::cout << cosine << std::endl;
+	return cosine;
 }
 
 /* Point */

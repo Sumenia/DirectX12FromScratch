@@ -45,8 +45,7 @@ namespace MiniEngine
 		void			setQuadratic(float quadratic);
 		float			getQuadratic();
 
-		float			getCosineLightAngle();
-		float			getCosineBigAngle();
+	
 
 		/* DirectionalLight */
 		Vector3f		getDirection() const;
@@ -54,7 +53,8 @@ namespace MiniEngine
 		/* SpotLight */
 		float			getOuterCutOff() const;
 		float			getInnerCutOff() const;
-		Vector3f		getDirection() const;
+		float			getCosineBigAngle() const;
+		float			getCosineLightAngle() const;
 
 		/* Point */
 		float			getRange() const;
