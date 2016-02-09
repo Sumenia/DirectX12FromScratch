@@ -16,8 +16,10 @@ public:
 
 	enum RGBFormat
 	{
-		RGBA = 0,
-		RGB = 1
+		RGB = 0,
+		RGBA = 1,
+		GRAY = 2,
+		GRAY_ALPHA = 3
 	};
 
 public:
@@ -30,7 +32,7 @@ public:
 	int8_t			getHeight() const;
 	Format			getFormat() const;
 	RGBFormat		getRGBFormat() const;
-	virtual bool	loadFromFile(const std::string &filename) const = 0;
+	virtual bool	loadFromFile(const std::string &filename) = 0;
 
 protected:
 	void			*_data;
