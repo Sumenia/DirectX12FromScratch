@@ -36,6 +36,16 @@ namespace MiniEngine
         Vector3f        &getSpecular();
         void            setSpecular(Vector3f const &specular);
 
+		float			getCutOff();
+		void			setCutOff(float cutOff);
+
+		float			getOuterCutOff();
+		void			setOuterCutOff(float outerCutOff);
+
+		Vector3f        &getDirection();
+		void            setDirection(Vector3f const &direction);
+
+
     protected:
         SceneManager    &_manager;
 

@@ -42,7 +42,10 @@ float smoothStep(float min, float max, float x)
 	}
 	else
 	{
-		return ((-2.0f * pow((x - min) / (max - min), 3.0)) + (3.0f * pow((x - min) / (max - min), 2)));
+		float value = (x - min) / (max - min);
+		float  pow1 = value * value;
+		float pow2 = pow1 * value;
+		return ((-2.0f * pow2) + (3.0f * pow1));
 	}
 
 }
@@ -57,16 +60,16 @@ float3 computeSpotLigth(float3 materialColor, Light light, PSInput input)
 
 	float cosDirection = dot(V, lightDirection);
 
-	//float cosInnerCutOff = cos(light.cutOff);
+	float cosInnerCutOff = cos(light.cutOff);
 
-	//float cosOuterCutOff ! cos ()
+	float cosOuterCutOff = cos(light.outerCutOff);
 
-	float smoothstep = smoothStep(0.985, 0.978, cosDirection);
-	//if (0.90 <= cosDirection)
-	//{
-	return  computePointLight(materialColor, light, input) * smoothstep;
-	//}
-	//return (float3(0.0f, 0.0f, 0.0f));
+	float spotEffect = smoothStep(0.70,0.99, cosDirection);
+
+	float3  normal = normalize(input.normal);
+	
+	 return  computePointLight(materialColor, light, input) * spotEffect;
+
 }
 
 

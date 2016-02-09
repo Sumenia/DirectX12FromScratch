@@ -207,7 +207,9 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
         lightsData[i].ambient = { light->getAmbient().x, light->getAmbient().y, light->getAmbient().z };
         lightsData[i].diffuse = { light->getDiffuse().x, light->getDiffuse().y, light->getDiffuse().z };
         lightsData[i].specular = { light->getSpecular().x, light->getSpecular().y, light->getSpecular().z };
-
+		lightsData[i].cutOff = light->getCutOff();
+		lightsData[i].outerCutOff = light->getOuterCutOff();
+		lightsData[i].direction = { light->getDirection().x, light->getDirection().y, light->getDirection().z };
         i++;
     }
 
