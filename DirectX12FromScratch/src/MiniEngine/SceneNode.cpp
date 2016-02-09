@@ -101,6 +101,11 @@ Vector3f &SceneNode::getDerivedPosition()
     return (_derivedPosition);
 }
 
+Vector3f &SceneNode::getPosition()
+{
+    return (_position);
+}
+
 Quatf &SceneNode::getDerivedRotation()
 {
     if (_needUpdate)

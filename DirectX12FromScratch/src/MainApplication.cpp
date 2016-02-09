@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MainApplication.h"
+#include "MiniEngine/SpotLight.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12RenderWindow.h"
 
@@ -30,24 +31,22 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             {
                 _camera = _sceneManager->createCamera();
 
-                _camera->lookAt({ 80.0f, 120.0f, 20.0f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+                _camera->lookAt({ 60.0f, 100.0f, 0.0f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
 
                 renderTarget->getDefaultViewport()->attachCamera(_camera);
-				
-                MiniEngine::Light   *light = _sceneManager->createLight();
 
-                light->setAmbient({0.05f, 0.05f, 0.05f});
+                MiniEngine::SpotLight   *light = dynamic_cast<MiniEngine::SpotLight*>(_sceneManager->createLight(MiniEngine::Light::SPOT, _camera));
+
+                light->setAmbient({0.1f, 0.1f, 0.1f});
                 light->setDiffuse({ 0.5f, 0.5f, 0.5f });
                 light->setSpecular({ 1.0f, 1.0f, 1.0f });
 
-                light->getParent()->translate({ -150.0f, -150.0f, 150.0f }, MiniEngine::TS_WORLD);
+                light->setInnerCutOff(10.0f);
+                light->setOuterCutOff(25.0f);
 
-                // Load a cube
+                light->setDirection({ 0.0f, 0.0f, 1.0f });
+
                 _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
-
-                //_node->rotate(45, MiniEngine::Vector3f(1.0f, 0.0f, 0.0f));
-                //_node->scale(MiniEngine::Vector3f(1.0f, 0.5f, 0.5f));
-
             }
         }
     }

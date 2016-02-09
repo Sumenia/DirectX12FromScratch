@@ -37,6 +37,7 @@ namespace MiniEngine
         virtual Matrix4f        &getTransformationMatrix();
 
         Vector3f                &getDerivedPosition();
+        Vector3f                &getPosition();
         Quatf                   &getDerivedRotation();
         Vector3f                &getDerivedScaling();
 
