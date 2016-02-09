@@ -27,26 +27,26 @@ namespace MiniEngine
 
         virtual Type    getType() const = 0;
 
-        Vector3f        &getAmbient();
+        Vector3f const  &getAmbient() const;
         void            setAmbient(Vector3f const &ambient);
 
-        Vector3f        &getDiffuse();
+        Vector3f const  &getDiffuse() const;
         void            setDiffuse(Vector3f const &diffuse);
 
-        Vector3f        &getSpecular();
+        Vector3f const  &getSpecular() const;
         void            setSpecular(Vector3f const &specular);
 
 		void			setConstant(float constant);
-		float			getConstant();
+		float			getConstant() const;
 
 		void			setLinear(float linear);
-		float			getLinear();
+		float			getLinear() const;
 
 		void			setQuadratic(float quadratic);
-		float			getQuadratic();
+		float			getQuadratic() const;
 
 		/* DirectionalLight */
-		Vector3f		getDirection() const;
+        Vector3f const  &getDirection() const;
 
 		/* SpotLight */
 		float			getOuterCutOff() const;
