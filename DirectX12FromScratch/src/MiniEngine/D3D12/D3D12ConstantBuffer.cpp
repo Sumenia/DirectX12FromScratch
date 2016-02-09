@@ -141,7 +141,7 @@ bool D3D12ConstantBuffer::updateCameraMatrix(Vector3f const &position, Matrix4f 
         for (unsigned int y = 0; y < 4; y++)
             camera.projection.m[x][y] = projection(x + 1, y + 1);
 
-    camera.position = {};
+    camera.position = { position.x, position.y, position.z };
     camera.nb_lights = nb_lights;
 
     return (update(sizeof(camera), &camera));
