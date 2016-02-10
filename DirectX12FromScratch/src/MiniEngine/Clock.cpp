@@ -4,13 +4,11 @@
 using namespace MiniEngine;
 
 Clock::Clock()
-	: _startTime(SysClock::getCurrentTime())
 {
 
 }
 
 Clock::Clock(Clock & c)
-	: _startTime(c.getElapsedTime())
 {
 
 }
@@ -21,13 +19,13 @@ Clock::~Clock()
 }
 
 Time
-Clock::getElapsedTime()
+Clock::getWallClock()
 {
-	return Time(SysClock::getCurrentTime().getMicroseconds() - _startTime.getMicroseconds());
+	return Time(SysClock::getCurrentTime());
 }
 
-void
-Clock::reset()
+Time
+Clock::getElapsedTime(Time start, Time end)
 {
-	_startTime = SysClock::getCurrentTime();
+	return Time(end.getMicroseconds() - start.getMicroseconds());
 }
