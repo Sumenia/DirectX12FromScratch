@@ -49,6 +49,8 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
                 _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
             }
         }
+
+        _window->getMouse()->setPosition({(int)(_window->getWidth() / 2), (int)(_window->getHeight() / 2) });
     }
 }
 
@@ -101,22 +103,21 @@ bool MainApplication::update(MiniEngine::Time elapsedTime)
 
 	float elapsedSeconds = elapsedTime.getSeconds();
 
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::Left))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::Right))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(0, -1, 0), MiniEngine::TS_WORLD);
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::Up))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::Down))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
+    Vector2f    middle((int)(_window->getWidth() / 2), (int)(_window->getHeight() / 2));
+    Vector2f    deltaPos = _window->getMouse()->getPosition() - middle;
 
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::Z))
+    _camera->rotate(10 * elapsedSeconds * -deltaPos.x, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
+    _camera->rotate(10 * elapsedSeconds * -deltaPos.y, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
+
+    _window->getMouse()->setPosition(middle);
+
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Up))
 		_camera->translate(Vector3f(0, 0, -100 * elapsedSeconds), MiniEngine::TS_LOCAL);
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::S))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Down))
 		_camera->translate(Vector3f(0, 0, 100 * elapsedSeconds), MiniEngine::TS_LOCAL);
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::Q))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Left))
 		_camera->translate(Vector3f(-100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
-	if (_window->getKeyboard()->isKeyPressed(Keyboard::D))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Right))
 		_camera->translate(Vector3f(100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
 
 	if (_window->getKeyboard()->isKeyPressed(Keyboard::Space))
