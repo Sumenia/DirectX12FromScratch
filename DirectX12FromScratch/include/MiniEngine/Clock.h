@@ -7,15 +7,12 @@ namespace MiniEngine
 
 	class Clock
 	{
-	private:
-		Time _startTime;
-
 	public:
 		Clock();
 		Clock(Clock &);
 		~Clock();
 
-		Time getElapsedTime();
-		void reset();
+		Time getWallClock(); // Gets current time
+		Time getElapsedTime(Time start, Time end); // Returns time passed between two Time variables
 	};
 }
