@@ -15,6 +15,7 @@ D3D12RenderSystem::~D3D12RenderSystem()
 
     delete _commandQueue;
     delete _device;
+    delete _fence;
     _factory = nullptr;
 }
 
