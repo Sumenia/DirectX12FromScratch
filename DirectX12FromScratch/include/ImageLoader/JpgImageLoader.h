@@ -2,6 +2,7 @@
 
 # include "ImageLoader/ImageLoader.h"
 # include "libJPG/libjpeg/jpeglib.h"
+# include "libJPG/libjpeg/jerror.h"
 
 class		JpgImageLoader : public ImageLoader
 {
