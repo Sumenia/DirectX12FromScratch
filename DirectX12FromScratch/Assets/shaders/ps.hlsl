@@ -18,8 +18,8 @@ float3 calcDiffuseColor(Light light, float3 materialColor, float3 normal, float3
 float3 calcSpecularColor(Light light, float3 materialColor, float3 position, float3 normal, float3 lightDirection)
 {
     float3  viewDir = normalize(camera.position - position);
-    float3  reflectionDirection = reflect(lightDirection, normal);
-    float   spec = pow(max(dot(viewDir, reflectionDirection), 0.0), 32.0f/* TO-DO: Replace by shininess */);
+    float3  halfWayDir = -normalize(-lightDirection + viewDir);
+    float   spec = pow(max(dot(normal, halfWayDir), 0.0f), 32.0f); // TO-DO: Replace by shininess
 
     return (light.specular * spec * materialColor); // TO-DO: Use ks
 }
