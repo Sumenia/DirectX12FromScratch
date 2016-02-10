@@ -14,7 +14,6 @@ D3D12RenderSystem::~D3D12RenderSystem()
     clear();
 
     delete _commandQueue;
-    delete _rootSignature;
     delete _device;
     _factory = nullptr;
 }
