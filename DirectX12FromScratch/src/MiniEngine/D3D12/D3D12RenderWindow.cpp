@@ -30,8 +30,13 @@ D3D12RenderWindow::~D3D12RenderWindow()
     delete _dsvDescriptorHeap;
     _dsvDescriptorHeap = nullptr;
 
-	for (UINT n = 0; n < FrameCount; n++)
-		_rtvs[n]->Release();
+    for (UINT n = 0; n < FrameCount; n++)
+    {
+        if (_rtvs[n])
+            _rtvs[n]->Release();
+
+        _rtvs[n] = nullptr;
+    }
 
 	delete _rtvDescriptorHeap;
 	_rtvDescriptorHeap = nullptr;
