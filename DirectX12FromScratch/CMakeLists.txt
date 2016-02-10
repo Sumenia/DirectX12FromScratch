@@ -24,6 +24,12 @@ endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/DirectX12FromScratch/Assets DESTINATION ${OUTPUT_DIR})
 if (MSVC)
+create_default_target_launcher(D3D12Engine
+	FORWARD_ARGS
+	WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+create_target_launcher(D3D12Engine
+	FORWARD_ARGS
+	WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
   SET(DIRS ${ASSIMP_BINARY_DIR} ${SFML_BINARY_DIR})
   install(CODE "include(BundleUtilities)
           FIXUP_BUNDLE(\"${PROJECT_BINARY_DIR}/bin/D3D12Engine.exe\" \"${OUTPUT_DIR}/WINDOW_SFML.dll\" \"${DIRS}\")")

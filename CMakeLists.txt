@@ -2,8 +2,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.4)
 #Because target platform version is only set on cmake v3.4+ (required for directx 12 headers/libs)
 PROJECT(DirectX12FromScratch)
 
-SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-SET(OUTPUT_DIR ${PROJECT_BINARY_DIR}/bin)
+cmake_policy(SET CMP0026 OLD)
+
+LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules")
+LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/rpavlik_cmake_modules")
+include(CreateLaunchers)
 
 find_package(assimp REQUIRED)
 if (ASSIMP_FOUND)
