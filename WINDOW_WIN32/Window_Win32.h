@@ -23,6 +23,8 @@ public:
 
 	virtual bool				getEvent(Event &);
 
+	virtual bool				isKeyPressed(Keyboard::Key key);
+
 private:
 	HWND        _handle;
 	bool	    _isOpen;

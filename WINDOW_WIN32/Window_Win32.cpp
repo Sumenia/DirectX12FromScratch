@@ -149,3 +149,8 @@ LRESULT Window_Win32::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	return LRESULT();
 }
+
+bool Window_Win32::isKeyPressed(Keyboard::Key key)
+{
+	return false;
+}
