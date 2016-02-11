@@ -4,6 +4,14 @@ PROJECT(DirectX12FromScratch)
 
 cmake_policy(SET CMP0026 OLD)
 
+find_package(Git)
+if (GIT_FOUND)
+MESSAGE(STATUS "Git found, syncing modules")
+execute_process (COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+else()
+MESSAGE(WARNING "Git not found, please install git and set environment variables correctly - you have to manually init/update/sync submodules")
+endif()
+
 LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules")
 LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/rpavlik_cmake_modules")
 include(CreateLaunchers)
