@@ -6,8 +6,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectX12FromScratch", "Dir
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WINDOW_SFML", "WINDOW_SFML\WINDOW_SFML.vcxproj", "{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WINDOW_WIN32", "WINDOW_WIN32\WINDOW_WIN32.vcxproj", "{9F766DAA-EA83-436A-B6A0-9ED837780C80}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -22,10 +20,6 @@ Global
 		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}.Debug|x64.Build.0 = Debug|x64
 		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}.Release|x64.ActiveCfg = Release|x64
 		{BDBB47E0-544D-4290-BDE4-BA40663D1CA3}.Release|x64.Build.0 = Release|x64
-		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Debug|x64.ActiveCfg = Debug|x64
-		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Debug|x64.Build.0 = Debug|x64
-		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Release|x64.ActiveCfg = Release|x64
-		{9F766DAA-EA83-436A-B6A0-9ED837780C80}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
