@@ -46,7 +46,7 @@ bool D3D12RenderableModel::initVertexBuffer(D3D12RenderSystem &system)
 		{
 			_vertexData[i].vertice = { vertexs[k].vertice.x, vertexs[k].vertice.y, vertexs[k].vertice.z };
 			_vertexData[i].normal = { vertexs[k].normal.x, vertexs[k].normal.y, vertexs[k].normal.z };
-			//_vertexData[i].uv = { _vertexs[i].uv.x, _vertexs[i].uv.y };
+			_vertexData[i].uv = { vertexs[k].uv.x, vertexs[k].uv.y };
 		}
 	}
 	

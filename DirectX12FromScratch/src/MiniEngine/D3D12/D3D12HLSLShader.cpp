@@ -89,6 +89,8 @@ DXGI_FORMAT D3D12HLSLShader::toD3D12(HLSLShader::Input::Format value)
         return DXGI_FORMAT_R32G32B32_FLOAT;
     case HLSLShader::Input::Format::R32G32B32A32_FLOAT:
         return DXGI_FORMAT_R32G32B32A32_FLOAT;
+	case HLSLShader::Input::Format::R32G32_FLOAT:
+		return DXGI_FORMAT_R32G32_FLOAT;
     default:
         return DXGI_FORMAT_R32G32B32_FLOAT;
     }

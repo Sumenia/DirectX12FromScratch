@@ -160,7 +160,8 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
     {
         const HLSLShader::Input inputs[] = {
             { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
-            { "NORMAL", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
+            { "NORMAL", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
+			{ "TEXCOORD", 0, MiniEngine::HLSLShader::Input::Format::R32G32_FLOAT, 0, 24, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
         };
 
         pipeline->setInputs(_countof(inputs), inputs);

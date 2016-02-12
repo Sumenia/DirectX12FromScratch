@@ -36,7 +36,7 @@ float3 computeLight(float3 materialColor, Light light, PSInput input)
         return (float3(0.0f, 0.0f, 0.0f));
 }
 
-float4 PSMain(PSInput input) : SV_TARGET
+/*float4 PSMain(PSInput input) : SV_TARGET
 {
     float3  materialColor = getDiffuseColor(input.normal);
     float3  color;
@@ -45,4 +45,14 @@ float4 PSMain(PSInput input) : SV_TARGET
         color += computeLight(materialColor, lights[i], input);
 
     return (float4(color, 1.0f));
+}*/
+
+Texture2D	tex : register(t0);
+
+SamplerState samp : register(s0);
+
+float4 PSMain(PSInput input) : SV_TARGET
+{
+	return (tex.Sample(samp, input.uv));
+	//return (float4(1.0, 1.0, 1.0, 1.0));
 }
