@@ -12,7 +12,7 @@ namespace MiniEngine
 		bool loadFromFile(const std::string &filename);
 		const Magick::Blob	&getblob();
 
-	private:
+	protected:
 		Magick::Blob		_blob;
 	};
 }

@@ -9,10 +9,10 @@ Texture::~Texture() {}
 
 bool				Texture::loadFromFile(const std::string &filename)
 {
+	Magick::Image	image;
+
 	try
 	{
-		Magick::Image	image;
-
 		image.read(filename);
 		image.magick("RGB");
 		image.write(&_blob);

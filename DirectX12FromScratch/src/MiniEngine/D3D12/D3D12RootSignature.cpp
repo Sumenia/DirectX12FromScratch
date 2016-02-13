@@ -21,9 +21,11 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system)
     ID3DBlob                    *signature = nullptr;
     ID3DBlob                    *error = nullptr;
 
-	CD3DX12_DESCRIPTOR_RANGE	range;
+	CD3DX12_DESCRIPTOR_RANGE	ranges[3];
 
-	range.Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	ranges[0].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	ranges[1].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
+	ranges[2].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 2);
 
     CD3DX12_ROOT_PARAMETER      parameters[5];
     
@@ -31,7 +33,7 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system)
     parameters[1].InitAsConstantBufferView(1);
     parameters[2].InitAsConstantBufferView(2);
     parameters[3].InitAsConstantBufferView(3);
-	parameters[4].InitAsDescriptorTable(1, &range);
+	parameters[4].InitAsDescriptorTable(3, ranges);
 
 	D3D12_STATIC_SAMPLER_DESC sampler = {};
 	sampler.Filter = D3D12_FILTER_MIN_MAG_MIP_POINT;

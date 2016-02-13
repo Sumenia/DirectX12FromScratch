@@ -3,15 +3,16 @@
 #include "MiniEngine/D3D12/D3D12Device.h"
 #include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 #include "MiniEngine/D3D12/D3D12Material.h"
+#include "MiniEngine/D3D12/D3D12Texture.h"
 
 using namespace MiniEngine;
 
-std::vector<UINT8> GenerateTextureData()
+std::vector<UINT8> GenerateTextureData(unsigned int width, unsigned int height)
 {
-	const UINT rowPitch = 64 * 4;
+	const UINT rowPitch = width * 4;
 	const UINT cellPitch = rowPitch >> 3;		// The width of a cell in the checkboard texture.
-	const UINT cellHeight = 64 >> 3;	// The height of a cell in the checkerboard texture.
-	const UINT textureSize = rowPitch * 64;
+	const UINT cellHeight = height >> 3;	// The height of a cell in the checkerboard texture.
+	const UINT textureSize = rowPitch * height;
 
 	std::vector<UINT8> data(textureSize);
 	UINT8* pData = &data[0];
@@ -57,9 +58,9 @@ bool D3D12Material::bind(CommandList &list, unsigned int rootIdx)
         return (false);
 
 	ID3D12DescriptorHeap* ppHeaps[] = { _cbvSrvDescHeap->getNative() };
-	_commandList->getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	dynamic_cast<D3D12CommandList&>(list).getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
-	_commandList->getNative()->SetGraphicsRootDescriptorTable(4, _cbvSrvDescHeap->getNative()->GetGPUDescriptorHandleForHeapStart());
+	dynamic_cast<D3D12CommandList&>(list).getNative()->SetGraphicsRootDescriptorTable(4, _cbvSrvDescHeap->getNative()->GetGPUDescriptorHandleForHeapStart());
 
 	return (_material->bind(list, rootIdx));
 }
@@ -70,10 +71,6 @@ bool D3D12Material::finalize()
     size_t  cursor = 0;
     size_t  size = 0;
     char    *materialData = nullptr;
-
-	// init CommandList
-	_commandList = _system.getCommandQueue()->createCommandList(nullptr);
-	_commandList->init();
 
     // Get size of material struct
     padSize(size, sizeof(id));
@@ -135,82 +132,40 @@ bool D3D12Material::finalize()
 	if (!initCbvSrvDescriptorHeap())
 		return (false);
 	
-	HRESULT                     result;
-
-	ID3D12Resource				*buffer;
-	ID3D12Resource				*bufferUpload;
-
-	// Describe and create a Texture2D.
-	D3D12_RESOURCE_DESC textureDesc = {};
-	textureDesc.MipLevels = 1;
-	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	textureDesc.Width = 64;
-	textureDesc.Height = 64;
-	textureDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-	textureDesc.DepthOrArraySize = 1;
-	textureDesc.SampleDesc.Count = 1;
-	textureDesc.SampleDesc.Quality = 0;
-	textureDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-
-	result = _system.getDevice()->getNative()->CreateCommittedResource(
-		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
-		D3D12_HEAP_FLAG_NONE,
-		&textureDesc,
-		D3D12_RESOURCE_STATE_COPY_DEST,
-		nullptr,
-		__uuidof(ID3D12Resource),
-		(void**)&buffer);
-
-	const UINT64 uploadBufferSize = GetRequiredIntermediateSize(buffer, 0, 1);
-
-	// Create the GPU upload buffer.
-	result = _system.getDevice()->getNative()->CreateCommittedResource(
-		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
-		D3D12_HEAP_FLAG_NONE,
-		&CD3DX12_RESOURCE_DESC::Buffer(uploadBufferSize),
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		__uuidof(ID3D12Resource),
-		(void**)&bufferUpload);
-
 	// Copy data to the intermediate upload heap and then schedule a copy 
 	// from the upload heap to the Texture2D.
-	std::vector<UINT8> texture = GenerateTextureData();
+	std::vector<UINT8> texture = GenerateTextureData(128, 128);
 
-	D3D12_SUBRESOURCE_DATA textureData = {};
-	textureData.pData = &texture[0];
-	textureData.RowPitch = 64 * 4;
-	textureData.SlicePitch = textureData.RowPitch * 64;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE handle(_cbvSrvDescHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
+	D3D12Texture *tex;
+	// D3D12Texture PART
+	// Diffuse
+	for (unsigned int i = 0; i < 3 /*nb TextureType*/; i++)
+	{
+		if (_textures[static_cast<TextureType>(i)] != nullptr)
+		{
+			tex = new D3D12Texture(_system);
+			// TO-DO init texture with real data
+			tex->init(&texture[0], 128, 128);
 
-	if (!_commandList->reset())
-		return (false);
-
-	UpdateSubresources(_commandList->getNative(), buffer, bufferUpload, 0, 0, 1, &textureData);
-	_commandList->getNative()->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(buffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
-
-	if (!_commandList->end())
-		return (false);
-
-	// Execute the list of commands.
-	_system.getCommandQueue()->executeCommandLists(1, _commandList);
-	if (!_system.getCommandQueue()->wait(*_system.getFence()))
-		return (false);
-
-	// Describe and create a SRV for the texture.
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.Format = textureDesc.Format;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = 1;
-	_system.getDevice()->getNative()->CreateShaderResourceView(buffer, &srvDesc, _cbvSrvDescHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
+			// Describe and create a SRV for the texture.
+			D3D12_SHADER_RESOURCE_VIEW_DESC		srvDesc = {};
+			srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+			srvDesc.Format = tex->getResourceDesc().Format;
+			srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+			srvDesc.Texture2D.MipLevels = 1;
+			_system.getDevice()->getNative()->CreateShaderResourceView(tex->getBuffer(), &srvDesc, handle);
+		}
+		handle.Offset(_cbvSrvDescHeap->getSize());
+	}
     return (true);
 }
 
 bool D3D12Material::initCbvSrvDescriptorHeap()
 {
-	// Descriptor Heap for Material CBV + Textures SRVs
+	// Descriptor Heap for Textures SRVs
 	_cbvSrvDescHeap = new D3D12DescriptorHeap(_system);
-	return (_cbvSrvDescHeap->init(1, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE));
+	return (_cbvSrvDescHeap->init(3, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE));
 }
 
 void D3D12Material::padSize(size_t &size, size_t sizeData)

@@ -27,7 +27,7 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 	{
 		Texture *tex = new Texture();
 		tex->loadFromFile(path + "/" + file.C_Str());
-		std::cout << "Diffuse : " << file.C_Str() << std::endl;
+		std::cout << "Diffuse : " << path + "/" + file.C_Str() << std::endl;
 		useTexture(DIFFUSE, tex);
 	}
 
