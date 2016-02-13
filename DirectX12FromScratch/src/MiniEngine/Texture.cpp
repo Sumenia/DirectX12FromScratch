@@ -9,24 +9,12 @@ Texture::~Texture() {}
 
 bool				Texture::loadFromFile(const std::string &filename)
 {
-	Magick::Image	image;
+	_loader = new PngImageLoader;
 
-	try
-	{
-		image.read(filename);
-		image.magick("RGB");
-		image.write(&_blob);
-	}
-	catch (Magick::Exception &error_)
-	{
-		std::cout << error_.what() << std::endl;
-		return (false);
-	}
-
-	return (true);
+	return (_loader->loadFromFile(filename));
 }
 
-const Magick::Blob	&Texture::getblob()
+ImageLoader			*Texture::getImage()
 {
-	return _blob;
+	return _loader;
 }
