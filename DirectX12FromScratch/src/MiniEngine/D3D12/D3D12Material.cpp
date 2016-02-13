@@ -146,7 +146,9 @@ bool D3D12Material::finalize()
 		{
 			tex = new D3D12Texture(_system);
 			// TO-DO init texture with real data
-			tex->init(&texture[0], 128, 128);
+			tex->init(_textures[static_cast<TextureType>(i)]->getImage()->getData(),
+						_textures[static_cast<TextureType>(i)]->getImage()->getWidth(),
+						_textures[static_cast<TextureType>(i)]->getImage()->getHeight());
 
 			// Describe and create a SRV for the texture.
 			D3D12_SHADER_RESOURCE_VIEW_DESC		srvDesc = {};

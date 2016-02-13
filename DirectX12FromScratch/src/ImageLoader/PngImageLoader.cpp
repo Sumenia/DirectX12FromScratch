@@ -38,7 +38,7 @@ bool			PngImageLoader::writeToFile(const std::string &filename)
 		return (false);
 
 	png_set_IHDR(png_ptr, png_info, _width, _height,
-		_bitDepth, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE,
+		_bitDepth, PNG_COLOR_TYPE_RGBA, PNG_INTERLACE_NONE,
 		PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 
 	png_write_info(png_ptr, png_info);
@@ -115,8 +115,8 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 		_rgbFormat == ERGBFormat::Type::GRAY_ALPHA)
 		png_set_gray_to_rgb(png_ptr);
 
-	if (!removeAlphaChannel(fp, png_info, png_ptr))
-		return (false);
+	/*if (!removeAlphaChannel(fp, png_info, png_ptr))
+		return (false);*/
 
 	_data = (png_bytep*)malloc(sizeof(png_bytep) * _height);
 	_length = png_get_rowbytes(png_ptr, png_info) * _height;
@@ -127,6 +127,7 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	png_read_image(png_ptr, (png_bytep*)_data);
 
 	fclose(fp);
+	writeToFile("test.png");
 	return (true);
 }
 

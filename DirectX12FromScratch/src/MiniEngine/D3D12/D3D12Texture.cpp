@@ -3,7 +3,7 @@
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12Texture.h"
 
-MiniEngine::D3D12Texture::D3D12Texture(D3D12RenderSystem & system) : _system(system)
+MiniEngine::D3D12Texture::D3D12Texture(D3D12RenderSystem & system) : _system(system), _buffer(nullptr)
 {
 }
 
@@ -20,18 +20,12 @@ bool MiniEngine::D3D12Texture::init(void *data,
 
 	// init CommandList
 	D3D12CommandList *commandList = _system.getCommandQueue()->createCommandList(nullptr);
-	commandList->init();
+	if (!commandList->init())
+		return (false);
 
 	// Describe and create a Texture2D.
-	_textureDesc.MipLevels = 1;
-	_textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	_textureDesc.Width = width;
-	_textureDesc.Height = height;
-	_textureDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-	_textureDesc.DepthOrArraySize = 1;
-	_textureDesc.SampleDesc.Count = 1;
-	_textureDesc.SampleDesc.Quality = 0;
-	_textureDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	ZeroMemory(&_textureDesc, sizeof(_textureDesc));
+	_textureDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_R8G8B8A8_UNORM, width, height);
 
 	result = _system.getDevice()->getNative()->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
@@ -41,6 +35,9 @@ bool MiniEngine::D3D12Texture::init(void *data,
 		nullptr,
 		__uuidof(ID3D12Resource),
 		(void**)&_buffer);
+
+	if (_buffer == nullptr)
+		return (false);
 
 	const UINT64 uploadBufferSize = GetRequiredIntermediateSize(_buffer, 0, 1);
 
@@ -54,24 +51,37 @@ bool MiniEngine::D3D12Texture::init(void *data,
 		__uuidof(ID3D12Resource),
 		(void**)&bufferUpload);
 
+	if (bufferUpload == nullptr)
+		return (false);
+
 	D3D12_SUBRESOURCE_DATA textureData = {};
 	textureData.pData = data;
 	textureData.RowPitch = width * 4;
 	textureData.SlicePitch = textureData.RowPitch * height;
 
 	if (!commandList->reset())
+	{
+		bufferUpload->Release();
 		return (false);
+	}
 
 	UpdateSubresources(commandList->getNative(), _buffer, bufferUpload, 0, 0, 1, &textureData);
 	commandList->getNative()->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(_buffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
 
 	if (!commandList->end())
+	{
+		bufferUpload->Release();
 		return (false);
+	}
 
 	// Execute the list of commands.
 	_system.getCommandQueue()->executeCommandLists(1, commandList);
 	if (!_system.getCommandQueue()->wait(*_system.getFence()))
+	{
+		bufferUpload->Release();
 		return (false);
+	}
+	bufferUpload->Release();
 	return (true);
 }
 
