@@ -1,0 +1,3 @@
+[submodule "rpavlik_cmake_modules"]
+	path = rpavlik_cmake_modules
+	url = https://github.com/rpavlik/cmake-modules.git
