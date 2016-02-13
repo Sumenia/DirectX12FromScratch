@@ -22,6 +22,9 @@
     <ClInclude Include="include\Config.h" />
     <ClInclude Include="include\DynamicLibrary.h" />
     <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\ImageLoader\ImageLoader.h" />
+    <ClInclude Include="include\ImageLoader\PngImageloader.h" />
+    <ClInclude Include="include\ImageLoader\JpgImageLoader.h" />
     <ClInclude Include="include\Keyboard.h" />
     <ClInclude Include="include\MainApplication.h" />
     <ClInclude Include="include\MiniEngine\Application.h" />
@@ -78,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DynamicLibrary.cpp" />
+    <ClCompile Include="src\ImageLoader\ImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\JpgImageLoader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainApplication.cpp" />
     <ClCompile Include="src\MiniEngine\Application.cpp" />
@@ -216,6 +222,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./include</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -235,11 +242,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)ImageMagick-6.9.3-Q16\include;$(SolutionDir)assimp-3.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty;$(SolutionDir)assimp-3.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)ImageMagick-6.9.3-Q16\lib;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10586.0\um\x64;%(AdditionalLibraryDirectories);$(SolutionDir)\SFML-2.3.2\lib;$(SolutionDir)assimp-3.1.1\lib64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;CORE_RL_magick_.lib;CORE_RL_Magick++_.lib;CORE_RL_wand_.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)ImageMagick-6.9.3-Q16\lib;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10586.0\um\x64;%(AdditionalLibraryDirectories);$(SolutionDir)\SFML-2.3.2\lib;$(SolutionDir)assimp-3.1.1\lib64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libjpeg.lib;d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
     <PreBuildEvent>
@@ -270,15 +277,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)ImageMagick-6.9.3-Q16\include;$(SolutionDir)assimp-3.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty;$(SolutionDir)assimp-3.1.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)ImageMagick-6.9.3-Q16\lib;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10586.0\um\x64;%(AdditionalLibraryDirectories);$(SolutionDir)\SFML-2.3.2\lib;$(SolutionDir)assimp-3.1.1\lib64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;CORE_RL_magick_.lib;CORE_RL_Magick++_.lib;CORE_RL_wand_.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)ImageMagick-6.9.3-Q16\lib;C:\Program Files %28x86%29\Windows Kits\10\Lib\10.0.10586.0\um\x64;%(AdditionalLibraryDirectories);$(SolutionDir)\SFML-2.3.2\lib;$(SolutionDir)assimp-3.1.1\lib64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libjpeg.lib;d3d12.lib;dxgi.lib;d3dcompiler.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
