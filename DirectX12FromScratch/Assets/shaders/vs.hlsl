@@ -3,7 +3,7 @@
 #include "psinput.hlsl"
 #include "material.hlsl"
 
-PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
+PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD)
 {
 	PSInput result;
 
@@ -17,6 +17,7 @@ PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL)
 
 	result.position = cameraPosition;
     result.normal = mul(float4(getNormal(normal), 0), model.transformNormal);
+	result.uv = uv;
 
 	return result;
 }

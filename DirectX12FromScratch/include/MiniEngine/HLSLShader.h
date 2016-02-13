@@ -9,10 +9,11 @@ namespace MiniEngine
     public:
         struct Input
         {
-            enum Format
-            {
-                R32G32B32_FLOAT,
-                R32G32B32A32_FLOAT
+			enum Format
+			{
+				R32G32B32_FLOAT,
+				R32G32B32A32_FLOAT,
+				R32G32_FLOAT
             };
 
             enum Classification

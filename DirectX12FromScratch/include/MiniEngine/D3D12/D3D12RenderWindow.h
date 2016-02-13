@@ -38,6 +38,7 @@ namespace MiniEngine
     protected:
         IDXGISwapChain3             *_swapChain;
 		D3D12DescriptorHeap	        *_rtvDescriptorHeap;
+		D3D12DescriptorHeap	        *_srvDescriptorHeap;
 		ID3D12Resource		        *_rtvs[D3D12RenderWindow::FrameCount];
         D3D12DescriptorHeap         *_dsvDescriptorHeap;
         ID3D12Resource              *_dsv;

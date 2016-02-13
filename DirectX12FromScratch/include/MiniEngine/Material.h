@@ -34,9 +34,9 @@ namespace MiniEngine
 
 		enum TextureType
 		{
-			DIFFUSE,
-			SPECULAR,
-			AMBIENT
+			DIFFUSE = 0,
+			SPECULAR = 1,
+			AMBIENT = 2
 		};
 
     public:

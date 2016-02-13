@@ -49,6 +49,7 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h" />
     <ClInclude Include="include\MiniEngine\CommandQueue.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RootSignature.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Texture.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12VertexBuffer.h" />
     <ClInclude Include="include\MiniEngine\Fence.h" />
     <ClInclude Include="include\MiniEngine\Geometry.h" />
@@ -107,6 +108,7 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderWindow.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RootSignature.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12Fence.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Texture.cpp" />
     <ClCompile Include="src\MiniEngine\D3D12\D3D12VertexBuffer.cpp" />
     <ClCompile Include="src\MiniEngine\Fence.cpp" />
     <ClCompile Include="src\MiniEngine\GraphicPipeline.cpp" />
