@@ -59,12 +59,12 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system, bool ambient, bool diff
 	    parameters[4].InitAsDescriptorTable(nbSrvs, ranges);
 
 	D3D12_STATIC_SAMPLER_DESC sampler = {};
-	sampler.Filter = D3D12_FILTER_MIN_MAG_MIP_POINT;
+	sampler.Filter = D3D12_FILTER_ANISOTROPIC;
 	sampler.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	sampler.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	sampler.AddressW = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
 	sampler.MipLODBias = 0;
-	sampler.MaxAnisotropy = 0;
+	sampler.MaxAnisotropy = 16;
 	sampler.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 	sampler.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
 	sampler.MinLOD = 0.0f;
