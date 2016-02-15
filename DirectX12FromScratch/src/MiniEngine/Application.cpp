@@ -25,15 +25,14 @@ void Application::run()
 	Clock clock;
 	int monitorRefreshHz = 30;
 
-	// TODO(Platy): Find the window's HWND to find the monitor's refresh rate
-	//HDC refreshDC = GetDC(/* HWND */);
-	//int refreshRate = GetDeviceCaps(refreshDC, VREFRESH);
-	//ReleaseDC(/* HWND */, refreshDC);
-	//if (refreshRate > 1)
-	//{
-	//	monitorRefreshHz = refreshRate;
-	//}
-	
+	int refreshRate = getRefreshRate();
+	if (refreshRate > 1)
+	{
+		monitorRefreshHz = refreshRate;
+	}
+
+	printf("%d\n", monitorRefreshHz);
+
 	float gameUpdateHz = static_cast<float>(monitorRefreshHz / 2.0f);
 	float targetSecondsPerFrame = 1.0f / gameUpdateHz;
 	Time lastCounter = clock.getWallClock();
@@ -50,11 +49,11 @@ void Application::run()
 				Sleep(SleepMS);
 			}
 		}
-
-		while (secondsElapsedForFrame < targetSecondsPerFrame)
-		{
-			secondsElapsedForFrame = clock.getElapsedTime(lastCounter, clock.getWallClock()).getSeconds();
-		}
+		else
+			while (secondsElapsedForFrame < targetSecondsPerFrame)
+			{
+				secondsElapsedForFrame = clock.getElapsedTime(lastCounter, clock.getWallClock()).getSeconds();
+			}
 		// !Time
 
 		if (!update(secondsElapsedForFrame * 1000000))

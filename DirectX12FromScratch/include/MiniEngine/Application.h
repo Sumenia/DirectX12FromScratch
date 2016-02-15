@@ -13,6 +13,7 @@ namespace MiniEngine
 
         void            run();
         virtual bool    update(Time elapsedTime) = 0;
+		virtual int		getRefreshRate() = 0;
 
     protected:
         bool            renderOneFrame();
