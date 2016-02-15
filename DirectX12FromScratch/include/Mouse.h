@@ -26,6 +26,8 @@
 
 #include "Vector.h"
 
+class Window;
+
 ////////////////////////////////////////////////////////////
 /// \brief Give access to the real-time state of the mouse
 ///
@@ -91,7 +93,7 @@ public:
 	/// \return Current position of the mouse
 	///
 	////////////////////////////////////////////////////////////
-	//static Vector2i getPosition(const Window& relativeTo);
+	virtual Vector2i getPosition(const Window& relativeTo) = 0;
 
 	////////////////////////////////////////////////////////////
 	/// \brief Set the current position of the mouse in desktop coordinates
@@ -114,6 +116,6 @@ public:
 	/// \param relativeTo Reference window
 	///
 	////////////////////////////////////////////////////////////
-	//static void setPosition(const Vector2i& position, const Window& relativeTo);
+	virtual void setPosition(const Vector2i& position, const Window& relativeTo) = 0;
 };
 

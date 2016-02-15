@@ -1,4 +1,5 @@
 #include "Mouse_SFML.h"
+#include "Window_SFML.h"
 
 Mouse_SFML::Mouse_SFML()
 {
@@ -51,7 +52,30 @@ Vector2i Mouse_SFML::getPosition()
 	return Vector2i(v.x, v.y);
 }
 
+Vector2i Mouse_SFML::getPosition(const Window & relativeTo)
+{
+	Window_SFML const *window = nullptr;
+
+	if (!(window = dynamic_cast<const Window_SFML*>(&relativeTo)))
+	{
+		return Vector2i();
+	}
+	sf::Vector2i v = sf::Mouse::getPosition(*window->getSfmlWindow());
+	return Vector2i(v.x, v.y);
+}
+
 void Mouse_SFML::setPosition(const Vector2i & position)
 {
 	sf::Mouse::setPosition(sf::Vector2i(position.x, position.y));
+}
+
+void Mouse_SFML::setPosition(const Vector2i & position, const Window & relativeTo)
+{
+	Window_SFML const *window = nullptr;
+
+	if (!(window = dynamic_cast<const Window_SFML*>(&relativeTo)))
+	{
+		return;
+	}
+	sf::Mouse::setPosition(sf::Vector2i(position.x, position.y), *window->getSfmlWindow());
 }

@@ -23,4 +23,6 @@ protected:
 	MiniEngine::SceneManager	*_sceneManager;
 	MiniEngine::Camera			*_camera;
     MiniEngine::SceneNode       *_node;
+
+	bool _hasFocus;
 };

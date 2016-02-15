@@ -17,7 +17,9 @@ public:
 	Mouse::Wheel		fromNative(sf::Mouse::Wheel);
 
 	Vector2i			getPosition();
+	Vector2i			getPosition(const Window& relativeTo);
 	void				setPosition(const Vector2i& position);
+	void				setPosition(const Vector2i &position, const Window &relativeTo);
 
 private:
 	std::unordered_map<sf::Mouse::Button, Mouse::Button>	_fromNative;

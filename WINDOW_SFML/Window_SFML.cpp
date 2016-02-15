@@ -137,3 +137,13 @@ Mouse *Window_SFML::getMouse()
 {
 	return &_mouse;
 }
+
+void Window_SFML::setMouseCursorVisible(bool visible)
+{
+	_window->setMouseCursorVisible(visible);
+}
+
+const sf::Window * Window_SFML::getSfmlWindow() const
+{
+	return _window;
+}

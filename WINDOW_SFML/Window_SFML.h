@@ -25,6 +25,10 @@ public:
 
 	virtual Keyboard			*getKeyboard();
 	virtual Mouse				*getMouse();
+
+	virtual void				setMouseCursorVisible(bool);
+
+	const sf::Window			*getSfmlWindow() const;
 private:
 	void						initEventTypeMap();
 

@@ -20,6 +20,8 @@ public:
 
 	virtual Keyboard			*getKeyboard() = 0;
 	virtual Mouse				*getMouse() = 0;
+
+	virtual void				setMouseCursorVisible(bool) = 0;
 private:
 };
 
