@@ -5,7 +5,7 @@ using namespace MiniEngine;
 
 unsigned int Material::id_count = 0;
 
-Material::Material(RenderSystem &system) : _system(system), _id(Material::id_count), _flags(NORMAL_COLOR), _ka(1.0f, 1.0f, 1.0f), _kd(1.0f, 1.0f, 1.0f), _ks(1.0f, 1.0f, 1.0f), _shininess(32)
+Material::Material(RenderSystem &system) : _system(system), _id(Material::id_count), _flags(0), _ka(1.0f, 1.0f, 1.0f), _kd(1.0f, 1.0f, 1.0f), _ks(1.0f, 1.0f, 1.0f), _shininess(32)
 {
     Material::id_count++;
 
