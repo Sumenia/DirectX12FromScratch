@@ -16,7 +16,9 @@ namespace MiniEngine
 		~D3D12ConstantBuffer();
 
 		bool                init(unsigned int size, unsigned int nb = D3D12RenderWindow::FrameCount);
+        bool                initDescriptorHeap(unsigned int nb);
         bool                initRessources(unsigned int size, unsigned int nb);
+        bool                initCBVs(unsigned int nb);
         bool                initData(unsigned int size);
 
         bool                update(unsigned int size, void *data);
@@ -30,7 +32,10 @@ namespace MiniEngine
 
 	protected:
 		D3D12RenderSystem	&_system;
+
+        D3D12DescriptorHeap *_descriptorHeap;
 		ID3D12Resource		**_constantBuffer;
+        UINT8               **_mappedMemory;
         bool                _needUpdate[256];
 
         unsigned int        _nb;

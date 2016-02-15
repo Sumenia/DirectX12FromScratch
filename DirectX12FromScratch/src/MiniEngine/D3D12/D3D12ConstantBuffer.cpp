@@ -5,7 +5,7 @@
 
 using namespace MiniEngine;
 
-D3D12ConstantBuffer::D3D12ConstantBuffer(D3D12RenderSystem &system) : ConstantBuffer(system), _system(system), _constantBuffer(nullptr), _nb(0), _size(0), _idx(0), _data(nullptr)
+D3D12ConstantBuffer::D3D12ConstantBuffer(D3D12RenderSystem &system) : ConstantBuffer(system), _system(system), _descriptorHeap(nullptr), _constantBuffer(nullptr), _nb(0), _size(0), _idx(0), _data(nullptr), _mappedMemory(nullptr)
 {
     for (auto &&needUpdate : _needUpdate)
         needUpdate = false;
@@ -13,37 +13,56 @@ D3D12ConstantBuffer::D3D12ConstantBuffer(D3D12RenderSystem &system) : ConstantBu
 
 D3D12ConstantBuffer::~D3D12ConstantBuffer()
 {
+    CD3DX12_RANGE   readRange(0, 0);
+
     delete _data;
     _data = nullptr;
 
     if (_constantBuffer)
         for (unsigned int i = 0; i < _nb; i++)
             if (_constantBuffer[i])
+            {
+                _constantBuffer[i]->Unmap(0, &readRange);
                 _constantBuffer[i]->Release();
+            }
     
     delete _constantBuffer;
     _constantBuffer = nullptr;
+
+    delete _mappedMemory;
+    _mappedMemory = nullptr;
+
+    delete _descriptorHeap;
+    _descriptorHeap = nullptr;
 }
 
 
 bool D3D12ConstantBuffer::init(unsigned int size, unsigned int nb)
 {
     _nb = nb;
-    _size = size;
-
-    size = (size + 255) & ~255;
+    _size = size = (size + 255) & ~255;
 
     return (
-        initRessources(size, nb)
+        initDescriptorHeap(nb)
+        && initRessources(size, nb)
+        && initCBVs(nb)
         && initData(size)
     );
 }
 
+bool D3D12ConstantBuffer::initDescriptorHeap(unsigned int nb)
+{
+    _descriptorHeap = new D3D12DescriptorHeap(_system);
+    return (_descriptorHeap->init(nb, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE));
+}
+
 bool D3D12ConstantBuffer::initRessources(unsigned int size, unsigned int nb)
 {
+    CD3DX12_RANGE               readRange(0, 0);
     CD3DX12_HEAP_PROPERTIES     uploadHeapProperties(D3D12_HEAP_TYPE_UPLOAD);
 
     _constantBuffer = new ID3D12Resource*[nb];
+    _mappedMemory = new UINT8*[nb];
 
     ZeroMemory(_constantBuffer, sizeof(ID3D12Resource*) * nb);
 
@@ -64,8 +83,29 @@ bool D3D12ConstantBuffer::initRessources(unsigned int size, unsigned int nb)
 
         if (FAILED(result))
             return (false);
+
+        result = _constantBuffer[i]->Map(0, &readRange, reinterpret_cast<void**>(&_mappedMemory[i]));
+
+        if (FAILED(result))
+            return (false);
     }
 
+    return (true);
+}
+
+bool D3D12ConstantBuffer::initCBVs(unsigned int nb)
+{
+    D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
+
+    CD3DX12_CPU_DESCRIPTOR_HANDLE   cbvSrvHandle(_descriptorHeap->getNative()->GetCPUDescriptorHandleForHeapStart(), 0, _descriptorHeap->getSize());
+    for (unsigned int i = 0; i < nb; i++)
+    {
+        cbvDesc.BufferLocation = _constantBuffer[_idx]->GetGPUVirtualAddress();
+        cbvDesc.SizeInBytes = _size;
+        _system.getDevice()->getNative()->CreateConstantBufferView(&cbvDesc, cbvSrvHandle);
+        cbvSrvHandle.Offset(_descriptorHeap->getSize());
+    }
+    
     return (true);
 }
 
@@ -78,8 +118,6 @@ bool D3D12ConstantBuffer::initData(unsigned int size)
 bool D3D12ConstantBuffer::update(unsigned int size, void *data)
 {
     CD3DX12_RANGE   readRange(0, 0);
-    UINT8           *mappedMemory = nullptr;
-    HRESULT         result;
 
     if (size > _size)
         return (false);
@@ -87,14 +125,10 @@ bool D3D12ConstantBuffer::update(unsigned int size, void *data)
     if (data != _data)
         memcpy(_data, data, size);
 
-    result = _constantBuffer[_idx]->Map(0, &readRange, reinterpret_cast<void**>(&mappedMemory));
+    memcpy(_mappedMemory[_idx], data, size);
 
-    if (FAILED(result))
-        return (false);
-
-    memcpy(mappedMemory, data, size);
-
-    _constantBuffer[_idx]->Unmap(0, &readRange);
+    if (data == _data)
+        return (true);
 
     for (unsigned int i = 0; i < _nb; i++)
     {
@@ -102,6 +136,7 @@ bool D3D12ConstantBuffer::update(unsigned int size, void *data)
             _needUpdate[i] = true;
     }
 
+    _idx = (_idx + 1) % _nb;
     return (true);
 }
 
@@ -115,9 +150,11 @@ bool D3D12ConstantBuffer::bind(CommandList &commandList, unsigned int rootIdx)
             return (false);
     }
 
-    dynamic_cast<D3D12CommandList&>(commandList).getNative()->SetGraphicsRootConstantBufferView(rootIdx, _constantBuffer[_idx]->GetGPUVirtualAddress());
+    CD3DX12_GPU_DESCRIPTOR_HANDLE   cbvSrvHandle(_descriptorHeap->getNative()->GetGPUDescriptorHandleForHeapStart(), _idx, _descriptorHeap->getSize());
+    ID3D12DescriptorHeap*           ppHeaps[] = { _descriptorHeap->getNative() };
 
-    _idx = (_idx + 1) % _nb;
+    dynamic_cast<D3D12CommandList&>(commandList).getNative()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+    dynamic_cast<D3D12CommandList&>(commandList).getNative()->SetGraphicsRootDescriptorTable(rootIdx, cbvSrvHandle);
 
     return (true);
 }
@@ -198,7 +235,6 @@ bool D3D12ConstantBuffer::updateLights(std::list<std::shared_ptr<Light>> &lights
 
     LightStructure  lightsData[MAX_LIGHTS];
 
-    // TO-DO: Pass all parameters for lights
     unsigned int i = 0;
     for (auto &&light : lights)
     {

@@ -48,12 +48,19 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system, bool ambient, bool diff
         }
     }
 
+    CD3DX12_DESCRIPTOR_RANGE	rangesCBV[4];
+
+    rangesCBV[0].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 0);
+    rangesCBV[1].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 1);
+    rangesCBV[2].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 2);
+    rangesCBV[3].Init(D3D12_DESCRIPTOR_RANGE_TYPE_CBV, 1, 3);
+
     CD3DX12_ROOT_PARAMETER      parameters[5];
     
-    parameters[0].InitAsConstantBufferView(0);
-    parameters[1].InitAsConstantBufferView(1);
-    parameters[2].InitAsConstantBufferView(2);
-    parameters[3].InitAsConstantBufferView(3);
+    parameters[0].InitAsDescriptorTable(1, &rangesCBV[0]);
+    parameters[1].InitAsDescriptorTable(1, &rangesCBV[1]);
+    parameters[2].InitAsDescriptorTable(1, &rangesCBV[2]);
+    parameters[3].InitAsDescriptorTable(1, &rangesCBV[3]);
 
     if (nbSrvs > 0)
 	    parameters[4].InitAsDescriptorTable(nbSrvs, ranges);
