@@ -30,11 +30,10 @@ public:
 
 	const sf::Window			*getSfmlWindow() const;
 private:
-	void						initEventTypeMap();
+    Event::EventType Window_SFML::fromNative(sf::Event::EventType type);
 
 private:
-	sf::Window											*_window;
-	std::map<sf::Event::EventType, Event::EventType>	_eventTypeMap;
-	Keyboard_SFML										_keyboard;
-	Mouse_SFML											_mouse;
+	sf::Window					*_window;
+	Keyboard_SFML				_keyboard;
+	Mouse_SFML					_mouse;
 };

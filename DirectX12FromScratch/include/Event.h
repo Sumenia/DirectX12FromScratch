@@ -76,6 +76,7 @@ public:
 
 	enum EventType
 	{
+        Unknown,
 		Closed,
 		Resized,
 		LostFocus,

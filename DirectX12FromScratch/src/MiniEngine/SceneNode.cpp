@@ -130,6 +130,14 @@ Matrix4f &SceneNode::getTransformationMatrix()
     return (_transform);
 }
 
+void SceneNode::setRotationMatrix(Matrix3f &m)
+{
+    Quatf q = Quatf::fromMatrix(m);
+    q.normalize();
+
+    _rotation = q;
+}
+
 void MiniEngine::SceneNode::rotate(float w, Vector3f const &v, TransformSpace space)
 {
 	Quatf q = Quatf::fromAxisRot(v, w);

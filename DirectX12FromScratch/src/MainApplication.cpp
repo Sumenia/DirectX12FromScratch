@@ -109,20 +109,22 @@ bool MainApplication::update(MiniEngine::Time elapsedTime)
 	if (_hasFocus) {
         Vector2f mousePos = _window->getMouse()->getPosition(*_window);
 		Vector2f deltaPos = mousePos - lastPos;
-        lastPos = mousePos;
-
-		_camera->rotate(15 * elapsedSeconds * -deltaPos.x, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
-		_camera->rotate(15 * elapsedSeconds * -deltaPos.y, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
-
-		//_window->getMouse()->setPosition(middle, *_window);
-        if (lastPos.x < windowSize.x * 0.05 || lastPos.x > windowSize.x * 0.95
-            || lastPos.y < windowSize.y * 0.05 || lastPos.y > windowSize.y * 0.95)
+        if (lastPos != mousePos)
         {
-            Vector2f middle = Vector2f(windowSize.x / 2, windowSize.y / 2);
-            _window->setMouseCursorVisible(true);
-            _window->getMouse()->setPosition(middle, *_window);
-            _window->setMouseCursorVisible(false);
-            lastPos = middle;
+            lastPos = mousePos;
+
+            _camera->rotate(15 * elapsedSeconds * -deltaPos.x, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
+            _camera->rotate(15 * elapsedSeconds * -deltaPos.y, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
+
+            if (lastPos.x < windowSize.x * 0.05 || lastPos.x > windowSize.x * 0.95
+                || lastPos.y < windowSize.y * 0.05 || lastPos.y > windowSize.y * 0.95)
+            {
+                Vector2f middle = Vector2f(windowSize.x / 2, windowSize.y / 2);
+                _window->setMouseCursorVisible(true);
+                _window->getMouse()->setPosition(middle, *_window);
+                _window->setMouseCursorVisible(false);
+                lastPos = middle;
+            }
         }
 	}
 
