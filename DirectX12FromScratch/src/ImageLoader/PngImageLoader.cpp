@@ -116,6 +116,12 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 		_rgbFormat == ERGBFormat::Type::GRAY_ALPHA)
 		png_set_gray_to_rgb(png_ptr);
 
+	if (_rgbFormat == ERGBFormat::RGB) {
+		png_set_add_alpha(png_ptr, 0xff, PNG_FILLER_AFTER);
+		png_read_update_info(png_ptr, png_info);
+		setjmp(png_jmpbuf(png_ptr));
+	}
+
 	/*if (!removeAlphaChannel(fp, png_info, png_ptr))
 		return (false);*/
 

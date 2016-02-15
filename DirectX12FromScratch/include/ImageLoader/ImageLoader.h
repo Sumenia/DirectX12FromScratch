@@ -35,8 +35,8 @@ public:
 	void					*getData() const;
 	int						getDataLength() const;
 	int8_t					getBitpDepth() const;
-	int8_t					getWidth() const;
-	int8_t					getHeight() const;
+	unsigned int			getWidth() const;
+	unsigned int			getHeight() const;
 	EImageFormat::Type		getFormat() const;
 	ERGBFormat::Type		getRGBFormat() const;
 	virtual bool			loadFromFile(const std::string &filename) = 0;
