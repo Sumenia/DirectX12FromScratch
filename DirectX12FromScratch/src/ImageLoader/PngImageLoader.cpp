@@ -69,6 +69,7 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	errno_t		err;
 	png_infop	png_info;
 	png_structp	png_ptr;
+	void		*data;
 
 	
 	err = fopen_s(&fp, filename.c_str(), "rb");
@@ -118,16 +119,31 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	/*if (!removeAlphaChannel(fp, png_info, png_ptr))
 		return (false);*/
 
-	_data = (png_bytep*)malloc(sizeof(png_bytep) * _height);
+	std::cout << "FILE: " << filename << std::endl;
+	std::cout << "DEPTH: " << (int)_bitDepth << std::endl;
+	std::cout << "COLOR: " << (int)_rgbFormat << std::endl;
+	data = (png_bytep*)malloc(sizeof(png_bytep) * _height);
 	_length = png_get_rowbytes(png_ptr, png_info) * _height;
 
 	for (int y = 0; y < _height; y++)
-		((png_bytep*)_data)[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, png_info));
+		((png_bytep*)data)[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, png_info));
 
-	png_read_image(png_ptr, (png_bytep*)_data);
+	png_read_image(png_ptr, (png_bytep*)data);
 
 	fclose(fp);
-	writeToFile("test.png");
+
+	unsigned int size = png_get_rowbytes(png_ptr, png_info);
+	_data = new char[_length];
+
+	for (int y = 0; y < _height; y++) {
+		png_bytep row = ((png_bytep*)data)[y];
+		for (int i = 0; i < size; i++) {
+			((char*)_data)[i + (y * size)] = row[i];
+		}
+	}
+
+	free(data);
+
 	return (true);
 }
 

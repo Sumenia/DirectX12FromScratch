@@ -49,7 +49,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
                 light->setDirection({ 0.0f, 0.0f, 1.0f });
 
-                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/majora/Majora.txt"));
+                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/cube.txt"));
                 _node->scale({ 50.0f, 50.0f, 50.0f });
             }
         }
