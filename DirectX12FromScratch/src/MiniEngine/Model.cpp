@@ -43,7 +43,11 @@ bool			Model::loadFromFile(const std::string &file)
         aiProcess_FindDegenerates |
         aiProcess_FindInvalidData |
         aiProcess_OptimizeMeshes |
-		aiProcess_GenSmoothNormals);
+		aiProcess_GenSmoothNormals |
+        aiProcess_PreTransformVertices |
+        aiProcess_TransformUVCoords |
+        aiProcess_FlipUVs
+    );
 
 	if (!scene)
 	{
