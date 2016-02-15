@@ -7,43 +7,6 @@
 
 using namespace MiniEngine;
 
-/*
-std::vector<UINT8> GenerateTextureData()
-{
-	const UINT rowPitch = 64 * 4;
-	const UINT cellPitch = rowPitch >> 3;		// The width of a cell in the checkboard texture.
-	const UINT cellHeight = 64 >> 3;	// The height of a cell in the checkerboard texture.
-	const UINT textureSize = rowPitch * 64;
-
-	std::vector<UINT8> data(textureSize);
-	UINT8* pData = &data[0];
-
-	for (UINT n = 0; n < textureSize; n += 4)
-	{
-		UINT x = n % rowPitch;
-		UINT y = n / rowPitch;
-		UINT i = x / cellPitch;
-		UINT j = y / cellHeight;
-
-		if (i % 2 == j % 2)
-		{
-			pData[n] = 0x00;		// R
-			pData[n + 1] = 0x00;	// G
-			pData[n + 2] = 0x00;	// B
-			pData[n + 3] = 0xff;	// A
-		}
-		else
-		{
-			pData[n] = 0xff;		// R
-			pData[n + 1] = 0xff;	// G
-			pData[n + 2] = 0xff;	// B
-			pData[n + 3] = 0xff;	// A
-		}
-	}
-
-	return data;
-}*/
-
 D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) : RenderTarget(system), RenderWindow(system, window), D3D12RenderTarget(system), _swapChain(nullptr), _commandList(nullptr), _rtvDescriptorHeap(nullptr), _dsvDescriptorHeap(nullptr)
 {
 	for (UINT n = 0; n < FrameCount; n++)
@@ -86,16 +49,14 @@ D3D12RenderWindow::~D3D12RenderWindow()
 
 bool D3D12RenderWindow::init()
 {
-	if (!(
-		initSwapChain()
-		&& initRtvDescriptorHeap()
-		&& initRtv()
-		&& initDsvDescriptorHeap()
-		&& initDsv()
-		&& initCommandList()
-		))
-		return (false);
-	return (true);
+	return (
+        initSwapChain()
+        && initRtvDescriptorHeap()
+        && initRtv()
+        && initDsvDescriptorHeap()
+        && initDsv()
+        && initCommandList()
+    );
 }
 
 bool D3D12RenderWindow::render()

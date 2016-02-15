@@ -7,42 +7,6 @@
 
 using namespace MiniEngine;
 
-std::vector<UINT8> GenerateTextureData(unsigned int width, unsigned int height)
-{
-	const UINT rowPitch = width * 4;
-	const UINT cellPitch = rowPitch >> 3;		// The width of a cell in the checkboard texture.
-	const UINT cellHeight = height >> 3;	// The height of a cell in the checkerboard texture.
-	const UINT textureSize = rowPitch * height;
-
-	std::vector<UINT8> data(textureSize);
-	UINT8* pData = &data[0];
-
-	for (UINT n = 0; n < textureSize; n += 4)
-	{
-		UINT x = n % rowPitch;
-		UINT y = n / rowPitch;
-		UINT i = x / cellPitch;
-		UINT j = y / cellHeight;
-
-		if (i % 2 == j % 2)
-		{
-			pData[n] = 0x00;		// R
-			pData[n + 1] = 0x00;	// G
-			pData[n + 2] = 0x00;	// B
-			pData[n + 3] = 0xff;	// A
-		}
-		else
-		{
-			pData[n] = 0xff;		// R
-			pData[n + 1] = 0xff;	// G
-			pData[n + 2] = 0xff;	// B
-			pData[n + 3] = 0xff;	// A
-		}
-	}
-
-	return data;
-}
-
 D3D12Material::D3D12Material(D3D12RenderSystem &system) : Material(system), _system(system), _material(nullptr), _cbvSrvDescHeap(nullptr)
 {}
 
