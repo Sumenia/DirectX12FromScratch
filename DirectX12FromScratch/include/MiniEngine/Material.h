@@ -19,24 +19,24 @@ namespace MiniEngine
 		enum Flag : DWORD64
 		{
 			// Method to retrieve the color of the fragment (default use kd)
-			NORMAL_COLOR = 0x1,
-			TEXTURE_DIFFUSE = 0x2,
+			NORMAL_COLOR = 1,
+			TEXTURE_DIFFUSE = 2,
 
 			// Method to retrieve the normal of the vertice (default use normal arg)
-			NORMAL_MAP = 0x4,
+			NORMAL_MAP = 4,
 
 			// Method to retrieve the ambient color (default use ka)
-			TEXTURE_AMBIENT = 0x8,
+			TEXTURE_AMBIENT = 8,
 
             // Method to retrieve the specular color (default use ks)
-            TEXTURE_SPECULAR = 0x16,
+            TEXTURE_SPECULAR = 16,
         };
 
 		enum TextureType
 		{
-			DIFFUSE = 0,
-			SPECULAR = 1,
-			AMBIENT = 2
+            AMBIENT = 0,
+			DIFFUSE = 1,
+			SPECULAR = 2
 		};
 
     public:
@@ -63,6 +63,10 @@ namespace MiniEngine
         unsigned int    getId() const;
 
         std::string     generateHLSLShader(Shader::Type type);
+
+        bool            haveAmbientMap() const;
+        bool            haveDiffuseMap() const;
+        bool            haveSpecularMap() const;
 
     protected:
         void            setFlagToShader(std::stringstream &source, std::string const &define, Flag flag);

@@ -158,7 +158,7 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
     {
         D3D12RootSignature      *rootSignature = new D3D12RootSignature();
 
-        if (!rootSignature->init(*this))
+        if (!rootSignature->init(*this, material.haveAmbientMap(), material.haveDiffuseMap(), material.haveSpecularMap()))
         {
             delete rootSignature;
             delete pipeline;

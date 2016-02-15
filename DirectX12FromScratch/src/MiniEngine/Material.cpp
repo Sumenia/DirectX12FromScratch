@@ -5,7 +5,7 @@ using namespace MiniEngine;
 
 unsigned int Material::id_count = 0;
 
-Material::Material(RenderSystem &system) : _system(system), _id(Material::id_count), _flags(0), _ka(1.0f, 1.0f, 1.0f), _kd(1.0f, 1.0f, 1.0f), _ks(1.0f, 1.0f, 1.0f), _shininess(32)
+Material::Material(RenderSystem &system) : _system(system), _id(Material::id_count), _flags(NORMAL_COLOR), _ka(1.0f, 1.0f, 1.0f), _kd(1.0f, 1.0f, 1.0f), _ks(1.0f, 1.0f, 1.0f), _shininess(32)
 {
     Material::id_count++;
 
@@ -26,6 +26,18 @@ Material::~Material()
 bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 {
 	aiString file;
+
+    if (material->GetTextureCount(aiTextureType_AMBIENT) > 0 &&
+        material->GetTexture(aiTextureType_AMBIENT, 0, &file) == AI_SUCCESS)
+    {
+        Texture *tex = _system.createTexture(path + "/" + file.C_Str());
+
+        if (!tex)
+            return (false);
+
+        std::cout << "Ambient : " << file.C_Str() << std::endl;
+        useTexture(AMBIENT, tex);
+    }
 
 	if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0 &&
 		material->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
@@ -50,18 +62,7 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
         std::cout << "Specular : " << file.C_Str() << std::endl;
 		useTexture(SPECULAR, tex);
 	}
-	
-	if (material->GetTextureCount(aiTextureType_AMBIENT) > 0 &&
-		material->GetTexture(aiTextureType_AMBIENT, 0, &file) == AI_SUCCESS)
-	{
-        Texture *tex = _system.createTexture(path + "/" + file.C_Str());
 
-        if (!tex)
-            return (false);
-
-        std::cout << "Ambient : " << file.C_Str() << std::endl;
-		useTexture(AMBIENT, tex);
-	}
 	return true;
 }
 
@@ -77,17 +78,26 @@ void Material::useDiffuseColor(Vector3f const &color)
     
     _flags &= ~TEXTURE_DIFFUSE;
     _flags &= ~NORMAL_COLOR;
+
+    delete _textures[DIFFUSE];
+    _textures[DIFFUSE] = nullptr;
 }
 
 void Material::useAmbientColor(Vector3f const &color)
 {
     _ka = color;
     _flags &= ~TEXTURE_AMBIENT;
+
+    delete _textures[AMBIENT];
+    _textures[AMBIENT] = nullptr;
 }
 
 void Material::useSpecularColor(Vector3f const &color) {
     _ks = color;
     _flags &= ~TEXTURE_SPECULAR;
+
+    delete _textures[SPECULAR];
+    _textures[SPECULAR] = nullptr;
 }
 
 void Material::setShininess(float shininess)
@@ -153,4 +163,19 @@ std::string Material::generateHLSLShader(Shader::Type type)
 void Material::setFlagToShader(std::stringstream &source, std::string const &define, Flag flag)
 {
     source << "#define " << define << " " << (_flags & flag) << std::endl;
+}
+
+bool Material::haveAmbientMap() const
+{
+    return (!!_textures.at(AMBIENT));
+}
+
+bool Material::haveDiffuseMap() const
+{
+    return (!!_textures.at(DIFFUSE));
+}
+
+bool Material::haveSpecularMap() const
+{
+    return (!!_textures.at(SPECULAR));
 }

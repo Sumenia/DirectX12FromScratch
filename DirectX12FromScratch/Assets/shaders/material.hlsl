@@ -19,14 +19,46 @@ struct Material
 
 ConstantBuffer<Material> material : register(b3);
 
-float3 getDiffuseColor(float3 normal)
+SamplerState samp : register(s0);
+
+#if TEXTURE_AMBIENT
+Texture2D	ambientTexture : register(t0);
+#endif
+
+#if TEXTURE_DIFFUSE
+Texture2D	diffuseTexture : register(t1);
+#endif
+
+#if TEXTURE_SPECULAR
+Texture2D	specularTexture : register(t2);
+#endif
+
+float3 getDiffuseColor(float3 normal, float2 uv)
 {
 #if NORMAL_COLOR
     return (float3(abs(normal.x), abs(normal.y), abs(normal.z)));
 #elif TEXTURE_DIFFUSE
-    // TO-DO: RETURN TEXTURE
+    return (diffuseTexture.Sample(samp, uv));
 #else
     return (material.kd);
+#endif
+}
+
+float3 getAmbientColor(float3 normal, float2 uv)
+{
+#if TEXTURE_AMBIENT
+    return (ambientTexture.Sample(samp, uv));
+#else
+    return (material.ka * getDiffuseColor(normal, uv));
+#endif
+}
+
+float3 getSpecularColor(float3 normal, float2 uv)
+{
+#if TEXTURE_SPECULAR
+    return (specularTexture.Sample(samp, uv));
+#else
+    return (material.ks * getDiffuseColor(normal, uv));
 #endif
 }
 

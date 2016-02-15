@@ -14,7 +14,7 @@ namespace MiniEngine
         D3D12Material(D3D12RenderSystem &system);
         ~D3D12Material();
 
-		bool				initCbvSrvDescriptorHeap();
+		bool				initCbvSrvDescriptorHeap(unsigned int nbSrvs);
         bool                bind(CommandList &list, unsigned int rootIdx);
         bool                finalize();
 
@@ -24,7 +24,7 @@ namespace MiniEngine
 
         D3D12RenderSystem   &_system;
 
-		D3D12DescriptorHeap						*_cbvSrvDescHeap;
-		D3D12ConstantBuffer						*_material;		
+		D3D12DescriptorHeap	*_cbvSrvDescHeap;
+		D3D12ConstantBuffer	*_material;		
     };
 }
