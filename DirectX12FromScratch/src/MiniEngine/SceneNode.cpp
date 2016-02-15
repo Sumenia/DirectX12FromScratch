@@ -101,6 +101,11 @@ Vector3f &SceneNode::getDerivedPosition()
     return (_derivedPosition);
 }
 
+Vector3f &SceneNode::getPosition()
+{
+    return (_position);
+}
+
 Quatf &SceneNode::getDerivedRotation()
 {
     if (_needUpdate)
@@ -135,7 +140,7 @@ void MiniEngine::SceneNode::rotate(float w, Vector3f const &v, TransformSpace sp
     else if (space == TS_PARENT)
         _rotation = q * _rotation;
     else if (space == TS_WORLD)
-        _rotation = _rotation - getDerivedRotation().inverse() * q * getDerivedRotation();
+        _rotation = _rotation * getDerivedRotation().inverse() * q * getDerivedRotation();
 
 	needUpdate();
 }
@@ -156,6 +161,24 @@ void MiniEngine::SceneNode::translate(Vector3f const &v, TransformSpace space)
 
     needUpdate();
 }
+
+void MiniEngine::SceneNode::setPosition(Vector3f const &v, TransformSpace space)
+{
+	if (space == TS_LOCAL)
+		_position = _rotation.transform() * v;
+	else if (space == TS_PARENT)
+		_position = v;
+	else if (space == TS_WORLD)
+	{
+		if (_parent)
+			_position = (_parent->getDerivedRotation().inverse().transform() * v) / _parent->getDerivedScaling();
+		else
+			_position = v;
+	}
+
+	needUpdate();
+}
+
 
 void MiniEngine::SceneNode::scale(Vector3f const &v)
 {

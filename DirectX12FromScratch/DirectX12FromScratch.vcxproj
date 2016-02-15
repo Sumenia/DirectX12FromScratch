@@ -51,6 +51,7 @@
     <ClInclude Include="include\MiniEngine\D3D12\D3D12RootSignature.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12Texture.h" />
     <ClInclude Include="include\MiniEngine\D3D12\D3D12VertexBuffer.h" />
+    <ClInclude Include="include\MiniEngine\DirectionalLight.h" />
     <ClInclude Include="include\MiniEngine\Fence.h" />
     <ClInclude Include="include\MiniEngine\Geometry.h" />
     <ClInclude Include="include\MiniEngine\GraphicPipeline.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="include\MiniEngine\Mesh.h" />
     <ClInclude Include="include\MiniEngine\Model.h" />
     <ClInclude Include="include\MiniEngine\MovableObject.h" />
+    <ClInclude Include="include\MiniEngine\PointLight.h" />
     <ClInclude Include="include\MiniEngine\Quaternion.h" />
     <ClInclude Include="include\MiniEngine\RenderableModel.h" />
     <ClInclude Include="include\MiniEngine\RenderableObject.h" />
@@ -72,6 +74,7 @@
     <ClInclude Include="include\MiniEngine\SceneManager.h" />
     <ClInclude Include="include\MiniEngine\SceneNode.h" />
     <ClInclude Include="include\MiniEngine\Shader.h" />
+    <ClInclude Include="include\MiniEngine\SpotLight.h" />
     <ClInclude Include="include\MiniEngine\SysClock.h" />
     <ClInclude Include="include\MiniEngine\Texture.h" />
     <ClInclude Include="include\MiniEngine\Time.h" />
@@ -81,6 +84,9 @@
     <ClInclude Include="include\Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\MiniEngine\DirectionalLight.cpp" />
+    <ClCompile Include="src\MiniEngine\PointLight.cpp" />
+    <ClCompile Include="src\MiniEngine\SpotLight.cpp" />
     <ClCompile Include="src\DynamicLibrary.cpp" />
     <ClCompile Include="src\ImageLoader\ImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />

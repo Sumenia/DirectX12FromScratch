@@ -17,6 +17,8 @@ struct Light
     float   constantAttenuation;
     float   linearAttenuation;
     float   quadraticAttenuation;
+
+    float   range;
 };
 
 cbuffer lightsArray : register(b2)

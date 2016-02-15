@@ -37,12 +37,14 @@ namespace MiniEngine
         virtual Matrix4f        &getTransformationMatrix();
 
         Vector3f                &getDerivedPosition();
+        Vector3f                &getPosition();
         Quatf                   &getDerivedRotation();
         Vector3f                &getDerivedScaling();
 
 		virtual void			rotate(float w, Vector3f const &v, TransformSpace space = TS_LOCAL);
 		virtual void			translate(Vector3f const &v, TransformSpace space = TS_LOCAL);
 		virtual void			scale(Vector3f const &v);
+		virtual void			setPosition(Vector3f const &v, TransformSpace space);
 
         virtual void            needUpdate();
 

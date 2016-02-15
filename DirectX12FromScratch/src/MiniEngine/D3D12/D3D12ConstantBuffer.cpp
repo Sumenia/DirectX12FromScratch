@@ -141,7 +141,7 @@ bool D3D12ConstantBuffer::updateCameraMatrix(Vector3f const &position, Matrix4f 
         for (unsigned int y = 0; y < 4; y++)
             camera.projection.m[x][y] = projection(x + 1, y + 1);
 
-    camera.position = {};
+    camera.position = { position.x, position.y, position.z };
     camera.nb_lights = nb_lights;
 
     return (update(sizeof(camera), &camera));
@@ -179,6 +179,7 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
 
         float               cutOff;
         float               outerCutOff;
+		
 
         DirectX::XMFLOAT3   ambient;
         DirectX::XMFLOAT3   diffuse;
@@ -190,7 +191,9 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
         float               linear;
         float               quadratic;
 
-        float               pad2[2];
+        float               range;
+
+        float               pad2[1];
     };
 
     LightStructure  lightsData[MAX_LIGHTS];
@@ -200,13 +203,20 @@ bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
     for (auto &&light : lights)
     {
         Vector3f    position = light->getParent()->getDerivedPosition();
-        //Vector4f    direction(light->getDirection().x, light->getDirection().y, light->getDirection().z, 0.0f);
+        Vector4f    direction = light->getParent()->getTransformationMatrix() * Vector4f(light->getDirection().x, light->getDirection().y, light->getDirection().z, 0.0f);
 
         lightsData[i].type = light->getType();
         lightsData[i].position = { position.x, position.y, position.z };
         lightsData[i].ambient = { light->getAmbient().x, light->getAmbient().y, light->getAmbient().z };
         lightsData[i].diffuse = { light->getDiffuse().x, light->getDiffuse().y, light->getDiffuse().z };
         lightsData[i].specular = { light->getSpecular().x, light->getSpecular().y, light->getSpecular().z };
+        lightsData[i].direction = { direction.x, direction.y, direction.z };
+        lightsData[i].quadratic = light->getQuadratic();
+        lightsData[i].constant = light->getConstant();
+        lightsData[i].linear = light->getLinear();
+        lightsData[i].cutOff = light->getCosineLightAngle();
+        lightsData[i].outerCutOff = light->getCosineBigAngle();
+        lightsData[i].range = light->getRange();
 
         i++;
     }

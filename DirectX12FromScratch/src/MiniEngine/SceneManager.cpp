@@ -1,6 +1,9 @@
 #include "MiniEngine/SceneManager.h"
 #include "MiniEngine/Light.h"
 #include "MiniEngine/RenderSystem.h"
+#include "MiniEngine/PointLight.h"
+#include "MiniEngine/DirectionalLight.h"
+#include "MiniEngine/SpotLight.h"
 
 using namespace MiniEngine;
 
@@ -41,12 +44,22 @@ Camera *SceneManager::createCamera(SceneNode *node)
     return (camera);
 }
 
-Light *SceneManager::createLight(SceneNode *node)
+Light *SceneManager::createLight(Light::Type type, SceneNode *node)
 {
+    Light   *light = nullptr;
+
     if (_lights.size() == MAX_LIGHTS)
         return (nullptr);
 
-    Light   *light = new Light(*this);
+    if (type == Light::POINT)
+        light = new PointLight(*this);
+    else if (type == Light::SPOT)
+        light = new SpotLight(*this);
+    else if (type == Light::DIRECTIONAL)
+        light = new DirectionalLight(*this);
+
+    if (!light)
+        return (nullptr);
 
     _lights.push_back(light);
     _needUpdate = true;
