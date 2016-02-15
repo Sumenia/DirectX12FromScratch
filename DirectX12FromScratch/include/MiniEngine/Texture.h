@@ -8,11 +8,12 @@ namespace MiniEngine
 	{
 	public:
 		Texture();
-		~Texture();
-		bool					loadFromFile(const std::string &filename);
+		virtual ~Texture();
+
+		virtual bool			loadFromFile(const std::string &filename);
 		ImageLoader				*getImage();
 
-	private:
+	protected:
 		ImageLoader				*_loader;
 	};
 }

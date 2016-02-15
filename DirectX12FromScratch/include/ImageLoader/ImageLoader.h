@@ -31,6 +31,7 @@ class ImageLoader
 public:
 	ImageLoader(EImageFormat::Type format);
 	virtual ~ImageLoader();
+
 	void					*getData() const;
 	int						getDataLength() const;
 	int8_t					getBitpDepth() const;

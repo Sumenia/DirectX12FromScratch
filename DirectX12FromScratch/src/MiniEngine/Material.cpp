@@ -1,12 +1,17 @@
 #include "MiniEngine/Material.h"
+#include "MiniEngine/RenderSystem.h"
 
 using namespace MiniEngine;
 
 unsigned int Material::id_count = 0;
 
-Material::Material() : _id(Material::id_count), _flags(0), _ka(1.0f, 1.0f, 1.0f), _kd(1.0f, 1.0f, 1.0f), _ks(1.0f, 1.0f, 1.0f), _shininess(32)
+Material::Material(RenderSystem &system) : _system(system), _id(Material::id_count), _flags(0), _ka(1.0f, 1.0f, 1.0f), _kd(1.0f, 1.0f, 1.0f), _ks(1.0f, 1.0f, 1.0f), _shininess(32)
 {
     Material::id_count++;
+
+    _textures[AMBIENT] = nullptr;
+    _textures[DIFFUSE] = nullptr;
+    _textures[SPECULAR] = nullptr;
 }
 
 Material::~Material()
@@ -25,8 +30,11 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 	if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0 &&
 		material->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
 	{
-		Texture *tex = new Texture();
-		tex->loadFromFile(path + "/" + file.C_Str());
+		Texture *tex = _system.createTexture(path + "/" + file.C_Str());
+
+        if (!tex)
+            return (false);
+
 		std::cout << "Diffuse : " << path + "/" + file.C_Str() << std::endl;
 		useTexture(DIFFUSE, tex);
 	}
@@ -34,18 +42,24 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 	if (material->GetTextureCount(aiTextureType_SPECULAR) > 0 &&
 		material->GetTexture(aiTextureType_SPECULAR, 0, &file) == AI_SUCCESS)
 	{
-		Texture *tex = new Texture();
-		tex->loadFromFile(path + "/" + file.C_Str());
-		std::cout << "Specular : " << file.C_Str() << std::endl;
+        Texture *tex = _system.createTexture(path + "/" + file.C_Str());
+
+        if (!tex)
+            return (false);
+
+        std::cout << "Specular : " << file.C_Str() << std::endl;
 		useTexture(SPECULAR, tex);
 	}
 	
 	if (material->GetTextureCount(aiTextureType_AMBIENT) > 0 &&
 		material->GetTexture(aiTextureType_AMBIENT, 0, &file) == AI_SUCCESS)
 	{
-		Texture *tex = new Texture();
-		tex->loadFromFile(path + "/" + file.C_Str());
-		std::cout << "Ambient : " << file.C_Str() << std::endl;
+        Texture *tex = _system.createTexture(path + "/" + file.C_Str());
+
+        if (!tex)
+            return (false);
+
+        std::cout << "Ambient : " << file.C_Str() << std::endl;
 		useTexture(AMBIENT, tex);
 	}
 	return true;
@@ -93,7 +107,7 @@ void Material::useTexture(TextureType t, Texture *tex)
     else if (t == SPECULAR)
         _flags |= TEXTURE_SPECULAR;
 
-	_textures.insert(std::pair<TextureType, Texture*>(t, tex));
+    _textures[t] = tex;
 }
 
 void Material::useNormalScalar()

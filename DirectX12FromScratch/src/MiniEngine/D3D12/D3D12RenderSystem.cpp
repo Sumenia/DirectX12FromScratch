@@ -134,6 +134,19 @@ D3D12Material *D3D12RenderSystem::createMaterial()
     return (new D3D12Material(*this));
 }
 
+D3D12Texture *D3D12RenderSystem::createTexture(std::string const &filename)
+{
+    D3D12Texture    *texture = new D3D12Texture(*this);
+
+    if (!texture->loadFromFile(filename))
+    {
+        delete texture;
+        return (nullptr);
+    }
+
+    return (texture);
+}
+
 D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &material)
 {
     HLSLShader              *vertexShader = nullptr;

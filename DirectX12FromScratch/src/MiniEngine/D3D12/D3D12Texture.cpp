@@ -3,17 +3,28 @@
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12Texture.h"
 
-MiniEngine::D3D12Texture::D3D12Texture(D3D12RenderSystem & system) : _system(system), _buffer(nullptr)
+using namespace MiniEngine;
+
+D3D12Texture::D3D12Texture(D3D12RenderSystem &system) : _system(system), _buffer(nullptr)
+{}
+
+D3D12Texture::~D3D12Texture()
 {
+    if (_buffer)
+        _buffer->Release();
+
+    _buffer = nullptr;
 }
 
-MiniEngine::D3D12Texture::~D3D12Texture()
+bool D3D12Texture::loadFromFile(const std::string &filename)
 {
+    if (!Texture::loadFromFile(filename))
+        return (false);
+
+    return (init(_loader->getData(), _loader->getWidth(), _loader->getHeight()));
 }
 
-bool MiniEngine::D3D12Texture::init(void *data,
-									unsigned int width,
-									unsigned int height)
+bool D3D12Texture::init(void *data, unsigned int width, unsigned int height)
 {
 	HRESULT                     result;
 	ID3D12Resource				*bufferUpload;
@@ -85,12 +96,12 @@ bool MiniEngine::D3D12Texture::init(void *data,
 	return (true);
 }
 
-ID3D12Resource * MiniEngine::D3D12Texture::getBuffer()
+ID3D12Resource *D3D12Texture::getBuffer()
 {
 	return (_buffer);
 }
 
-D3D12_RESOURCE_DESC & MiniEngine::D3D12Texture::getResourceDesc()
+D3D12_RESOURCE_DESC &D3D12Texture::getResourceDesc()
 {
 	return (_textureDesc);
 }

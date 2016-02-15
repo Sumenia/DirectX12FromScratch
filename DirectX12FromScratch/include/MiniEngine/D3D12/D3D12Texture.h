@@ -7,20 +7,23 @@ namespace MiniEngine
 {
 	class D3D12RenderSystem;
 
-	class D3D12Texture
+	class D3D12Texture : public Texture
 	{
 	public:
 		D3D12Texture(D3D12RenderSystem &system);
 		~D3D12Texture();
 
-		bool				init(void *data, unsigned int width, unsigned int height);
-		ID3D12Resource		*getBuffer();
-		D3D12_RESOURCE_DESC &getResourceDesc();
+        virtual bool			loadFromFile(const std::string &filename);
+
+		ID3D12Resource		    *getBuffer();
+		D3D12_RESOURCE_DESC     &getResourceDesc();
 
 	protected:
+        bool                    init(void *data, unsigned int width, unsigned int height);
+
 		D3D12RenderSystem		&_system;
 		ID3D12Resource			*_buffer;
 
-		D3D12_RESOURCE_DESC					_textureDesc;
+		D3D12_RESOURCE_DESC		_textureDesc;
 	};
 }

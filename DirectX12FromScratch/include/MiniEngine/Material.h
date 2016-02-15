@@ -11,8 +11,8 @@
 namespace MiniEngine
 {
     class CommandList;
+    class RenderSystem;
 
-    // TO-DO: Add flags and behaviours to this class and the associated shader
     class Material
     {
     public:
@@ -40,7 +40,7 @@ namespace MiniEngine
 		};
 
     public:
-        Material();
+        Material(RenderSystem &system);
         virtual ~Material();
 
 		bool			loadFromAssimp(aiMaterial* material, const std::string& path);
@@ -66,6 +66,8 @@ namespace MiniEngine
 
     protected:
         void            setFlagToShader(std::stringstream &source, std::string const &define, Flag flag);
+
+        RenderSystem    &_system;
 
         unsigned int    _id;
         DWORD64         _flags;

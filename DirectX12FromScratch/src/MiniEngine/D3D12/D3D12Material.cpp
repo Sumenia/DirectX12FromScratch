@@ -43,13 +43,16 @@ std::vector<UINT8> GenerateTextureData(unsigned int width, unsigned int height)
 	return data;
 }
 
-D3D12Material::D3D12Material(D3D12RenderSystem &system) : _system(system), _material(nullptr)
+D3D12Material::D3D12Material(D3D12RenderSystem &system) : Material(system), _system(system), _material(nullptr)
 {}
 
 D3D12Material::~D3D12Material()
 {
     delete _material;
     _material = nullptr;
+
+    delete _cbvSrvDescHeap;
+    _cbvSrvDescHeap = nullptr;
 }
 
 bool D3D12Material::bind(CommandList &list, unsigned int rootIdx)
@@ -132,23 +135,13 @@ bool D3D12Material::finalize()
 	if (!initCbvSrvDescriptorHeap())
 		return (false);
 	
-	// Copy data to the intermediate upload heap and then schedule a copy 
-	// from the upload heap to the Texture2D.
-	std::vector<UINT8> texture = GenerateTextureData(128, 128);
-
 	CD3DX12_CPU_DESCRIPTOR_HANDLE handle(_cbvSrvDescHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
-	D3D12Texture *tex;
-	// D3D12Texture PART
-	// Diffuse
+
 	for (unsigned int i = 0; i < 3 /*nb TextureType*/; i++)
 	{
 		if (_textures[static_cast<TextureType>(i)] != nullptr)
 		{
-			tex = new D3D12Texture(_system);
-			// TO-DO init texture with real data
-			tex->init(_textures[static_cast<TextureType>(i)]->getImage()->getData(),
-						_textures[static_cast<TextureType>(i)]->getImage()->getWidth(),
-						_textures[static_cast<TextureType>(i)]->getImage()->getHeight());
+            D3D12Texture* tex = dynamic_cast<D3D12Texture*>(_textures[static_cast<TextureType>(i)]);
 
 			// Describe and create a SRV for the texture.
 			D3D12_SHADER_RESOURCE_VIEW_DESC		srvDesc = {};
@@ -156,10 +149,12 @@ bool D3D12Material::finalize()
 			srvDesc.Format = tex->getResourceDesc().Format;
 			srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 			srvDesc.Texture2D.MipLevels = 1;
+
 			_system.getDevice()->getNative()->CreateShaderResourceView(tex->getBuffer(), &srvDesc, handle);
 		}
 		handle.Offset(_cbvSrvDescHeap->getSize());
 	}
+
     return (true);
 }
 
