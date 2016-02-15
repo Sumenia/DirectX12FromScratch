@@ -30,7 +30,8 @@ bool D3D12Texture::init(void *data, unsigned int width, unsigned int height)
 	ID3D12Resource				*bufferUpload;
 
 	// init CommandList
-	D3D12CommandList *commandList = _system.getCommandQueue()->createCommandList(nullptr);
+	std::shared_ptr<D3D12CommandList> commandList(_system.getCommandQueue()->createCommandList(nullptr));
+
 	if (!commandList->init())
 		return (false);
 
@@ -86,12 +87,14 @@ bool D3D12Texture::init(void *data, unsigned int width, unsigned int height)
 	}
 
 	// Execute the list of commands.
-	_system.getCommandQueue()->executeCommandLists(1, commandList);
+	_system.getCommandQueue()->executeCommandLists(1, commandList.get());
+
 	if (!_system.getCommandQueue()->wait(*_system.getFence()))
 	{
 		bufferUpload->Release();
 		return (false);
 	}
+
 	bufferUpload->Release();
 	return (true);
 }

@@ -77,6 +77,7 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system, bool ambient, bool diff
     rootSignatureDesc.Init(nbSrvs > 0 ? 5 : 4, parameters, 1, &sampler, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
     result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error);
+    delete [] ranges;
 
     if (FAILED(result))
     {
