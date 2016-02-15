@@ -6,7 +6,7 @@ struct Material
     float3  ka;
 #endif
 
-#if !NORMAL && !TEXTURE_DIFFUSE 
+#if !NORMAL_COLOR && !TEXTURE_DIFFUSE 
     float3  kd;
 #endif
 
