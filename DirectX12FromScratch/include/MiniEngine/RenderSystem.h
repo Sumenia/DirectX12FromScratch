@@ -41,6 +41,7 @@ namespace MiniEngine
         virtual GraphicPipeline             *getGraphicPipeline(DWORD64 type);
 
         bool                                render();
+		const std::list<RenderTarget *>		&getRenderTargets() const;
 
     protected:
         std::list<RenderTarget*>            _targets;

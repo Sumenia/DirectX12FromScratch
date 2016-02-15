@@ -457,6 +457,8 @@ typedef class Vector2<float> Vector2f;
 typedef class Vector2<double> Vector2d;
 /// Two dimensional Vector of ints
 typedef class Vector2<int> Vector2i;
+/// Two dimensional Vector of unsigned ints
+typedef class Vector2<unsigned int> Vector2ui;
 
 /**
 * Class for three dimensional vector.
@@ -1000,6 +1002,8 @@ typedef Vector3<float> Vector3f;
 typedef Vector3<double> Vector3d;
 /// Three dimensional Vector of ints
 typedef Vector3<int> Vector3i;
+/// Three dimensional Vector of unsigned ints
+typedef Vector3<unsigned int> Vector3ui;
 
 /**
 * Class for four dimensional vector.
@@ -1517,3 +1521,5 @@ typedef Vector4<float> Vector4f;
 typedef Vector4<double> Vector4d;
 /// Three dimensional Vector of ints
 typedef Vector4<int> Vector4i;
+/// Three dimensional Vector of unsigned ints
+typedef Vector4<unsigned int> Vector4ui;

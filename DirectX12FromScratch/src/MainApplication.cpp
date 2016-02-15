@@ -128,6 +128,17 @@ bool MainApplication::update(MiniEngine::Time elapsedTime)
 
 	while (_window->getEvent(event))
 	{
+		if (event.type == Event::Resized)
+		{
+			Vector2ui newSize = { _window->getWidth(), _window->getHeight() };
+			const std::list<MiniEngine::RenderTarget *> targets = _root->getRenderSystem()->getRenderTargets();
+
+			for (auto target : targets)
+			{
+				target->resize(newSize);
+			}
+		}
+
 		if (event.type == Event::KeyPressed)
 		{
 			if (event.key.code == Keyboard::Escape)

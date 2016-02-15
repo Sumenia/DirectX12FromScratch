@@ -100,3 +100,8 @@ bool RenderSystem::render()
 
     return (true);
 }
+
+const std::list<RenderTarget *> &RenderSystem::getRenderTargets() const
+{
+	return (_targets);
+}
