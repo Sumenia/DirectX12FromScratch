@@ -70,8 +70,8 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	png_infop	png_info;
 	png_structp	png_ptr;
 	void		*data;
+	png_byte 	header[8];
 
-	
 	err = fopen_s(&fp, filename.c_str(), "rb");
 	if (err)
 	{
@@ -79,11 +79,19 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 		return (false);
 	}
 
+	fread(header, 1, 8, fp);
+	if (png_sig_cmp(header, 0, 8))
+	{
+		std::cerr << filename << " is not a valid png file" << std::endl;
+		return (false);
+	}
+
+
 	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr)
 	{
 		fclose(fp);
-		std::cout << "Failed to create png read struct" << std::endl;
+		std::cerr << "Failed to create png read struct" << std::endl;
 		return (false);
 	}
 
@@ -92,7 +100,7 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	{
 		png_destroy_read_struct(&png_ptr, NULL, NULL);
 		fclose(fp);
-		std::cout << "Failed to create png info struct" << std::endl;
+		std::cerr << "Failed to create png info struct" << std::endl;
 		return (false);
 	}
 
@@ -102,8 +110,9 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 		fclose(fp);
 		return (false);
 	}
-
+	
 	png_init_io(png_ptr, fp);
+	png_set_sig_bytes(png_ptr, 8);
 
 	png_read_info(png_ptr, png_info);
 

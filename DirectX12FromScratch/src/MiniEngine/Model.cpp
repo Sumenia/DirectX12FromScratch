@@ -29,14 +29,15 @@ bool			Model::loadFromFile(const std::string &file)
 
 	_path = file.substr(0, file.find_last_of('/'));
 	_file = file.substr(file.find_last_of('/') + 1);
+
+	importer.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
+
 	const aiScene* scene = importer.ReadFile(file,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType |
 	    aiProcess_FixInfacingNormals |
 		aiProcess_GenUVCoords |
-        aiProcess_ValidateDataStructure |
         aiProcess_ImproveCacheLocality |
         aiProcess_RemoveRedundantMaterials |
         aiProcess_FindDegenerates |
@@ -47,7 +48,8 @@ bool			Model::loadFromFile(const std::string &file)
         aiProcess_TransformUVCoords |
         aiProcess_MakeLeftHanded |
         aiProcess_FlipUVs |
-        aiProcess_FlipWindingOrder
+        aiProcess_FlipWindingOrder |
+		aiProcess_SortByPType
     );
 
 	if (!scene)
