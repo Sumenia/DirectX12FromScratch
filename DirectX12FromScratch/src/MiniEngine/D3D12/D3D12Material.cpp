@@ -23,6 +23,9 @@ bool D3D12Material::bind(CommandList &list, unsigned int rootIdx)
 {
     if (!_material)
         return (false);
+    
+    if (!_material->bind(list, rootIdx))
+        return (false);
 
     if (_cbvSrvDescHeap)
     {
@@ -33,7 +36,7 @@ bool D3D12Material::bind(CommandList &list, unsigned int rootIdx)
 
     }
 	
-	return (_material->bind(list, rootIdx));
+	return (true);
 }
 
 bool D3D12Material::finalize()

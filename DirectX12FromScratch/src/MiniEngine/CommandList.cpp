@@ -21,8 +21,7 @@ bool CommandList::setMaterialPipeline(DWORD64 type)
     if (!pipeline)
         return (false);
 
-    setPipeline(*pipeline);
-    return (true);
+    return (setPipeline(*pipeline));
 }
 
 RenderTarget &CommandList::getRenderTarget()

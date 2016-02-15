@@ -27,7 +27,7 @@ namespace MiniEngine
         bool                        bindMaterial(Material &material);
         bool                        bindMaterial(unsigned int id);
 
-        void                        setPipeline(GraphicPipeline &pipeline);
+        bool                        setPipeline(GraphicPipeline &pipeline);
 
         ID3D12GraphicsCommandList   *getNative();
 
@@ -35,5 +35,9 @@ namespace MiniEngine
         D3D12RenderSystem           &_system;
         ID3D12CommandAllocator      *_allocator;
         ID3D12GraphicsCommandList   *_list;
+
+        ConstantBuffer              *_camera;
+        ConstantBuffer              *_model;
+        ConstantBuffer              *_lights;
     };
 }
