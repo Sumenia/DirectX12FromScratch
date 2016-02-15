@@ -5,25 +5,30 @@ JpgImageLoader::JpgImageLoader() : ImageLoader(EImageFormat::Type::JPG) {}
 
 JpgImageLoader::~JpgImageLoader() {}
 
-bool								JpgImageLoader::loadFromFile(const std::string &filename)
+bool								JpgImageLoader::isJpg(FILE *file)
 {
-	FILE							*file;
-	errno_t							err;
-	char							error[4096];
+	unsigned char					buffer[2];
+	int								rd;
+
+	memset(buffer, 0, 2);
+
+	rd = fread(buffer, sizeof(unsigned char), 2, file);
+	rewind(file);
+
+	if (rd != 2)
+		return (false);
+
+	return (buffer[0] == 0xff && buffer[1] == 0xd8);
+}
+
+bool								JpgImageLoader::loadFromFile(FILE *file)
+{
 	struct jpeg_decompress_struct	cinfo;
 	struct jpeg_error_mgr			jerr;
 	jmp_buf							setjmp_buffer;
 	unsigned char					*buffer;
 	int								row_stride;
 	unsigned long					counter;
-
-	err = fopen_s(&file, filename.c_str(), "rb");
-	if (err)
-	{
-		strerror_s(error, 4096, err);
-		std::cerr << "Error opening file " << filename << " : " << error << std::endl;
-		return (false);
-	}
 
 	cinfo.err = jpeg_std_error(&jerr);
 	
@@ -33,11 +38,12 @@ bool								JpgImageLoader::loadFromFile(const std::string &filename)
 	{
 		std::cerr << "Error in jpeg file" << std::endl;
 		jpeg_destroy_decompress(&cinfo);
-		fclose(file);
 		return (false);
 	}
 
 	jpeg_stdio_src(&cinfo, file);
+
+
 	jpeg_read_header(&cinfo, TRUE);
 	jpeg_start_decompress(&cinfo);
 
@@ -69,7 +75,6 @@ bool								JpgImageLoader::loadFromFile(const std::string &filename)
 
 	jpeg_finish_decompress(&cinfo);
 	jpeg_destroy_decompress(&cinfo);
-	fclose(file);
 
 	delete buffer;
 

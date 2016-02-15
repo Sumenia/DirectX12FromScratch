@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ImageLoader/PngImageLoader.h"
+#include "ImageLoader/JpgImageLoader.h"
 
 namespace MiniEngine
 {

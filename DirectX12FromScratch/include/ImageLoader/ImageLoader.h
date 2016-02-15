@@ -39,7 +39,7 @@ public:
 	unsigned int			getHeight() const;
 	EImageFormat::Type		getFormat() const;
 	ERGBFormat::Type		getRGBFormat() const;
-	virtual bool			loadFromFile(const std::string &filename) = 0;
+	virtual bool			loadFromFile(FILE *file) = 0;
 
 protected:
 	void					*_data;

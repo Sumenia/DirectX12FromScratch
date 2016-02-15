@@ -9,6 +9,7 @@ class		JpgImageLoader : public ImageLoader
 public:
 	JpgImageLoader();
 	~JpgImageLoader();
-	bool	loadFromFile(const std::string &filename);
+	bool			loadFromFile(FILE *file);
+	static bool		isJpg(FILE *file);
 };
 

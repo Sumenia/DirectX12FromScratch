@@ -13,9 +13,34 @@ Texture::~Texture()
 
 bool  Texture::loadFromFile(const std::string &filename)
 {
-	_loader = new PngImageLoader;
+	errno_t		err;
+	FILE		*file;
+	char		error[4096];
+	bool		res = false;
 
-	return (_loader->loadFromFile(filename));
+	_loader = nullptr;
+	err = fopen_s(&file, filename.c_str(), "rb");
+	if (err)
+	{
+		strerror_s(error, 4096, err);
+		std::cerr << "Error opening file " << filename << " : " << error << std::endl;
+		return (false);
+	}
+
+	if (JpgImageLoader::isJpg(file))
+		_loader = new JpgImageLoader;
+	else if (PngImageLoader::isPng(file))
+		_loader = new PngImageLoader;
+
+	if (_loader)
+		res = _loader->loadFromFile(file);
+
+	if (!res)
+		std::cerr << "wrong image format" << std::endl;
+
+	fclose(file);
+
+	return (res);
 }
 
 ImageLoader	*Texture::getImage()

@@ -63,26 +63,30 @@ bool			PngImageLoader::writeToFile(const std::string &filename)
 	return (true);
 }
 
-bool			PngImageLoader::loadFromFile(const std::string &filename)
+bool			PngImageLoader::isPng(FILE *file)
 {
-	FILE		*fp;
-	errno_t		err;
+	png_byte 	header[8];
+
+	fread(header, 1, 8, file);
+	rewind(file);
+
+	if (png_sig_cmp(header, 0, 8))
+		return (false);
+
+	return (true);
+}
+
+bool			PngImageLoader::loadFromFile(FILE *file)
+{
 	png_infop	png_info;
 	png_structp	png_ptr;
 	void		*data;
 	png_byte 	header[8];
 
-	err = fopen_s(&fp, filename.c_str(), "rb");
-	if (err)
-	{
-		std::cerr << "Could not open " << filename << std::endl;
-		return (false);
-	}
-
-	fread(header, 1, 8, fp);
+	fread(header, 1, 8, file);
 	if (png_sig_cmp(header, 0, 8))
 	{
-		std::cerr << filename << " is not a valid png file" << std::endl;
+		std::cerr << "not a valid png file" << std::endl;
 		return (false);
 	}
 
@@ -90,7 +94,6 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr)
 	{
-		fclose(fp);
 		std::cerr << "Failed to create png read struct" << std::endl;
 		return (false);
 	}
@@ -99,7 +102,6 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	if (!png_info)
 	{
 		png_destroy_read_struct(&png_ptr, NULL, NULL);
-		fclose(fp);
 		std::cerr << "Failed to create png info struct" << std::endl;
 		return (false);
 	}
@@ -107,11 +109,10 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 	if (setjmp(png_jmpbuf(png_ptr)))
 	{
 		png_destroy_read_struct(&png_ptr, &png_info, NULL);
-		fclose(fp);
 		return (false);
 	}
 	
-	png_init_io(png_ptr, fp);
+	png_init_io(png_ptr, file);
 	png_set_sig_bytes(png_ptr, 8);
 
 	png_read_info(png_ptr, png_info);
@@ -131,12 +132,6 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 		setjmp(png_jmpbuf(png_ptr));
 	}
 
-	/*if (!removeAlphaChannel(fp, png_info, png_ptr))
-		return (false);*/
-
-	std::cout << "FILE: " << filename << std::endl;
-	std::cout << "DEPTH: " << (int)_bitDepth << std::endl;
-	std::cout << "COLOR: " << (int)_rgbFormat << std::endl;
 	data = (png_bytep*)malloc(sizeof(png_bytep) * _height);
 	_length = png_get_rowbytes(png_ptr, png_info) * _height;
 
@@ -144,8 +139,6 @@ bool			PngImageLoader::loadFromFile(const std::string &filename)
 		((png_bytep*)data)[y] = (png_byte*)malloc(png_get_rowbytes(png_ptr, png_info));
 
 	png_read_image(png_ptr, (png_bytep*)data);
-
-	fclose(fp);
 
 	unsigned int size = png_get_rowbytes(png_ptr, png_info);
 	_data = new char[_length];
@@ -196,7 +189,6 @@ bool			PngImageLoader::removeAlphaChannel(FILE *fp, png_infop &png_info, png_str
 	if (setjmp(png_jmpbuf(png_ptr)))
 	{
 		png_destroy_read_struct(&png_ptr, &png_info, NULL);
-		fclose(fp);
 		return (false);
 	}
 	return (true);

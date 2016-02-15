@@ -8,7 +8,8 @@ class PngImageLoader : public ImageLoader
 public:
 	PngImageLoader();
 	~PngImageLoader();
-	virtual bool	loadFromFile(const std::string &filename);
+	virtual bool	loadFromFile(FILE *file);
+	static bool		isPng(FILE *file);
 
 private:
 	bool			writeToFile(const std::string &filename);
