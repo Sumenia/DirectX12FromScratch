@@ -14,7 +14,7 @@ namespace MiniEngine
         D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget *target);
         ~D3D12CommandList();
 
-        bool                        init();
+        bool                        init(bool bundle = false);
         bool                        reset();
 
         bool                        begin();
@@ -28,6 +28,8 @@ namespace MiniEngine
         bool                        bindMaterial(unsigned int id);
 
         bool                        setPipeline(GraphicPipeline &pipeline);
+
+        bool                        executeBundle(CommandList &list);
 
         ID3D12GraphicsCommandList   *getNative();
 

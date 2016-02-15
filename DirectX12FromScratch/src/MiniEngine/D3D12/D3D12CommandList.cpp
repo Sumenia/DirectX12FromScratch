@@ -22,11 +22,11 @@ D3D12CommandList::~D3D12CommandList()
     _allocator = nullptr;
 }
 
-bool D3D12CommandList::init()
+bool D3D12CommandList::init(bool bundle)
 {
     HRESULT             result;
 
-    result = _system.getDevice()->getNative()->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&_allocator);
+    result = _system.getDevice()->getNative()->CreateCommandAllocator(bundle ? D3D12_COMMAND_LIST_TYPE_BUNDLE : D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&_allocator);
 
     if (FAILED(result))
     {
@@ -34,7 +34,7 @@ bool D3D12CommandList::init()
         return (false);
     }
 
-    result = _system.getDevice()->getNative()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, _allocator, nullptr, __uuidof(ID3D12GraphicsCommandList), (void**)&_list);
+    result = _system.getDevice()->getNative()->CreateCommandList(0, bundle ? D3D12_COMMAND_LIST_TYPE_BUNDLE : D3D12_COMMAND_LIST_TYPE_DIRECT, _allocator, nullptr, __uuidof(ID3D12GraphicsCommandList), (void**)&_list);
 
     if (FAILED(result))
     {
@@ -130,6 +130,15 @@ bool D3D12CommandList::setPipeline(GraphicPipeline &pipeline)
     if (_lights && !bindLightsCBV(*_lights))
         return (false);
 
+    return (true);
+}
+
+bool D3D12CommandList::executeBundle(CommandList &list)
+{
+    if (!dynamic_cast<D3D12CommandList&>(list)._bundle)
+        return (false);
+
+    _list->ExecuteBundle(dynamic_cast<D3D12CommandList&>(list).getNative());
     return (true);
 }
 

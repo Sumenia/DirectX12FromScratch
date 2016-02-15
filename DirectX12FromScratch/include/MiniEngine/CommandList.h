@@ -16,7 +16,7 @@ namespace MiniEngine
         CommandList(RenderSystem &system, RenderTarget *target);
         virtual ~CommandList();
 
-        virtual bool        init() = 0;
+        virtual bool        init(bool bundle = false) = 0;
         virtual bool        reset() = 0;
 
         virtual bool        begin() = 0;
@@ -32,6 +32,8 @@ namespace MiniEngine
 
         virtual bool        setPipeline(GraphicPipeline &pipeline) = 0;
 
+        virtual bool        executeBundle(CommandList &list) = 0;
+
         RenderTarget        &getRenderTarget();
         RenderSystem        &getRenderSystem();
 
@@ -41,5 +43,7 @@ namespace MiniEngine
 
         unsigned int        _previousMaterialId;
         DWORD64             _previousMaterialType;
+
+        bool                _bundle;
     };
 }

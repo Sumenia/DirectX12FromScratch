@@ -3,7 +3,7 @@
 
 using namespace MiniEngine;
 
-CommandList::CommandList(RenderSystem &system, RenderTarget *target) : _system(system), _target(target), _previousMaterialId(-1), _previousMaterialType(-1)
+CommandList::CommandList(RenderSystem &system, RenderTarget *target) : _system(system), _target(target), _previousMaterialId(-1), _previousMaterialType(-1), _bundle(false)
 {}
 
 CommandList::~CommandList()
