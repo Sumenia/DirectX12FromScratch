@@ -38,7 +38,7 @@ float3 getDiffuseColor(float3 normal, float2 uv)
 #if NORMAL_COLOR
     return (float3(abs(normal.x), abs(normal.y), abs(normal.z)));
 #elif TEXTURE_DIFFUSE
-    return (diffuseTexture.Sample(samp, uv));
+    return (diffuseTexture.Sample(samp, uv).rgb);
 #else
     return (material.kd);
 #endif
@@ -47,7 +47,7 @@ float3 getDiffuseColor(float3 normal, float2 uv)
 float3 getAmbientColor(float3 normal, float2 uv)
 {
 #if TEXTURE_AMBIENT
-    return (ambientTexture.Sample(samp, uv));
+    return (ambientTexture.Sample(samp, uv).rgb);
 #else
     return (material.ka * getDiffuseColor(normal, uv));
 #endif
@@ -56,7 +56,7 @@ float3 getAmbientColor(float3 normal, float2 uv)
 float3 getSpecularColor(float3 normal, float2 uv)
 {
 #if TEXTURE_SPECULAR
-    return (specularTexture.Sample(samp, uv));
+    return (specularTexture.Sample(samp, uv).rgb);
 #else
     return (material.ks * getDiffuseColor(normal, uv));
 #endif
