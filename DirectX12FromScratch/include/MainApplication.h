@@ -14,6 +14,7 @@ public:
     void            initWindow(const std::string &windowType, HINSTANCE hInstance);
 
     bool            update(MiniEngine::Time elapsedTime);
+	int				getRefreshRate();
 
 protected:
 	Window          *_window;

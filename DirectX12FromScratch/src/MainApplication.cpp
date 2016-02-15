@@ -146,3 +146,12 @@ bool MainApplication::update(MiniEngine::Time elapsedTime)
 
     return (true);
 }
+
+int MainApplication::getRefreshRate()
+{
+	HDC refreshDC = GetDC((HWND)_window->getHandle());
+	int refreshRate = GetDeviceCaps(refreshDC, VREFRESH);
+	ReleaseDC((HWND)_window->getHandle(), refreshDC);
+
+	return refreshRate;
+}
