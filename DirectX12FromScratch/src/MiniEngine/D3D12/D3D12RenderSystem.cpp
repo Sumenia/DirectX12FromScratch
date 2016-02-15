@@ -230,15 +230,14 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
     return (pipeline);
 }
 
-D3D12RenderableModel *D3D12RenderSystem::loadModel(std::string const &filename)
+std::shared_ptr<RenderableModel> D3D12RenderSystem::loadModel(std::string const &filename)
 {
-	D3D12RenderableModel *model = new D3D12RenderableModel(*this);
+	std::shared_ptr<D3D12RenderableModel> model = std::make_shared<D3D12RenderableModel>(*this);
 
 	if (!model->loadFromFile(*this, filename))
 	{
 		std::cout << "Can't load model : " << filename << std::endl;
 
-		delete model;
 		return (nullptr);
 	}
 

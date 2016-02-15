@@ -41,7 +41,7 @@ namespace MiniEngine
         D3D12Texture            *createTexture(std::string const &filename);
         D3D12GraphicPipeline    *createGraphicPipeline(Material &material);
 
-		D3D12RenderableModel    *loadModel(std::string const &filename);
+		std::shared_ptr<RenderableModel> loadModel(std::string const &filename);
 
     protected:
         IDXGIFactory4           *_factory;

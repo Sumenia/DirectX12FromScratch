@@ -168,7 +168,7 @@ bool D3D12ConstantBuffer::updateModelMatrix(Matrix4f const &data)
     return (update(sizeof(model), &model));
 }
 
-bool D3D12ConstantBuffer::updateLights(std::list<Light*> &lights)
+bool D3D12ConstantBuffer::updateLights(std::list<std::shared_ptr<Light>> &lights)
 {
     struct  LightStructure
     {

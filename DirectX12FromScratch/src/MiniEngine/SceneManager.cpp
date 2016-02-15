@@ -44,19 +44,19 @@ Camera *SceneManager::createCamera(SceneNode *node)
     return (camera);
 }
 
-Light *SceneManager::createLight(Light::Type type, SceneNode *node)
+std::shared_ptr<Light> SceneManager::createLight(Light::Type type, SceneNode *node)
 {
-    Light   *light = nullptr;
+    std::shared_ptr<Light>   light = nullptr;
 
     if (_lights.size() == MAX_LIGHTS)
         return (nullptr);
 
     if (type == Light::POINT)
-        light = new PointLight(*this);
+        light = std::make_shared<PointLight>(*this);
     else if (type == Light::SPOT)
-        light = new SpotLight(*this);
+        light = std::make_shared<SpotLight>(*this);
     else if (type == Light::DIRECTIONAL)
-        light = new DirectionalLight(*this);
+		light = std::make_shared<DirectionalLight>(*this);
 
     if (!light)
         return (nullptr);
@@ -72,7 +72,7 @@ Light *SceneManager::createLight(Light::Type type, SceneNode *node)
     return (light);
 }
 
-void SceneManager::removeLight(Light *light)
+void SceneManager::removeLight(std::shared_ptr<Light> light)
 {
     for (auto it = _lights.begin(); it != _lights.end(); it++)
     {
@@ -91,7 +91,7 @@ void SceneManager::updateLightBuffer()
     _needUpdate = true;
 }
 
-std::list<Light*> const SceneManager::getLights() const
+std::list<std::shared_ptr<Light>> const SceneManager::getLights() const
 {
     return (_lights);
 }

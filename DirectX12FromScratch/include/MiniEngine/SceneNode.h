@@ -23,12 +23,12 @@ namespace MiniEngine
     class SceneNode
     {
     public:
-        SceneNode(SceneManager &manager, MovableObject *object = nullptr);
+        SceneNode(SceneManager &manager, std::shared_ptr<MovableObject> object = nullptr);
         virtual ~SceneNode();
 
-        virtual SceneNode       *createChild(MovableObject *object = nullptr);
+        virtual SceneNode       *createChild(std::shared_ptr<MovableObject> object = nullptr);
         virtual SceneNode       *addChild(SceneNode *node);
-        virtual void            attachObject(MovableObject *obj);
+        virtual void            attachObject(std::shared_ptr<MovableObject> obj);
 
         virtual SceneNode       *getParent();
 

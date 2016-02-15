@@ -19,7 +19,7 @@ namespace MiniEngine
 
         virtual bool    updateCameraMatrix(Vector3f const &position, Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights) = 0;
         virtual bool    updateModelMatrix(Matrix4f const &model) = 0;
-        virtual bool    updateLights(std::list<Light*> &lights) = 0;
+        virtual bool    updateLights(std::list<std::shared_ptr<Light>> &lights) = 0;
 
 	protected:
 		RenderSystem	&_system;

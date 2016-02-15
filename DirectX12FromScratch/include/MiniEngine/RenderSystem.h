@@ -2,6 +2,7 @@
 
 # include <list>
 # include <map>
+# include <memory>
 # include "Window.h"
 # include "MiniEngine/HLSLShader.h"
 # include "MiniEngine/CommandQueue.h"
@@ -34,7 +35,7 @@ namespace MiniEngine
         virtual Texture                     *createTexture(std::string const &filename) = 0;
         virtual GraphicPipeline             *createGraphicPipeline(Material &material) = 0;
 
-		virtual RenderableModel             *loadModel(std::string const &filename) = 0;
+		virtual std::shared_ptr<RenderableModel>             loadModel(std::string const &filename) = 0;
 
         virtual Material                    *getMaterial(unsigned int id);
         virtual void                        deleteMaterial(unsigned int id);
