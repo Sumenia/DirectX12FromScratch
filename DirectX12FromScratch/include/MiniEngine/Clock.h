@@ -4,7 +4,6 @@
 
 namespace MiniEngine
 {
-
 	class Clock
 	{
 	private:
@@ -16,6 +15,6 @@ namespace MiniEngine
 		~Clock();
 
 		Time getElapsedTime();
-		void reset();
+		Time reset();
 	};
 }

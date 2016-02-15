@@ -26,8 +26,11 @@ Clock::getElapsedTime()
 	return Time(SysClock::getCurrentTime().getMicroseconds() - _startTime.getMicroseconds());
 }
 
-void
+Time
 Clock::reset()
 {
+    Time time(SysClock::getCurrentTime().getMicroseconds() - _startTime.getMicroseconds());
+
 	_startTime = SysClock::getCurrentTime();
+    return (time);
 }

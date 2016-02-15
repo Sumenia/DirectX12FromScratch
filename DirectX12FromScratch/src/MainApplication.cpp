@@ -51,11 +51,11 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 				MiniEngine::SceneNode                           *node;
 				std::shared_ptr<MiniEngine::RenderableModel>    model = _root->getRenderSystem()->loadModel("./Assets/models/majora/Majora.txt");
 
-				for (unsigned int i = 0; i < 40; i++)
+				for (unsigned int i = 0; i < 400; i++)
 				{
 					node = _sceneManager->getRootNode()->createChild(model);
 					node->scale({ 25.0f, 25.0f, 25.0f });
-					node->translate({ i % 4 * 50.0f, i / 4 * 50.0f, 0.0f });
+					node->translate({ i % 40 * 50.0f, i / 40 * 50.0f, 0.0f });
 				}
             }
         }
@@ -104,12 +104,18 @@ void MainApplication::initWindow(const std::string &windowType, HINSTANCE hInsta
     }
 }
 
+#include "MiniEngine/Clock.h"
+
 bool MainApplication::update(MiniEngine::Time elapsedTime)
 {
+    static MiniEngine::Clock    clock;
+
     if (!_window || !_window->isOpen())
         return (false);
 
-	float elapsedSeconds = elapsedTime.getSeconds();
+    float elapsedSeconds = elapsedTime.getSeconds();
+
+    std::cout << (1.0f / clock.reset().getSeconds()) << " FPS" << std::endl;
 
 	if (_window->isKeyPressed(Keyboard::Left))
 		_camera->rotate(100 * elapsedSeconds, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);

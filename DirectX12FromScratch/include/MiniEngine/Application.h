@@ -1,7 +1,7 @@
 #pragma once
 
-# include "Root.h"
-# include "Time.h"
+# include "MiniEngine/Root.h"
+# include "MiniEngine/Time.h"
 
 namespace MiniEngine
 {
