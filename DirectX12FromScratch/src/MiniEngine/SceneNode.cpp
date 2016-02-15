@@ -232,3 +232,8 @@ ConstantBuffer *SceneNode::getCBV()
 {
     return (_modelConstantBuffer);
 }
+
+std::list<SceneNode*> MiniEngine::SceneNode::getChild()
+{
+	return _childs;
+}

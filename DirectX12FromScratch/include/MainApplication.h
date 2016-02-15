@@ -22,5 +22,9 @@ protected:
 
 	MiniEngine::SceneManager	*_sceneManager;
 	MiniEngine::Camera			*_camera;
-    MiniEngine::SceneNode       *_node;
+	std::list<MiniEngine::SceneNode*>		*_nodes;
+
+	float			_x;
+	float			_y;
+	float			_r;
 };

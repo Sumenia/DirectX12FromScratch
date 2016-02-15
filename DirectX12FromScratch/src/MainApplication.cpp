@@ -8,6 +8,9 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 {
     float       clearColor[4] = { 0.2f, 0.2f, 0.2f, 0.0f };
 
+	_x = 0.0f;
+	_y = 0.0f;
+	_r = 200.0f;
     initWindow(windowType, hInstance);
 
     if (_window)
@@ -31,7 +34,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             {
                 _camera = _sceneManager->createCamera();
 
-                _camera->lookAt({ 60.0f, 100.0f, 0.0f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+                _camera->lookAt({0.1f, 700.0f, 0.0f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
 
                 renderTarget->getDefaultViewport()->attachCamera(_camera);
 
@@ -46,7 +49,30 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
                 light->setDirection({ 0.0f, 0.0f, 1.0f });
 
-                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				_sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				_sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				 _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
             }
         }
     }
@@ -82,7 +108,7 @@ void MainApplication::initWindow(const std::string &windowType, HINSTANCE hInsta
     }
 
 # if defined(SYSTEM_WINDOWS)
-    if (!_window->create(800, 600, hInstance))
+    if (!_window->create(1920, 1080, hInstance))
 # else 
     if (!_window->create(800, 600))
 # endif
@@ -94,12 +120,27 @@ void MainApplication::initWindow(const std::string &windowType, HINSTANCE hInsta
     }
 }
 
+
 bool MainApplication::update(MiniEngine::Time elapsedTime)
 {
+	_x += 1;
+
     if (!_window || !_window->isOpen())
         return (false);
 
 	float elapsedSeconds = elapsedTime.getSeconds();
+	float i = 0.0f;
+	for (auto p : _sceneManager->getRootNode()->getChild())
+	{
+		if (i == 0.0f)
+		{
+			i += 1.0f;
+			continue;
+		}
+		p->setPosition({ cos((_x + 3.33f * i) / 20.0f ) * _r, _y, sin((_x + 3.33f * i) / 20.0f) * _r }, MiniEngine::TS_WORLD);
+		i += 1.0f;
+
+	}
 
 	if (_window->isKeyPressed(Keyboard::Left))
 		_camera->rotate(100 * elapsedSeconds, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);

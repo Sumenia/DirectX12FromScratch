@@ -50,6 +50,8 @@ namespace MiniEngine
 
         ConstantBuffer          *getCBV();
 
+		std::list<SceneNode*>	getChild();
+
     protected:
         virtual void            setParent(SceneNode *node);
         virtual void            update();
