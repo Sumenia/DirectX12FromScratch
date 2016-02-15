@@ -65,12 +65,6 @@ public:
 		int           y;
 	};
 
-	struct MouseWheelEvent
-	{
-		int delta;
-		int x;
-		int y;
-	};
 
 	struct MouseWheelScrollEvent
 	{
@@ -82,6 +76,7 @@ public:
 
 	enum EventType
 	{
+        Unknown,
 		Closed,
 		Resized,
 		LostFocus,
@@ -89,7 +84,6 @@ public:
 		TextEntered,
 		KeyPressed,
 		KeyReleased,
-		MouseWheelMoved,
 		MouseWheelScrolled,
 		MouseButtonPressed,
 		MouseButtonReleased,
@@ -119,7 +113,6 @@ public:
 		TextEvent             text;
 		MouseMoveEvent        mouseMove;
 		MouseButtonEvent      mouseButton;
-		MouseWheelEvent       mouseWheel;
 		MouseWheelScrollEvent mouseWheelScroll;
 	};
 };

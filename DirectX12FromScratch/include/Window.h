@@ -18,7 +18,10 @@ public:
 
 	virtual bool				getEvent(Event &) = 0;
 
-	virtual bool                isKeyPressed(Keyboard::Key key) = 0;
+	virtual Keyboard			*getKeyboard() = 0;
+	virtual Mouse				*getMouse() = 0;
+
+	virtual void				setMouseCursorVisible(bool) = 0;
 private:
 };
 

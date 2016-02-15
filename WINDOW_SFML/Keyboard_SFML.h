@@ -1,10 +1,10 @@
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <SFML/Window/Keyboard.hpp>
 #include "Keyboard.h"
 
-class Keyboard_SFML : Keyboard
+class Keyboard_SFML : public Keyboard
 {
 public:
 	Keyboard_SFML();
@@ -14,6 +14,6 @@ public:
 	Keyboard::Key		fromNative(sf::Keyboard::Key);
 
 private:
-	std::map<sf::Keyboard::Key, Keyboard::Key>			_fromNative;
-	std::map<Keyboard::Key, sf::Keyboard::Key>			_toNative;
+	std::unordered_map<sf::Keyboard::Key, Keyboard::Key>	_fromNative;
+	std::unordered_map<Keyboard::Key, sf::Keyboard::Key>	_toNative;
 };

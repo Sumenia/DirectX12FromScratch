@@ -4,7 +4,7 @@
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12RenderWindow.h"
 
-MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
+MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr), _hasFocus(true)
 {
     float       clearColor[4] = { 0.2f, 0.2f, 0.2f, 0.0f };
 
@@ -49,6 +49,9 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
                 _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
             }
         }
+
+        _window->getMouse()->setPosition({(int)(_window->getWidth() / 2), (int)(_window->getHeight() / 2) }, *_window);
+		_window->setMouseCursorVisible(false);
     }
 }
 
@@ -100,28 +103,43 @@ bool MainApplication::update(MiniEngine::Time elapsedTime)
         return (false);
 
 	float elapsedSeconds = elapsedTime.getSeconds();
+    static Vector2f windowSize = Vector2f(_window->getWidth(), _window->getHeight());
+    static Vector2f lastPos = _window->getMouse()->getPosition(*_window);
 
-	if (_window->isKeyPressed(Keyboard::Left))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
-	if (_window->isKeyPressed(Keyboard::Right))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(0, -1, 0), MiniEngine::TS_WORLD);
-	if (_window->isKeyPressed(Keyboard::Up))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::Down))
-		_camera->rotate(100 * elapsedSeconds, Vector3f(-1, 0, 0), MiniEngine::TS_LOCAL);
+	if (_hasFocus) {
+        Vector2f mousePos = _window->getMouse()->getPosition(*_window);
+		Vector2f deltaPos = mousePos - lastPos;
+        if (lastPos != mousePos)
+        {
+            lastPos = mousePos;
 
-	if (_window->isKeyPressed(Keyboard::Z))
+            _camera->rotate(15 * elapsedSeconds * -deltaPos.x, Vector3f(0, 1, 0), MiniEngine::TS_WORLD);
+            _camera->rotate(15 * elapsedSeconds * -deltaPos.y, Vector3f(1, 0, 0), MiniEngine::TS_LOCAL);
+
+            if (lastPos.x < windowSize.x * 0.05 || lastPos.x > windowSize.x * 0.95
+                || lastPos.y < windowSize.y * 0.05 || lastPos.y > windowSize.y * 0.95)
+            {
+                Vector2f middle = Vector2f(windowSize.x / 2, windowSize.y / 2);
+                _window->setMouseCursorVisible(true);
+                _window->getMouse()->setPosition(middle, *_window);
+                _window->setMouseCursorVisible(false);
+                lastPos = middle;
+            }
+        }
+	}
+
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Z))
 		_camera->translate(Vector3f(0, 0, -100 * elapsedSeconds), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::S))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::S))
 		_camera->translate(Vector3f(0, 0, 100 * elapsedSeconds), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::Q))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Q))
 		_camera->translate(Vector3f(-100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
-	if (_window->isKeyPressed(Keyboard::D))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::D))
 		_camera->translate(Vector3f(100 * elapsedSeconds, 0, 0), MiniEngine::TS_LOCAL);
 
-	if (_window->isKeyPressed(Keyboard::Space))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::Space))
 		_camera->translate(Vector3f(0, 100 * elapsedSeconds, 0), MiniEngine::TS_WORLD);
-	if (_window->isKeyPressed(Keyboard::LShift))
+	if (_window->getKeyboard()->isKeyPressed(Keyboard::LShift))
 		_camera->translate(Vector3f(0, -100 * elapsedSeconds, 0), MiniEngine::TS_WORLD);
 
 	Event event;
@@ -135,12 +153,25 @@ bool MainApplication::update(MiniEngine::Time elapsedTime)
 				_window->destroy();
 				return (false);
 			}
+			else if (event.key.code == Keyboard::LAlt && _hasFocus)
+			{
+				_window->setMouseCursorVisible(true);
+			    _hasFocus = false;
+			}
 		}
 
 		if (event.type == Event::Closed)
 		{
 			_window->destroy();
 			return (false);
+		}
+
+		if (event.type == Event::MouseButtonPressed && !_hasFocus)
+		{
+			_window->setMouseCursorVisible(false);
+			_hasFocus = true;
+			Vector2f    middle((int)(_window->getWidth() / 2), (int)(_window->getHeight() / 2));
+			_window->getMouse()->setPosition(middle, *_window);
 		}
 	}
 

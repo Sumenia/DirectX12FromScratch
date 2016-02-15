@@ -320,9 +320,6 @@
     <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableModel.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mouse.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\MiniEngine\Material.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>

@@ -127,7 +127,6 @@
     <ClCompile Include="src\MiniEngine\SysClock.cpp" />
     <ClCompile Include="src\MiniEngine\Time.cpp" />
     <ClCompile Include="src\MiniEngine\Viewport.cpp" />
-    <ClCompile Include="src\Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\shaders\camera.hlsl">

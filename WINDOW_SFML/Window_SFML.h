@@ -4,6 +4,7 @@
 # include <SFML/Window.hpp>
 # include "Window.h"
 # include "Keyboard_SFML.h"
+# include "Mouse_SFML.h"
 
 class Window_SFML : public Window
 {
@@ -22,13 +23,17 @@ public:
 	// Inherited via IEvent
 	virtual bool				getEvent(Event &event);
 
-	virtual bool				isKeyPressed(Keyboard::Key key);
+	virtual Keyboard			*getKeyboard();
+	virtual Mouse				*getMouse();
+
+	virtual void				setMouseCursorVisible(bool);
+
+	const sf::Window			*getSfmlWindow() const;
+private:
+    Event::EventType Window_SFML::fromNative(sf::Event::EventType type);
 
 private:
-	void						initEventTypeMap();
-
-private:
-	sf::Window											*_window;
-	std::map<sf::Event::EventType, Event::EventType>	_eventTypeMap;
-	Keyboard_SFML										_keyboard;
+	sf::Window					*_window;
+	Keyboard_SFML				_keyboard;
+	Mouse_SFML					_mouse;
 };

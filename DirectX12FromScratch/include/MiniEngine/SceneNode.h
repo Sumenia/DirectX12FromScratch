@@ -41,6 +41,8 @@ namespace MiniEngine
         Quatf                   &getDerivedRotation();
         Vector3f                &getDerivedScaling();
 
+        void                    setRotationMatrix(Matrix3f &m);
+
 		virtual void			rotate(float w, Vector3f const &v, TransformSpace space = TS_LOCAL);
 		virtual void			translate(Vector3f const &v, TransformSpace space = TS_LOCAL);
 		virtual void			scale(Vector3f const &v);

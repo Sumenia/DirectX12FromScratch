@@ -1,36 +1,61 @@
 #include "Window_SFML.h"
 #include "Config.h"
 
-void Window_SFML::initEventTypeMap() {
-	_eventTypeMap[sf::Event::Closed] = Event::Closed;
-	_eventTypeMap[sf::Event::Resized] = Event::Resized;
-	_eventTypeMap[sf::Event::LostFocus] = Event::LostFocus;
-	_eventTypeMap[sf::Event::GainedFocus] = Event::GainedFocus;
-	_eventTypeMap[sf::Event::TextEntered] = Event::TextEntered;
-	_eventTypeMap[sf::Event::KeyPressed] = Event::KeyPressed;
-	_eventTypeMap[sf::Event::KeyReleased] = Event::KeyReleased;
-	_eventTypeMap[sf::Event::MouseWheelMoved] = Event::MouseWheelMoved;
-	_eventTypeMap[sf::Event::MouseWheelScrolled] = Event::MouseWheelScrolled;
-	_eventTypeMap[sf::Event::MouseButtonPressed] = Event::MouseButtonPressed;
-	_eventTypeMap[sf::Event::MouseButtonReleased] = Event::MouseButtonReleased;
-	_eventTypeMap[sf::Event::MouseMoved] = Event::MouseMoved;
-	_eventTypeMap[sf::Event::MouseEntered] = Event::MouseEntered;
-	_eventTypeMap[sf::Event::MouseLeft] = Event::MouseLeft;
-	_eventTypeMap[sf::Event::JoystickButtonPressed] = Event::JoystickButtonPressed;
-	_eventTypeMap[sf::Event::JoystickButtonReleased] = Event::JoystickButtonReleased;
-	_eventTypeMap[sf::Event::JoystickMoved] = Event::JoystickMoved;
-	_eventTypeMap[sf::Event::JoystickConnected] = Event::JoystickConnected;
-	_eventTypeMap[sf::Event::JoystickDisconnected] = Event::JoystickDisconnected;
-	_eventTypeMap[sf::Event::TouchBegan] = Event::TouchBegan;
-	_eventTypeMap[sf::Event::TouchMoved] = Event::TouchMoved;
-	_eventTypeMap[sf::Event::TouchEnded] = Event::TouchEnded;
-	_eventTypeMap[sf::Event::SensorChanged] = Event::SensorChanged;
+Event::EventType Window_SFML::fromNative(sf::Event::EventType type) {
+    switch (type)
+    {
+    case sf::Event::Closed:
+        return Event::Closed;
+    case sf::Event::Resized:
+        return Event::Resized;
+    case sf::Event::LostFocus:
+        return Event::LostFocus;
+    case sf::Event::GainedFocus:
+        return Event::GainedFocus;
+    case sf::Event::TextEntered:
+        return Event::TextEntered;
+    case sf::Event::KeyPressed:
+        return Event::KeyPressed;
+    case sf::Event::KeyReleased:
+        return Event::KeyReleased;
+    case sf::Event::MouseWheelScrolled:
+        return Event::MouseWheelScrolled;
+    case sf::Event::MouseButtonPressed:
+        return Event::MouseButtonPressed;
+    case sf::Event::MouseButtonReleased:
+        return Event::MouseButtonReleased;
+    case sf::Event::MouseMoved:
+        return Event::MouseMoved;
+    case sf::Event::MouseEntered:
+        return Event::MouseEntered;
+    case sf::Event::MouseLeft:
+        return Event::MouseLeft;
+    case sf::Event::JoystickButtonPressed:
+        return Event::JoystickButtonPressed;
+    case sf::Event::JoystickButtonReleased:
+        return Event::JoystickButtonReleased;
+    case sf::Event::JoystickMoved:
+        return Event::JoystickMoved;
+    case sf::Event::JoystickConnected:
+        return Event::JoystickConnected;
+    case sf::Event::JoystickDisconnected:
+        return Event::JoystickDisconnected;
+    case sf::Event::TouchBegan:
+        return Event::TouchBegan;
+    case sf::Event::TouchMoved:
+        return Event::TouchMoved;
+    case sf::Event::TouchEnded:
+        return Event::TouchEnded;
+    case sf::Event::SensorChanged:
+        return Event::SensorChanged;
+    default:
+        return Event::Unknown;
+    }
 }
 
 Window_SFML::Window_SFML()
 {
     _window = nullptr;
-	initEventTypeMap();
 }
 
 Window_SFML::~Window_SFML()
@@ -88,13 +113,40 @@ bool Window_SFML::getEvent(Event &event)
 
 	if (_window->pollEvent(sfmlEvent))
 	{
-		event.type = _eventTypeMap[sfmlEvent.type];
+        event.type = fromNative(sfmlEvent.type);
 		if (event.type == Event::KeyPressed || event.type == Event::KeyReleased) {
 			event.key.code = _keyboard.fromNative(sfmlEvent.key.code);
-			event.key.alt = false;
-			event.key.control = false;
-			event.key.shift = false;
-			event.key.system = false;
+			event.key.alt = sfmlEvent.key.alt;
+			event.key.control = sfmlEvent.key.control;
+			event.key.shift = sfmlEvent.key.shift;
+			event.key.system = sfmlEvent.key.system;
+		}
+		else if (event.type == Event::TextEntered)
+		{
+			event.text.unicode = sfmlEvent.text.unicode;
+		}
+		else if (event.type == Event::MouseMoved)
+		{
+			event.mouseMove.x = sfmlEvent.mouseMove.x;
+			event.mouseMove.y = sfmlEvent.mouseMove.y;
+		}
+		else if (event.type == Event::MouseButtonPressed || event.type == Event::MouseButtonReleased)
+		{
+			event.mouseButton.button = _mouse.fromNative(sfmlEvent.mouseButton.button);
+			event.mouseButton.x = sfmlEvent.mouseButton.x;
+			event.mouseButton.y = sfmlEvent.mouseButton.y;
+		}
+		else if (event.type == Event::MouseWheelScrolled)
+		{
+			event.mouseWheelScroll.wheel = _mouse.fromNative(sfmlEvent.mouseWheelScroll.wheel);
+			event.mouseWheelScroll.delta = sfmlEvent.mouseWheelScroll.delta;
+			event.mouseWheelScroll.x = sfmlEvent.mouseWheelScroll.x;
+			event.mouseWheelScroll.y = sfmlEvent.mouseWheelScroll.y;
+		}
+		else if (event.type == Event::Resized)
+		{
+			event.size.width = sfmlEvent.size.width;
+			event.size.height = sfmlEvent.size.height;
 		}
 		return (true);
 	}
@@ -102,8 +154,22 @@ bool Window_SFML::getEvent(Event &event)
 	return (false);
 }
 
-
-bool Window_SFML::isKeyPressed(Keyboard::Key key)
+Keyboard *Window_SFML::getKeyboard()
 {
-	return _keyboard.isKeyPressed(key);
+	return &_keyboard;
+}
+
+Mouse *Window_SFML::getMouse()
+{
+	return &_mouse;
+}
+
+void Window_SFML::setMouseCursorVisible(bool visible)
+{
+	_window->setMouseCursorVisible(visible);
+}
+
+const sf::Window * Window_SFML::getSfmlWindow() const
+{
+	return _window;
 }

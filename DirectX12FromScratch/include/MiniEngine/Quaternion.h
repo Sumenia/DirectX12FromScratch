@@ -194,7 +194,7 @@ namespace MiniEngine
 		bool operator==(const Quaternion<T>& rhs) const
 		{
 			const Quaternion<T>& lhs = *this;
-			return (std::fabs(lhs.w - rhs.w) < EPSILON) && lhs.v == rhs.v;
+			return (std::fabs(lhs.w - rhs.w) < FLT_EPSILON) && lhs.v == rhs.v;
 		}
 
 		/**
@@ -492,7 +492,7 @@ namespace MiniEngine
 
 			T tr, s;
 			tr = m(1, 1) + m(2, 2) + m(3, 3);
-			if (tr >= epsilon)
+			if (tr >= FLT_EPSILON)
 			{
 				s = 0.5 / (T)sqrt(tr + 1.0);
 				q.w = 0.25 / s;
@@ -550,14 +550,14 @@ namespace MiniEngine
 			Quaternion<T> ret;
 			T cosTheta = w * q2.w + v.x * q2.v.x + v.y * q2.v.y + v.z * q2.v.z;
 			T theta = (T)acos(cosTheta);
-			if (fabs(theta) < epsilon)
+			if (fabs(theta) < FLT_EPSILON)
 			{
 				ret = *this;
 			}
 			else
 			{
 				T sinTheta = (T)sqrt(1.0 - cosTheta * cosTheta);
-				if (fabs(sinTheta) < epsilon)
+				if (fabs(sinTheta) < FLT_EPSILON)
 				{
 					ret.w = 0.5 * w + 0.5 * q2.w;
 					ret.v = v.lerp(0.5, q2.v);
