@@ -32,12 +32,12 @@ int8_t							ImageLoader::getBitpDepth() const
 	return _bitDepth;
 }
 
-int8_t							ImageLoader::getWidth() const
+unsigned int					ImageLoader::getWidth() const
 {
 	return _width;
 }
 
-int8_t							ImageLoader::getHeight() const
+unsigned int					ImageLoader::getHeight() const
 {
 	return _height;
 }
