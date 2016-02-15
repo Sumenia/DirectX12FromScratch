@@ -12,7 +12,9 @@ bool                    BmpImageLoader::loadFromFile(const std::string &filename
     char                error[4096];
     BITMAPFILEHEADER    fileHeader;
     BITMAPINFOHEADER    infoHeader;
-    
+    unsigned char       *buffer;
+    int                 cursor;
+    int                 pixel;
 
     err = fopen_s(&file, filename.c_str(), "rb");
     if (err)
@@ -35,38 +37,38 @@ bool                    BmpImageLoader::loadFromFile(const std::string &filename
 
     fseek(file, fileHeader.bfOffBits, SEEK_SET);
 
-    _rgbFormat = ERGBFormat::Type::RGB;
+    _rgbFormat = ERGBFormat::Type::RGBA;
     _bitDepth = infoHeader.biBitCount;
     _height = infoHeader.biHeight;
     _width = infoHeader.biWidth;
-    _length = infoHeader.biSizeImage;
-    _data = new unsigned char[infoHeader.biSizeImage];
+    _length = _width * _height * 4;
+    _data = new unsigned char[_length];
 
-    fread(_data, infoHeader.biSizeImage, 1, file);
+    buffer = new unsigned char[infoHeader.biSizeImage];
+    fread(buffer, infoHeader.biSizeImage, 1, file);
 
-    if (!_data || !_length)
+    if (!buffer || !infoHeader.biSizeImage)
     {
         std::cerr << "Error : " << filename << " when reading file" << std::endl;
         fclose(file);
         return (false);
     }
 
-    swapToRGB();
+    cursor = 0;
+    for (pixel = 0; pixel < _length; pixel += 4)
+    {
+        for (cursor = cursor; cursor < infoHeader.biSizeImage; cursor += 3)
+        {
+            ((unsigned char *)_data)[pixel] = buffer[cursor + 2];
+            ((unsigned char *)_data)[pixel + 1] = buffer[cursor + 1];
+            ((unsigned char *)_data)[pixel + 2] = buffer[cursor];
+            ((unsigned char *)_data)[pixel + 3] = 1.0f;
+        }
+    }
+
+    delete buffer;
 
     fclose(file);
 
     return (true);
-}
-
-void                    BmpImageLoader::swapToRGB()
-{
-    unsigned char       last;
-    int                 cursor;
-
-    for (cursor = 0; cursor < _length; cursor += 3)
-    {
-        last = ((unsigned char *)_data)[cursor];
-        ((unsigned char *)_data)[cursor] = ((unsigned char *)_data)[cursor + 2];
-        ((unsigned char *)_data)[cursor + 2] = last;
-    }
 }

@@ -9,7 +9,5 @@ public:
     BmpImageLoader();
     ~BmpImageLoader();
     bool        loadFromFile(const std::string &filename);
-private:
-    void        swapToRGB();
 };
 
