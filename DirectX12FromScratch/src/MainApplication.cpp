@@ -38,7 +38,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
                 renderTarget->getDefaultViewport()->attachCamera(_camera);
 
-                std::shared_ptr<MiniEngine::SpotLight>   light = std::dynamic_pointer_cast<MiniEngine::SpotLight>(_sceneManager->createLight(MiniEngine::Light::SPOT, _camera));
+                std::shared_ptr<MiniEngine::SpotLight>          light = std::dynamic_pointer_cast<MiniEngine::SpotLight>(_sceneManager->createLight(MiniEngine::Light::SPOT, _camera));
 
                 light->setAmbient({ 0.1f, 0.1f, 0.1f });
                 light->setDiffuse({ 0.5f, 0.5f, 0.5f });
@@ -49,11 +49,10 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
                 
                 light->setDirection({ 0.0f, 0.0f, -1.0f });
 
-				MiniEngine::SceneNode *node;
-				std::shared_ptr<MiniEngine::RenderableModel> model = _root->getRenderSystem()->loadModel("./Assets/models/majora/Majora.txt");
-                _node = _sceneManager->getRootNode()->createChild(model);
-				_node->scale({ 25.0f, 25.0f, 25.0f });
-				for (unsigned int i = 1; i < 40; i++)
+				MiniEngine::SceneNode                           *node;
+				std::shared_ptr<MiniEngine::RenderableModel>    model = _root->getRenderSystem()->loadModel("./Assets/models/majora/Majora.txt");
+
+				for (unsigned int i = 0; i < 40; i++)
 				{
 					node = _sceneManager->getRootNode()->createChild(model);
 					node->scale({ 25.0f, 25.0f, 25.0f });

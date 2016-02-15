@@ -22,7 +22,7 @@ namespace MiniEngine
 
         virtual Camera      *createCamera(SceneNode *node = nullptr);
         virtual std::shared_ptr<Light>       createLight(Light::Type type, SceneNode *node = nullptr);
-        virtual void        removeLight(std::shared_ptr<Light> light);
+        virtual void        removeLight(Light *light);
         virtual void        updateLightBuffer();
         std::list<std::shared_ptr<Light>> const     getLights() const;
 

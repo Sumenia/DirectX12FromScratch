@@ -237,7 +237,6 @@ std::shared_ptr<RenderableModel> D3D12RenderSystem::loadModel(std::string const 
 	if (!model->loadFromFile(*this, filename))
 	{
 		std::cout << "Can't load model : " << filename << std::endl;
-
 		return (nullptr);
 	}
 

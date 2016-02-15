@@ -72,11 +72,11 @@ std::shared_ptr<Light> SceneManager::createLight(Light::Type type, SceneNode *no
     return (light);
 }
 
-void SceneManager::removeLight(std::shared_ptr<Light> light)
+void SceneManager::removeLight(Light *light)
 {
     for (auto it = _lights.begin(); it != _lights.end(); it++)
     {
-        if (*it = light)
+        if ((*it).get() == light)
         {
             _needUpdate = true;
             _lights.erase(it);

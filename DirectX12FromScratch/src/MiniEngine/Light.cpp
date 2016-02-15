@@ -11,7 +11,7 @@ Light::Light(SceneManager &manager) : _manager(manager),
 
 Light::~Light()
 {
-    _manager.removeLight(std::dynamic_pointer_cast<Light>(shared_from_this()));
+    _manager.removeLight(this);
 }
 
 void Light::needUpdate()
