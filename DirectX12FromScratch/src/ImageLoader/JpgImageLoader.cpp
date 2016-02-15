@@ -52,7 +52,7 @@ bool								JpgImageLoader::loadFromFile(const std::string &filename)
 	{
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		memcpy((unsigned char *)_data + counter, buffer[0], row_stride);
-		counter += row_stride; 
+		counter += row_stride;
 	}
 
 	jpeg_finish_decompress(&cinfo);

@@ -1,7 +1,5 @@
 #include "ImageLoader/ImageLoader.h"
 
-
-
 ImageLoader::ImageLoader(EImageFormat::Type format):	 _data(NULL),
 											_length(0),
 											_format(format),

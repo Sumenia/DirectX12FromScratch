@@ -60,6 +60,7 @@
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\JpgImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\ImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\BmpImageLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Config.h" />
@@ -121,5 +122,6 @@
     <ClInclude Include="include\ImageLoader\PngImageloader.h" />
     <ClInclude Include="include\ImageLoader\JpgImageLoader.h" />
     <ClInclude Include="include\ImageLoader\ImageLoader.h" />
+    <ClInclude Include="include\ImageLoader\BmpImageLoader.h" />
   </ItemGroup>
 </Project>
