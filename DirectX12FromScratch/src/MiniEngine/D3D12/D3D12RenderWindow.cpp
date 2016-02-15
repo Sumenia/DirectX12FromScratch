@@ -19,32 +19,37 @@ D3D12RenderWindow::D3D12RenderWindow(D3D12RenderSystem &system, Window *window) 
 
 D3D12RenderWindow::~D3D12RenderWindow()
 {
-    delete _commandList;
-    _commandList = nullptr;
+	release();
+}
 
-    if (_dsv)
-        _dsv->Release();
+void D3D12RenderWindow::release()
+{
+	delete _commandList;
+	_commandList = nullptr;
 
-    _dsv = nullptr;
+	if (_dsv)
+		_dsv->Release();
 
-    delete _dsvDescriptorHeap;
-    _dsvDescriptorHeap = nullptr;
+	_dsv = nullptr;
 
-    for (UINT n = 0; n < FrameCount; n++)
-    {
-        if (_rtvs[n])
-            _rtvs[n]->Release();
+	delete _dsvDescriptorHeap;
+	_dsvDescriptorHeap = nullptr;
 
-        _rtvs[n] = nullptr;
-    }
+	for (UINT n = 0; n < FrameCount; n++)
+	{
+		if (_rtvs[n])
+			_rtvs[n]->Release();
+
+		_rtvs[n] = nullptr;
+	}
 
 	delete _rtvDescriptorHeap;
 	_rtvDescriptorHeap = nullptr;
 
-    if (_swapChain)
-        _swapChain->Release();
+	if (_swapChain)
+		_swapChain->Release();
 
-    _swapChain = nullptr;
+	_swapChain = nullptr;
 }
 
 bool D3D12RenderWindow::init()
@@ -279,4 +284,17 @@ bool D3D12RenderWindow::waitPreviousFrame()
 {
     _frameIdx = (_frameIdx + 1) % D3D12RenderWindow::FrameCount;
     return (_system.getCommandQueue()->wait(*_system.getFence()));
+}
+
+bool	D3D12RenderWindow::resize(Vector2ui size)
+{
+	for (auto view : _viewports)
+	{
+		Vector2f percent = view->getPercent();
+		Vector2f newSize = {size.x * percent.x / 100.f, size.y * percent.y / 100.f};
+		view->setSize(newSize);
+	}
+
+	release();
+	return init();
 }

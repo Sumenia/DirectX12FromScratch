@@ -15,6 +15,7 @@ namespace MiniEngine
 
 		virtual bool		    init() = 0;
         virtual bool            render() = 0;
+		virtual bool            resize(Vector2ui size) = 0; //x = width y = height
 
         void                    addViewport(Viewport *viewport);
         void                    setClearColor(const float color[4]);

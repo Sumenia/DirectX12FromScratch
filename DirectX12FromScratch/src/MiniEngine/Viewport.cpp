@@ -2,7 +2,7 @@
 
 using namespace MiniEngine;
 
-Viewport::Viewport(Vector2f position, Vector2f size) : _camera(nullptr), _position(position), _size(size)
+Viewport::Viewport(Vector2f position, Vector2f size, Vector2f percent) : _camera(nullptr), _position(position), _size(size), _percent(percent)
 {}
 
 Viewport::~Viewport()
@@ -33,4 +33,16 @@ Vector2f const &Viewport::getPosition() const
 Vector2f const &Viewport::getSize() const
 {
     return (_size);
+}
+
+Vector2f const &Viewport::getPercent() const
+{
+	return (_percent);
+}
+
+void			Viewport::setSize(Vector2f size)
+{
+	_size = size;
+	if (_camera)
+		_camera->setRatio(_size.x / _size.y);
 }

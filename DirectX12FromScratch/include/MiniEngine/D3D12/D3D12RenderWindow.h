@@ -22,6 +22,7 @@ namespace MiniEngine
 
 		bool						init();
         bool                        render();
+		bool						resize(Vector2ui size);
 
         bool                        initSwapChain();
 		bool						initRtvDescriptorHeap();
@@ -42,5 +43,7 @@ namespace MiniEngine
         D3D12DescriptorHeap         *_dsvDescriptorHeap;
         ID3D12Resource              *_dsv;
         D3D12CommandList            *_commandList;
+	
+		void						release();
     };
 }
