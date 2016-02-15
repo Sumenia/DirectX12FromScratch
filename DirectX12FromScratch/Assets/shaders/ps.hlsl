@@ -18,7 +18,7 @@ float3 calcDiffuseColor(Light light, float2 uv, float3 normal, float3 lightDirec
 float3 calcSpecularColor(Light light, float2 uv, float3 position, float3 normal, float3 lightDirection)
 {
     float3  viewDir = normalize(camera.position - position);
-    float3  halfWayDir = -normalize(-lightDirection + viewDir);
+    float3  halfWayDir = normalize(lightDirection + viewDir);
     float   spec = pow(max(dot(normal, halfWayDir), 0.0f), material.shininess);
 
     return (light.specular * spec * getSpecularColor(normal, uv));
@@ -33,7 +33,7 @@ float3 calcAttenuate(Light light, float3 distance, float3 ambient, float3 diffus
 
 float3 computePointLight(Light light, float3 position, float3 normal, float2 uv)
 {
-    float3  lightDirection = normalize(position - light.position);
+    float3  lightDirection = normalize(light.position - position);
     float	distance = length(light.position - position);
 
     if (light.range >= 0.0f && distance > light.range)
@@ -61,7 +61,7 @@ float3 computeDirectionalLight(Light light, float3 position, float3 normal, floa
 
 float3 computeSpotLigth(Light light, float3 position, float3 normal, float2 uv)
 {
-    float3  lightDirection = normalize(position - light.position);
+    float3  lightDirection = normalize(light.position - position);
     float	distance = length(light.position - position);
 
     if (light.range >= 0.0f && distance > light.range)

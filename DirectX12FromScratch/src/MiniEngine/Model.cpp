@@ -34,9 +34,8 @@ bool			Model::loadFromFile(const std::string &file)
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_SortByPType |
-		aiProcess_FixInfacingNormals |
+	    aiProcess_FixInfacingNormals |
 		aiProcess_GenUVCoords |
-		aiProcess_FlipWindingOrder |
         aiProcess_ValidateDataStructure |
         aiProcess_ImproveCacheLocality |
         aiProcess_RemoveRedundantMaterials |
@@ -46,7 +45,9 @@ bool			Model::loadFromFile(const std::string &file)
 		aiProcess_GenSmoothNormals |
         aiProcess_PreTransformVertices |
         aiProcess_TransformUVCoords |
-        aiProcess_FlipUVs
+        aiProcess_MakeLeftHanded |
+        aiProcess_FlipUVs |
+        aiProcess_FlipWindingOrder
     );
 
 	if (!scene)
