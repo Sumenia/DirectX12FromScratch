@@ -51,7 +51,14 @@ bool D3D12RenderableModel::initVertexBuffer(D3D12RenderSystem &system)
 	}
 	
 	_vertexBuffer = new D3D12VertexBuffer(system);
-	return (_vertexBuffer->init(sizeof(D3D12Vertex) * size, _vertexData));
+    if (!_vertexBuffer->init(sizeof(D3D12Vertex) * size, _vertexData))
+        return (false);
+
+    _vertexView.BufferLocation = _vertexBuffer->getBuffer()->GetGPUVirtualAddress();
+    _vertexView.StrideInBytes = sizeof(D3D12Vertex);
+    _vertexView.SizeInBytes = sizeof(D3D12Vertex) * getVertexsSize();
+
+    return (true);
 }
 
 bool D3D12RenderableModel::initIndexBuffer(D3D12RenderSystem &system)
@@ -72,27 +79,23 @@ bool D3D12RenderableModel::initIndexBuffer(D3D12RenderSystem &system)
 	}
 
 	_indexBuffer = new D3D12IndexBuffer(system);
-	return (_indexBuffer->init(sizeof(unsigned int) * size, _indexData));
+    if (!_indexBuffer->init(sizeof(unsigned int) * size, _indexData))
+        return (false);
+
+    _indexView.BufferLocation = _indexBuffer->getBuffer()->GetGPUVirtualAddress();
+    _indexView.SizeInBytes = sizeof(unsigned int) * getIndicesSize();
+    _indexView.Format = DXGI_FORMAT_R32_UINT;
+
+    return (true);
 }
 
 bool D3D12RenderableModel::render(Camera &camera, CommandList &commandList)
 {
-	D3D12_VERTEX_BUFFER_VIEW    vertexView;
-	D3D12_INDEX_BUFFER_VIEW     indexView;
-
 	D3D12CommandList            &d3d12CommandList = dynamic_cast<D3D12CommandList&>(commandList);
 
-	vertexView.BufferLocation = _vertexBuffer->getBuffer()->GetGPUVirtualAddress();
-	vertexView.StrideInBytes = sizeof(D3D12Vertex);
-	vertexView.SizeInBytes = sizeof(D3D12Vertex) * getVertexsSize();
-
-	indexView.BufferLocation = _indexBuffer->getBuffer()->GetGPUVirtualAddress();
-	indexView.SizeInBytes = sizeof(unsigned int) * getIndicesSize();
-	indexView.Format = DXGI_FORMAT_R32_UINT;
-
     d3d12CommandList.getNative()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    d3d12CommandList.getNative()->IASetVertexBuffers(0, 1, &vertexView);
-    d3d12CommandList.getNative()->IASetIndexBuffer(&indexView);
+    d3d12CommandList.getNative()->IASetVertexBuffers(0, 1, &_vertexView);
+    d3d12CommandList.getNative()->IASetIndexBuffer(&_indexView);
 
     for (auto &&mesh : getMeshs())
     {

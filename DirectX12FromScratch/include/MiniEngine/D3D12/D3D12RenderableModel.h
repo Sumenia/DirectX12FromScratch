@@ -32,6 +32,9 @@ namespace MiniEngine
 		D3D12VertexBuffer   *_vertexBuffer;
 		D3D12IndexBuffer    *_indexBuffer;
 
+        D3D12_VERTEX_BUFFER_VIEW    _vertexView;
+        D3D12_INDEX_BUFFER_VIEW     _indexView;
+
 		D3D12Vertex         *_vertexData;
 		unsigned int        *_indexData;
 	};
