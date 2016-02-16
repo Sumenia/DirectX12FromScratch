@@ -1,7 +1,7 @@
 #pragma once
 
 # include <string>
-# include "stdint.h"
+# include <Windows.h>
 
 namespace EImageFormat
 {

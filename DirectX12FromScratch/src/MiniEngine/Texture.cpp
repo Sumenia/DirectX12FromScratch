@@ -31,6 +31,8 @@ bool  Texture::loadFromFile(const std::string &filename)
 		_loader = new JpgImageLoader;
 	else if (PngImageLoader::isPng(file))
 		_loader = new PngImageLoader;
+	else if (BmpImageLoader::isBmp(file))
+		_loader = new BmpImageLoader;
 
 	if (_loader)
 		res = _loader->loadFromFile(file);

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ImageLoader\BmpImageLoader.h" />
     <ClInclude Include="include\Config.h" />
     <ClInclude Include="include\DynamicLibrary.h" />
     <ClInclude Include="include\Event.h" />
@@ -87,6 +88,7 @@
     <ClCompile Include="src\MiniEngine\DirectionalLight.cpp" />
     <ClCompile Include="src\MiniEngine\PointLight.cpp" />
     <ClCompile Include="src\MiniEngine\SpotLight.cpp" />
+    <ClCompile Include="src\ImageLoader\BmpImageLoader.cpp" />
     <ClCompile Include="src\DynamicLibrary.cpp" />
     <ClCompile Include="src\ImageLoader\ImageLoader.cpp" />
     <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />

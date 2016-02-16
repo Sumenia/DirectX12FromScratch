@@ -49,7 +49,7 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
                 light->setDirection({ 0.0f, 0.0f, -1.0f });
 
 				MiniEngine::SceneNode                           *node;
-				std::shared_ptr<MiniEngine::RenderableModel>    model = _root->getRenderSystem()->loadModel("./Assets/models/majora/Majora.txt");
+				std::shared_ptr<MiniEngine::RenderableModel>    model = _root->getRenderSystem()->loadModel("./Assets/models/cube.txt");
 
 				for (unsigned int i = 0; i < 40; i++)
 				{
