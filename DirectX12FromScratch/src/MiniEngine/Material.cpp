@@ -70,7 +70,7 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 	if (!tex)
 		return (false);
 
-	useTexture(NORMAL, tex);
+	useNormalMap(tex);
 
 	return true;
 }
@@ -78,14 +78,14 @@ bool	Material::loadFromAssimp(aiMaterial* material, const std::string& path)
 void Material::useNormalColor()
 {
     _flags |= NORMAL_COLOR;
-    //_flags &= ~TEXTURE_DIFFUSE;
+    _flags &= ~TEXTURE_DIFFUSE;
 }
 
 void Material::useDiffuseColor(Vector3f const &color)
 {
     _kd = color;
     
-    //_flags &= ~TEXTURE_DIFFUSE;
+    _flags &= ~TEXTURE_DIFFUSE;
     _flags &= ~NORMAL_COLOR;
 
     delete _textures[DIFFUSE];
@@ -95,7 +95,7 @@ void Material::useDiffuseColor(Vector3f const &color)
 void Material::useAmbientColor(Vector3f const &color)
 {
     _ka = color;
-    //_flags &= ~TEXTURE_AMBIENT;
+    _flags &= ~TEXTURE_AMBIENT;
 
     delete _textures[AMBIENT];
     _textures[AMBIENT] = nullptr;
@@ -103,7 +103,7 @@ void Material::useAmbientColor(Vector3f const &color)
 
 void Material::useSpecularColor(Vector3f const &color) {
     _ks = color;
-    //_flags &= ~TEXTURE_SPECULAR;
+    _flags &= ~TEXTURE_SPECULAR;
 
     delete _textures[SPECULAR];
     _textures[SPECULAR] = nullptr;
@@ -116,11 +116,6 @@ void Material::setShininess(float shininess)
 
 void Material::useTexture(TextureType t, Texture *tex)
 {
-	_flags |= NORMAL_COLOR;
-	if (t == NORMAL)
-		_flags |= NORMAL_MAP;
-
-	return;
     if (t == DIFFUSE)
     {
         _flags |= TEXTURE_DIFFUSE;
@@ -130,8 +125,6 @@ void Material::useTexture(TextureType t, Texture *tex)
         _flags |= TEXTURE_AMBIENT;
     else if (t == SPECULAR)
         _flags |= TEXTURE_SPECULAR;
-	else if (t == NORMAL)
-		_flags |= NORMAL_MAP;
 
     _textures[t] = tex;
 }

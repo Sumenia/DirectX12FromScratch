@@ -2,6 +2,7 @@
 #include "camera.hlsl"
 #include "material.hlsl"
 #include "lights.hlsl"
+#include "model.hlsl"
 
 float3 calcAmbientColor(Light light, float2 uv, float3 normal)
 {
@@ -97,7 +98,10 @@ float3 computeLight(Light light, float3 position, float3 normal, float2 uv)
 
 float4 PSMain(PSInput input) : SV_TARGET
 {
-    float3  normal = normalize(input.normal);
+    //input.normal = mul(float4(getNormal(input.normal, input.uv), 0), model.transformNormal);
+    //float3 normal = normalize(input.normal);
+
+    float3 normal = normalize(getNormal(input.normal, input.uv));
     float3  position = float3(input.worldPosition.x, input.worldPosition.y, input.worldPosition.z);
 
 	float3  color = float3(0.0f, 0.0f, 0.0f);

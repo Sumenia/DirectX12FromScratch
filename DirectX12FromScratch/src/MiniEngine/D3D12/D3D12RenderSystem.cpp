@@ -151,7 +151,7 @@ D3D12Texture *D3D12RenderSystem::createNormalMap(std::string const &filename)
 {
 	D3D12Texture    *texture = new D3D12Texture(*this);
 
-	if (!texture->loadFromFile(filename, DXGI_FORMAT_R32G32B32A32_FLOAT))
+	if (!texture->loadFromFile(filename, DXGI_FORMAT_R32G32B32_FLOAT))
 	{
 		delete texture;
 		return (nullptr);

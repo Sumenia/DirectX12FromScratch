@@ -132,6 +132,9 @@ bool			PngImageLoader::loadFromFile(FILE *file)
 		setjmp(png_jmpbuf(png_ptr));
 	}
 
+    if (!removeAlphaChannel(file, png_info, png_ptr))
+        return (false);
+
 	data = (png_bytep*)malloc(sizeof(png_bytep) * _height);
 	_length = png_get_rowbytes(png_ptr, png_info) * _height;
 
@@ -141,12 +144,17 @@ bool			PngImageLoader::loadFromFile(FILE *file)
 	png_read_image(png_ptr, (png_bytep*)data);
 
 	unsigned int size = png_get_rowbytes(png_ptr, png_info);
-	_data = new char[_length];
+	_data = new float[_length];
+
+    std::cout << _length << std::endl;
+
+    //unsigned int j = 0;
 
 	for (int y = 0; y < _height; y++) {
 		png_bytep row = ((png_bytep*)data)[y];
 		for (int i = 0; i < size; i++) {
-			((char*)_data)[i + (y * size)] = row[i];
+            //if (i % 4 != 3)
+               ((float*)_data)[i + (size * y)] = (float)row[i] / 255.0;
 		}
 	}
 

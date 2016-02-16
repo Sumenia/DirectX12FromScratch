@@ -68,7 +68,7 @@ bool D3D12Texture::init(void *data, unsigned int width, unsigned int height, DXG
 
 	D3D12_SUBRESOURCE_DATA textureData = {};
 	textureData.pData = data;
-	textureData.RowPitch = width * 4;
+    textureData.RowPitch = width * 3 * 4; // 4
 	textureData.SlicePitch = textureData.RowPitch * height;
 
 	if (!commandList->reset())
