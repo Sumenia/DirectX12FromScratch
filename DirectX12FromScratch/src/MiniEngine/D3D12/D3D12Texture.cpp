@@ -21,10 +21,10 @@ bool D3D12Texture::loadFromFile(const std::string &filename)
     if (!Texture::loadFromFile(filename))
         return (false);
 
-    return (init(_loader->getData(), _loader->getWidth(), _loader->getHeight()));
+    return (init(_loader->getData(), _loader->getWidth(), _loader->getHeight(), DXGI_FORMAT_R8G8B8A8_UNORM));
 }
 
-bool D3D12Texture::init(void *data, unsigned int width, unsigned int height)
+bool D3D12Texture::init(void *data, unsigned int width, unsigned int height, DXGI_FORMAT format)
 {
 	HRESULT                     result;
 	ID3D12Resource				*bufferUpload;
@@ -37,7 +37,7 @@ bool D3D12Texture::init(void *data, unsigned int width, unsigned int height)
 
 	// Describe and create a Texture2D.
 	ZeroMemory(&_textureDesc, sizeof(_textureDesc));
-	_textureDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_R8G8B8A8_UNORM, width, height);
+	_textureDesc = CD3DX12_RESOURCE_DESC::Tex2D(format, width, height);
 
 	result = _system.getDevice()->getNative()->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),

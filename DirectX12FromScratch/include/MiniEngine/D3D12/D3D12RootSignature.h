@@ -14,7 +14,7 @@ namespace MiniEngine
         D3D12RootSignature();
         ~D3D12RootSignature();
 
-        bool                    init(D3D12RenderSystem &system, bool ambient, bool diffuse, bool specular);
+        bool                    init(D3D12RenderSystem &system, bool ambient, bool diffuse, bool specular, bool normalMap);
 
         ID3D12RootSignature     *getNative();
 

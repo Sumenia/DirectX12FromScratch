@@ -19,7 +19,7 @@ namespace MiniEngine
 		D3D12_RESOURCE_DESC     &getResourceDesc();
 
 	protected:
-        bool                    init(void *data, unsigned int width, unsigned int height);
+        bool                    init(void *data, unsigned int width, unsigned int height, DXGI_FORMAT format);
 
 		D3D12RenderSystem		&_system;
 		ID3D12Resource			*_buffer;

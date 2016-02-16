@@ -91,6 +91,9 @@ bool D3D12Material::finalize()
     else
         nbSrvs++;
 
+    if (_flags & Material::NORMAL_MAP)
+        nbSrvs++;
+
     pad(size, cursor, materialData, &_shininess, sizeof(float));
 
     // Create constant buffer
@@ -119,7 +122,7 @@ bool D3D12Material::finalize()
 
         CD3DX12_CPU_DESCRIPTOR_HANDLE handle(_cbvSrvDescHeap->getNative()->GetCPUDescriptorHandleForHeapStart());
 
-        for (unsigned int i = 0; i < 3 /* TO-DO: Apply by type */; i++)
+        for (unsigned int i = 0; i < 4 /* TO-DO: Apply by type */; i++)
         {
             if (_textures[static_cast<TextureType>(i)] != nullptr)
             {

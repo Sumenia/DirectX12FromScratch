@@ -12,6 +12,7 @@ Material::Material(RenderSystem &system) : _system(system), _id(Material::id_cou
     _textures[AMBIENT] = nullptr;
     _textures[DIFFUSE] = nullptr;
     _textures[SPECULAR] = nullptr;
+    _textures[NORMAL] = nullptr;
 }
 
 Material::~Material()
@@ -123,13 +124,16 @@ void Material::useTexture(TextureType t, Texture *tex)
 void Material::useNormalScalar()
 {
     _flags &= ~NORMAL_MAP;
+
+    delete _textures[NORMAL];
+    _textures[NORMAL] = nullptr;
 }
 
-void Material::useNormalMap(/* NORMAL MAP */)
+void Material::useNormalMap(Texture *tex)
 {
-    // SET NORMAL MAP
-
     _flags |= NORMAL_MAP;
+
+    _textures[NORMAL] = tex;
 }
 
 DWORD64 Material::getFlags() const
@@ -178,4 +182,9 @@ bool Material::haveDiffuseMap() const
 bool Material::haveSpecularMap() const
 {
     return (!!_textures.at(SPECULAR));
+}
+
+bool Material::haveNormalMap() const
+{
+    return (!!_textures.at(NORMAL));
 }

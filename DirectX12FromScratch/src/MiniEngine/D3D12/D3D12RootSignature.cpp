@@ -15,13 +15,13 @@ D3D12RootSignature::~D3D12RootSignature()
     _signature = nullptr;
 }
 
-bool D3D12RootSignature::init(D3D12RenderSystem &system, bool ambient, bool diffuse, bool specular)
+bool D3D12RootSignature::init(D3D12RenderSystem &system, bool ambient, bool diffuse, bool specular, bool normalMap)
 {
     HRESULT                     result;
     ID3DBlob                    *signature = nullptr;
     ID3DBlob                    *error = nullptr;
 
-    unsigned int                nbSrvs = (int)ambient + (int)diffuse + (int)specular;
+    unsigned int                nbSrvs = (int)ambient + (int)diffuse + (int)specular + (int)normalMap;
     unsigned int                cursor = 0;
     CD3DX12_DESCRIPTOR_RANGE	*ranges = nullptr;
 
@@ -44,6 +44,12 @@ bool D3D12RootSignature::init(D3D12RenderSystem &system, bool ambient, bool diff
         if (specular)
         {
             ranges[cursor].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 2);
+            cursor++;
+        }
+
+        if (normalMap)
+        {
+            ranges[cursor].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 3);
             cursor++;
         }
     }

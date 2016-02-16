@@ -33,6 +33,10 @@ Texture2D	diffuseTexture : register(t1);
 Texture2D	specularTexture : register(t2);
 #endif
 
+#if NORMAL_MAP
+Texture2D	normalMap : register(t3);
+#endif
+
 float3 getDiffuseColor(float3 normal, float2 uv)
 {
 #if NORMAL_COLOR
@@ -62,10 +66,10 @@ float3 getSpecularColor(float3 normal, float2 uv)
 #endif
 }
 
-float3 getNormal(float3 normal)
+float3 getNormal(float3 normal, float2 uv)
 {
 #if NORMAL_MAP
-    // TO-DO: Use normal map
+    return (normalMap.Sample(samp, uv).rgb);
 #else
     return (normal);
 #endif

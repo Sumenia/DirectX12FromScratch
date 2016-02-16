@@ -36,7 +36,8 @@ namespace MiniEngine
 		{
             AMBIENT = 0,
 			DIFFUSE = 1,
-			SPECULAR = 2
+			SPECULAR = 2,
+            NORMAL = 3
 		};
 
     public:
@@ -54,7 +55,7 @@ namespace MiniEngine
         void            useTexture(TextureType t, Texture *tex);
 
         void            useNormalScalar();
-        void            useNormalMap(/* NORMAL MAP */);
+        void            useNormalMap(Texture *tex);
 
         virtual bool    bind(CommandList &list, unsigned int rootIdx) = 0;
         virtual bool    finalize() = 0;
@@ -67,6 +68,7 @@ namespace MiniEngine
         bool            haveAmbientMap() const;
         bool            haveDiffuseMap() const;
         bool            haveSpecularMap() const;
+        bool            haveNormalMap() const;
 
     protected:
         void            setFlagToShader(std::stringstream &source, std::string const &define, Flag flag);
