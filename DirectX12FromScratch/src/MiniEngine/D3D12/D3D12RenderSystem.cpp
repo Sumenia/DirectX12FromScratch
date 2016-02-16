@@ -138,13 +138,26 @@ D3D12Texture *D3D12RenderSystem::createTexture(std::string const &filename)
 {
     D3D12Texture    *texture = new D3D12Texture(*this);
 
-    if (!texture->loadFromFile(filename))
+    if (!texture->loadFromFile(filename, DXGI_FORMAT_R8G8B8A8_UNORM))
     {
         delete texture;
         return (nullptr);
     }
 
     return (texture);
+}
+
+D3D12Texture *D3D12RenderSystem::createNormalMap(std::string const &filename)
+{
+	D3D12Texture    *texture = new D3D12Texture(*this);
+
+	if (!texture->loadFromFile(filename, DXGI_FORMAT_R32G32B32A32_FLOAT))
+	{
+		delete texture;
+		return (nullptr);
+	}
+
+	return (texture);
 }
 
 D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &material)
@@ -158,7 +171,7 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
     {
         D3D12RootSignature      *rootSignature = new D3D12RootSignature();
 
-        if (!rootSignature->init(*this, material.haveAmbientMap(), material.haveDiffuseMap(), material.haveSpecularMap()))
+        if (!rootSignature->init(*this, material.haveAmbientMap(), material.haveDiffuseMap(), material.haveSpecularMap(), material.haveNormalMap()))
         {
             delete rootSignature;
             delete pipeline;

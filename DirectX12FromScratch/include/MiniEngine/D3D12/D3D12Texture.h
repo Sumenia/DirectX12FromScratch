@@ -13,7 +13,7 @@ namespace MiniEngine
 		D3D12Texture(D3D12RenderSystem &system);
 		~D3D12Texture();
 
-        virtual bool			loadFromFile(const std::string &filename);
+        virtual bool			loadFromFile(const std::string &filename, DXGI_FORMAT format);
 
 		ID3D12Resource		    *getBuffer();
 		D3D12_RESOURCE_DESC     &getResourceDesc();

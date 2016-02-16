@@ -16,12 +16,12 @@ D3D12Texture::~D3D12Texture()
     _buffer = nullptr;
 }
 
-bool D3D12Texture::loadFromFile(const std::string &filename)
+bool D3D12Texture::loadFromFile(const std::string &filename, DXGI_FORMAT format)
 {
     if (!Texture::loadFromFile(filename))
         return (false);
 
-    return (init(_loader->getData(), _loader->getWidth(), _loader->getHeight(), DXGI_FORMAT_R8G8B8A8_UNORM));
+    return (init(_loader->getData(), _loader->getWidth(), _loader->getHeight(), format));
 }
 
 bool D3D12Texture::init(void *data, unsigned int width, unsigned int height, DXGI_FORMAT format)

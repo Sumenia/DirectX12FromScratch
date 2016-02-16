@@ -38,8 +38,9 @@ namespace MiniEngine
         D3D12RenderWindow       *createRenderWindow(Window *window);
         D3D12HLSLShader         *createHLSLShader();
         D3D12Material           *createMaterial();
-        D3D12Texture            *createTexture(std::string const &filename);
-        D3D12GraphicPipeline    *createGraphicPipeline(Material &material);
+		D3D12Texture            *createTexture(std::string const &filename);
+		D3D12Texture            *createNormalMap(std::string const &filename);
+		D3D12GraphicPipeline    *createGraphicPipeline(Material &material);
 
 		std::shared_ptr<RenderableModel> loadModel(std::string const &filename);
 

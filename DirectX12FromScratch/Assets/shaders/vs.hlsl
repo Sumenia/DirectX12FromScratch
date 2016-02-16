@@ -16,7 +16,7 @@ PSInput VSMain(float3 position : POSITION, float3 normal : NORMAL, float2 uv : T
     cameraPosition = mul(cameraPosition, camera.projection);
 
 	result.position = cameraPosition;
-    result.normal = mul(float4(getNormal(normal), 0), model.transformNormal);
+    result.normal = mul(float4(getNormal(normal, uv), 0), model.transformNormal);
     result.uv = uv;
 
 	return result;

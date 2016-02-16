@@ -33,6 +33,7 @@ namespace MiniEngine
         virtual HLSLShader                  *createHLSLShader() = 0;
         virtual Material                    *createMaterial() = 0;
         virtual Texture                     *createTexture(std::string const &filename) = 0;
+		virtual Texture						*createNormalMap(std::string const &filename) = 0;
         virtual GraphicPipeline             *createGraphicPipeline(Material &material) = 0;
 
 		virtual std::shared_ptr<RenderableModel>             loadModel(std::string const &filename) = 0;
