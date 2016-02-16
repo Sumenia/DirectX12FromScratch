@@ -3,6 +3,7 @@
 #include "MiniEngine/SpotLight.h"
 #include "MiniEngine/D3D12/D3D12RenderSystem.h"
 #include "MiniEngine/D3D12/D3D12RenderWindow.h"
+#include "MiniEngine/Texture.h"
 
 MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInstance) : MiniEngine::Application(), _window(nullptr)
 {
@@ -12,6 +13,8 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
 
     if (_window)
     {
+		MiniEngine::Texture text;
+
         _root->setRenderSystem(new MiniEngine::D3D12RenderSystem);
 
         if (_root->getRenderSystem())
@@ -30,23 +33,30 @@ MainApplication::MainApplication(const std::string &windowType, HINSTANCE hInsta
             if (_sceneManager)
             {
                 _camera = _sceneManager->createCamera();
-
-                _camera->lookAt({ 60.0f, 100.0f, 0.0f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
+                _camera->lookAt({ 10.0f, 10.0f, 20.0f }, { 0.0f, -0.1f, 0.0f }, { 0.0f, 1.0f, 0.0f });
 
                 renderTarget->getDefaultViewport()->attachCamera(_camera);
 
-                MiniEngine::SpotLight   *light = dynamic_cast<MiniEngine::SpotLight*>(_sceneManager->createLight(MiniEngine::Light::SPOT, _camera));
+                std::shared_ptr<MiniEngine::SpotLight>          light = std::dynamic_pointer_cast<MiniEngine::SpotLight>(_sceneManager->createLight(MiniEngine::Light::SPOT, _camera));
 
-                light->setAmbient({0.1f, 0.1f, 0.1f});
+                light->setAmbient({ 0.1f, 0.1f, 0.1f });
                 light->setDiffuse({ 0.5f, 0.5f, 0.5f });
                 light->setSpecular({ 1.0f, 1.0f, 1.0f });
 
                 light->setInnerCutOff(10.0f);
                 light->setOuterCutOff(25.0f);
+                
+                light->setDirection({ 0.0f, 0.0f, -1.0f });
 
-                light->setDirection({ 0.0f, 0.0f, 1.0f });
+				MiniEngine::SceneNode                           *node;
+				std::shared_ptr<MiniEngine::RenderableModel>    model = _root->getRenderSystem()->loadModel("./Assets/models/cube.txt");
 
-                _node = _sceneManager->getRootNode()->createChild(_root->getRenderSystem()->loadModel("./Assets/models/teapot.txt"));
+				for (unsigned int i = 0; i < 40; i++)
+				{
+					node = _sceneManager->getRootNode()->createChild(model);
+					node->scale({ 25.0f, 25.0f, 25.0f });
+					node->translate({ i % 4 * 50.0f, i / 4 * 50.0f, 0.0f });
+				}
             }
         }
     }

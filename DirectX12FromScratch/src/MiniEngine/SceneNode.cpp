@@ -5,7 +5,7 @@
 
 using namespace MiniEngine;
 
-SceneNode::SceneNode(SceneManager &manager, MovableObject *object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0)), _needUpdate(true), _modelConstantBuffer(nullptr)
+SceneNode::SceneNode(SceneManager &manager, std::shared_ptr<MovableObject> object) : _manager(manager), _parent(nullptr), _obj(object), _scaling(1.0f, 1.0f, 1.0f), _rotation(Quatf::fromAxisRot(Vector3f(0, 0, 0), 0)), _needUpdate(true), _modelConstantBuffer(nullptr)
 {
     if (_obj)
         _obj->setParent(this);
@@ -23,7 +23,7 @@ SceneNode::~SceneNode()
     }
 }
 
-SceneNode *SceneNode::createChild(MovableObject *object)
+SceneNode *SceneNode::createChild(std::shared_ptr<MovableObject> object)
 {
     return (addChild(new SceneNode(_manager, object)));
 }
@@ -38,9 +38,9 @@ SceneNode *SceneNode::addChild(SceneNode *node)
     return (node);
 }
 
-void SceneNode::attachObject(MovableObject *obj)
+void SceneNode::attachObject(std::shared_ptr<MovableObject> obj)
 {
-    _obj.reset(obj);
+    _obj = obj;
 
     if (!_obj)
     {

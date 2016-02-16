@@ -3,7 +3,7 @@
 
 using namespace MiniEngine;
 
-D3D12RenderableModel::D3D12RenderableModel() : _vertexBuffer(nullptr), _indexBuffer(nullptr)
+D3D12RenderableModel::D3D12RenderableModel(RenderSystem& system) : RenderableModel(system), _vertexBuffer(nullptr), _indexBuffer(nullptr)
 {}
 
 D3D12RenderableModel::~D3D12RenderableModel()
@@ -46,7 +46,7 @@ bool D3D12RenderableModel::initVertexBuffer(D3D12RenderSystem &system)
 		{
 			_vertexData[i].vertice = { vertexs[k].vertice.x, vertexs[k].vertice.y, vertexs[k].vertice.z };
 			_vertexData[i].normal = { vertexs[k].normal.x, vertexs[k].normal.y, vertexs[k].normal.z };
-			//_vertexData[i].uv = { _vertexs[i].uv.x, _vertexs[i].uv.y };
+			_vertexData[i].uv = { vertexs[k].uv.x, vertexs[k].uv.y };
 		}
 	}
 	
@@ -101,6 +101,5 @@ bool D3D12RenderableModel::render(Camera &camera, CommandList &commandList)
 
         d3d12CommandList.getNative()->DrawIndexedInstanced(mesh->indices.size(), 1, mesh->idxOffset, 0, 0);
     }
-
 	return (true);
 }

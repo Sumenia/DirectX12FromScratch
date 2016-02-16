@@ -30,7 +30,7 @@ namespace MiniEngine
         virtual bool        bindMaterial(unsigned int id) = 0;
         virtual bool        setMaterialPipeline(DWORD64 type);
 
-        virtual void        setPipeline(GraphicPipeline &pipeline) = 0;
+        virtual bool        setPipeline(GraphicPipeline &pipeline) = 0;
 
         RenderTarget        &getRenderTarget();
         RenderSystem        &getRenderSystem();

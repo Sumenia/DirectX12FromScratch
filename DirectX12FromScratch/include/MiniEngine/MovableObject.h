@@ -1,10 +1,12 @@
 #pragma once
 
+# include <memory>
+
 namespace MiniEngine
 {
     class SceneNode;
 
-    class MovableObject
+    class MovableObject : public std::enable_shared_from_this<MovableObject>
     {
     public:
         MovableObject();

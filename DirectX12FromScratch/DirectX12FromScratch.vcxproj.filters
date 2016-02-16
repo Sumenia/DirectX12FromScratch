@@ -192,6 +192,12 @@
     <ClInclude Include="include\MiniEngine\SysClock.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="include\MiniEngine\Texture.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Texture.h">
+		<Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
     <ClInclude Include="include\MiniEngine\SpotLight.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -332,6 +338,12 @@
     <ClCompile Include="src\MiniEngine\Light.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\MiniEngine\Texture.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Texture.cpp">
+		<Filter>Fichiers sources</Filter>
+	</ClCompile>
     <ClCompile Include="src\MiniEngine\PointLight.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -345,19 +357,126 @@
   <ItemGroup>
     <FxCompile Include="Assets\shaders\ps.hlsl" />
     <FxCompile Include="Assets\shaders\camera.hlsl" />
+    <FxCompile Include="Assets\shaders\lights.hlsl" />
+    <FxCompile Include="Assets\shaders\material.hlsl" />
     <FxCompile Include="Assets\shaders\model.hlsl" />
+    <FxCompile Include="Assets\shaders\ps.hlsl" />
     <FxCompile Include="Assets\shaders\psinput.hlsl" />
     <FxCompile Include="Assets\shaders\vs.hlsl" />
-    <FxCompile Include="Assets\shaders\material.hlsl" />
-    <FxCompile Include="Assets\shaders\lights.hlsl" />
-    <ClCompile Include="src\MiniEngine\Clock.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MiniEngine\Time.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MiniEngine\SysClock.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\DynamicLibrary.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MainApplication.cpp" />
+    <ClCompile Include="src\MiniEngine\Application.cpp" />
+    <ClCompile Include="src\MiniEngine\BasicSceneManager.cpp" />
+    <ClCompile Include="src\MiniEngine\Camera.cpp" />
+    <ClCompile Include="src\MiniEngine\Clock.cpp" />
+    <ClCompile Include="src\MiniEngine\CommandQueue.cpp" />
+    <ClCompile Include="src\MiniEngine\ConstantBuffer.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandList.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12CommandQueue.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12ConstantBuffer.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12DescriptorHeap.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Device.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12GraphicPipeline.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12HLSLShader.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12IndexBuffer.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Material.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderableModel.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderSystem.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderTarget.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RenderWindow.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12RootSignature.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12Fence.cpp" />
+    <ClCompile Include="src\MiniEngine\D3D12\D3D12VertexBuffer.cpp" />
+    <ClCompile Include="src\MiniEngine\Fence.cpp" />
+    <ClCompile Include="src\MiniEngine\GraphicPipeline.cpp" />
+    <ClCompile Include="src\MiniEngine\HLSLShader.cpp" />
+    <ClCompile Include="src\MiniEngine\Light.cpp" />
+    <ClCompile Include="src\MiniEngine\Material.cpp" />
+    <ClCompile Include="src\MiniEngine\Mesh.cpp" />
+    <ClCompile Include="src\MiniEngine\Model.cpp" />
+    <ClCompile Include="src\MiniEngine\MovableObject.cpp" />
+    <ClCompile Include="src\MiniEngine\RenderableModel.cpp" />
+    <ClCompile Include="src\MiniEngine\RenderSystem.cpp" />
+    <ClCompile Include="src\MiniEngine\RenderTarget.cpp" />
+    <ClCompile Include="src\MiniEngine\RenderWindow.cpp" />
+    <ClCompile Include="src\MiniEngine\Root.cpp" />
+    <ClCompile Include="src\MiniEngine\SceneManager.cpp" />
+    <ClCompile Include="src\MiniEngine\SceneNode.cpp" />
+    <ClCompile Include="src\MiniEngine\Shader.cpp" />
+    <ClCompile Include="src\MiniEngine\CommandList.cpp" />
+    <ClCompile Include="src\MiniEngine\SysClock.cpp" />
+    <ClCompile Include="src\MiniEngine\Texture.cpp" />
+    <ClCompile Include="src\MiniEngine\Time.cpp" />
+    <ClCompile Include="src\MiniEngine\Viewport.cpp" />
+    <ClCompile Include="src\Mouse.cpp" />
+    <ClCompile Include="src\ImageLoader\PngImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\JpgImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\ImageLoader.cpp" />
+    <ClCompile Include="src\ImageLoader\BmpImageLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Config.h" />
+    <ClInclude Include="include\DynamicLibrary.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\Keyboard.h" />
+    <ClInclude Include="include\MainApplication.h" />
+    <ClInclude Include="include\MiniEngine\Application.h" />
+    <ClInclude Include="include\MiniEngine\BasicSceneManager.h" />
+    <ClInclude Include="include\MiniEngine\Camera.h" />
+    <ClInclude Include="include\MiniEngine\Clock.h" />
+    <ClInclude Include="include\MiniEngine\CommandList.h" />
+    <ClInclude Include="include\MiniEngine\ConstantBuffer.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandList.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12CommandQueue.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12ConstantBuffer.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12DescriptorHeap.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Device.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Fence.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12GraphicPipeline.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12HLSLShader.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12IndexBuffer.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12Material.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderableModel.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderSystem.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderTarget.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RenderWindow.h" />
+    <ClInclude Include="include\MiniEngine\CommandQueue.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12RootSignature.h" />
+    <ClInclude Include="include\MiniEngine\D3D12\D3D12VertexBuffer.h" />
+    <ClInclude Include="include\MiniEngine\Fence.h" />
+    <ClInclude Include="include\MiniEngine\Geometry.h" />
+    <ClInclude Include="include\MiniEngine\GraphicPipeline.h" />
+    <ClInclude Include="include\MiniEngine\Helper\d3dx12.h" />
+    <ClInclude Include="include\MiniEngine\HLSLShader.h" />
+    <ClInclude Include="include\MiniEngine\Light.h" />
+    <ClInclude Include="include\MiniEngine\Material.h" />
+    <ClInclude Include="include\MiniEngine\Matrix.h" />
+    <ClInclude Include="include\MiniEngine\Mesh.h" />
+    <ClInclude Include="include\MiniEngine\Model.h" />
+    <ClInclude Include="include\MiniEngine\MovableObject.h" />
+    <ClInclude Include="include\MiniEngine\Quaternion.h" />
+    <ClInclude Include="include\MiniEngine\RenderableModel.h" />
+    <ClInclude Include="include\MiniEngine\RenderableObject.h" />
+    <ClInclude Include="include\MiniEngine\RenderSystem.h" />
+    <ClInclude Include="include\MiniEngine\RenderTarget.h" />
+    <ClInclude Include="include\MiniEngine\RenderWindow.h" />
+    <ClInclude Include="include\MiniEngine\Root.h" />
+    <ClInclude Include="include\MiniEngine\SceneManager.h" />
+    <ClInclude Include="include\MiniEngine\SceneNode.h" />
+    <ClInclude Include="include\MiniEngine\Shader.h" />
+    <ClInclude Include="include\MiniEngine\SysClock.h" />
+    <ClInclude Include="include\MiniEngine\Texture.h" />
+    <ClInclude Include="include\MiniEngine\Time.h" />
+    <ClInclude Include="include\MiniEngine\Viewport.h" />
+    <ClInclude Include="include\Mouse.h" />
+    <ClInclude Include="include\Window.h" />
+    <ClInclude Include="include\Vector.h" />
+    <ClInclude Include="include\ImageLoader\PngImageloader.h" />
+    <ClInclude Include="include\ImageLoader\JpgImageLoader.h" />
+    <ClInclude Include="include\ImageLoader\ImageLoader.h" />
+    <ClInclude Include="include\ImageLoader\BmpImageLoader.h" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 # include <iostream>
 # include <fstream>
 # include <assimp/scene.h>
+# include "MiniEngine/Material.h"
 # include "Vector.h"
 
 namespace MiniEngine
@@ -23,7 +24,7 @@ namespace MiniEngine
 		Mesh();
 		virtual ~Mesh();
 
-		virtual bool                    loadFromAssimp(aiMesh *mesh);
+		virtual bool                    loadFromAssimp(aiMesh *mesh, const std::vector<Material*> &materials);
 
 		std::vector<Vertex>             vertexs;
 		std::vector<unsigned int>       indices;

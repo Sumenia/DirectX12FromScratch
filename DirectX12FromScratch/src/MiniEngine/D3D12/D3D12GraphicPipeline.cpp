@@ -15,6 +15,7 @@ D3D12GraphicPipeline::D3D12GraphicPipeline(D3D12RenderSystem &system) : GraphicP
     _desc.SampleDesc.Count = 1;
     _desc.InputLayout.NumElements = 0;
     _desc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+    _desc.RasterizerState.CullMode = D3D12_CULL_MODE_FRONT;
     _desc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 	_desc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
     _desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;

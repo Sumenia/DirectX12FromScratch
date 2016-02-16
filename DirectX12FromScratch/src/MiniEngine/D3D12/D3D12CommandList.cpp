@@ -6,7 +6,7 @@
 
 using namespace MiniEngine;
 
-D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget *target) : CommandList(system, target), _system(system), _allocator(nullptr), _list(nullptr)
+D3D12CommandList::D3D12CommandList(D3D12RenderSystem &system, D3D12RenderTarget *target) : CommandList(system, target), _system(system), _allocator(nullptr), _list(nullptr), _camera(nullptr), _model(nullptr), _lights(nullptr)
 {}
 
 D3D12CommandList::~D3D12CommandList()
@@ -78,16 +78,19 @@ bool D3D12CommandList::end()
 
 bool D3D12CommandList::bindCameraCBV(ConstantBuffer &buffer)
 {
+    _camera = &buffer;
     return (buffer.bind(*this, 0));
 }
 
 bool D3D12CommandList::bindModelCBV(ConstantBuffer &buffer)
 {
+    _model = &buffer;
     return (buffer.bind(*this, 1));
 }
 
 bool D3D12CommandList::bindLightsCBV(ConstantBuffer &buffer)
 {
+    _lights = &buffer;
     return (buffer.bind(*this, 2));
 }
 
@@ -113,10 +116,21 @@ bool D3D12CommandList::bindMaterial(Material &material)
     return (material.bind(*this, 3));
 }
 
-void D3D12CommandList::setPipeline(GraphicPipeline &pipeline)
+bool D3D12CommandList::setPipeline(GraphicPipeline &pipeline)
 {
     _list->SetGraphicsRootSignature(dynamic_cast<D3D12GraphicPipeline&>(pipeline).getRootSignature()->getNative());
     _list->SetPipelineState(dynamic_cast<D3D12GraphicPipeline&>(pipeline).getNative());
+
+    if (_camera && !bindCameraCBV(*_camera))
+        return (false);
+
+    if (_model && !bindModelCBV(*_model))
+        return (false);
+
+    if (_lights && !bindLightsCBV(*_lights))
+        return (false);
+
+    return (true);
 }
 
 ID3D12GraphicsCommandList *D3D12CommandList::getNative()

@@ -11,14 +11,14 @@ namespace MiniEngine
 	struct D3D12Vertex
 	{
 		DirectX::XMFLOAT3 vertice;
-		//DirectX::XMFLOAT2 uv;
 		DirectX::XMFLOAT3 normal;
+		DirectX::XMFLOAT2 uv;
 	};
 
 	class D3D12RenderableModel : public RenderableModel
 	{
 	public:
-		D3D12RenderableModel();
+		D3D12RenderableModel(RenderSystem& system);
 		~D3D12RenderableModel();
 
 		virtual bool        loadFromFile(D3D12RenderSystem &system, const std::string &file);

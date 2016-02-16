@@ -21,17 +21,17 @@ namespace MiniEngine
         virtual SceneNode   *getRootNode();
 
         virtual Camera      *createCamera(SceneNode *node = nullptr);
-        virtual Light       *createLight(Light::Type type, SceneNode *node = nullptr);
+        virtual std::shared_ptr<Light>       createLight(Light::Type type, SceneNode *node = nullptr);
         virtual void        removeLight(Light *light);
         virtual void        updateLightBuffer();
-        std::list<Light*> const     getLights() const;
+        std::list<std::shared_ptr<Light>> const     getLights() const;
 
         virtual bool        render(Camera &camera, CommandList &commandList) = 0;
 
     protected:
         RenderSystem        &_system;
         SceneNode           *_rootNode;
-        std::list<Light*>   _lights;
+        std::list<std::shared_ptr<Light>>   _lights;
         ConstantBuffer      *_lightsConstantBuffer;
         bool                _needUpdate;
     };

@@ -10,6 +10,7 @@
 # include "MiniEngine/D3D12/D3D12RenderableModel.h"
 # include "MiniEngine/D3D12/D3D12ConstantBuffer.h"
 # include "MiniEngine/D3D12/D3D12Material.h"
+# include "MiniEngine/D3D12/D3D12Texture.h"
 
 namespace MiniEngine
 {
@@ -37,9 +38,10 @@ namespace MiniEngine
         D3D12RenderWindow       *createRenderWindow(Window *window);
         D3D12HLSLShader         *createHLSLShader();
         D3D12Material           *createMaterial();
+        D3D12Texture            *createTexture(std::string const &filename);
         D3D12GraphicPipeline    *createGraphicPipeline(Material &material);
 
-		D3D12RenderableModel    *loadModel(std::string const &filename);
+		std::shared_ptr<RenderableModel> loadModel(std::string const &filename);
 
     protected:
         IDXGIFactory4           *_factory;

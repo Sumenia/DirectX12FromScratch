@@ -134,6 +134,19 @@ D3D12Material *D3D12RenderSystem::createMaterial()
     return (new D3D12Material(*this));
 }
 
+D3D12Texture *D3D12RenderSystem::createTexture(std::string const &filename)
+{
+    D3D12Texture    *texture = new D3D12Texture(*this);
+
+    if (!texture->loadFromFile(filename))
+    {
+        delete texture;
+        return (nullptr);
+    }
+
+    return (texture);
+}
+
 D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &material)
 {
     HLSLShader              *vertexShader = nullptr;
@@ -145,7 +158,7 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
     {
         D3D12RootSignature      *rootSignature = new D3D12RootSignature();
 
-        if (!rootSignature->init(*this))
+        if (!rootSignature->init(*this, material.haveAmbientMap(), material.haveDiffuseMap(), material.haveSpecularMap()))
         {
             delete rootSignature;
             delete pipeline;
@@ -160,7 +173,8 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
     {
         const HLSLShader::Input inputs[] = {
             { "POSITION", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 0, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
-            { "NORMAL", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
+            { "NORMAL", 0, MiniEngine::HLSLShader::Input::Format::R32G32B32_FLOAT, 0, 12, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 },
+			{ "TEXCOORD", 0, MiniEngine::HLSLShader::Input::Format::R32G32_FLOAT, 0, 24, MiniEngine::HLSLShader::Input::Classification::PER_VERTEX, 0 }
         };
 
         pipeline->setInputs(_countof(inputs), inputs);
@@ -216,15 +230,13 @@ D3D12GraphicPipeline *D3D12RenderSystem::createGraphicPipeline(Material &materia
     return (pipeline);
 }
 
-D3D12RenderableModel *D3D12RenderSystem::loadModel(std::string const &filename)
+std::shared_ptr<RenderableModel> D3D12RenderSystem::loadModel(std::string const &filename)
 {
-	D3D12RenderableModel *model = new D3D12RenderableModel;
+	std::shared_ptr<D3D12RenderableModel> model = std::make_shared<D3D12RenderableModel>(*this);
 
 	if (!model->loadFromFile(*this, filename))
 	{
 		std::cout << "Can't load model : " << filename << std::endl;
-
-		delete model;
 		return (nullptr);
 	}
 

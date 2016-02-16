@@ -24,7 +24,7 @@ namespace MiniEngine
 
         bool                updateCameraMatrix(Vector3f const &position, Matrix4f const &view, Matrix4f const &projection, unsigned int nb_lights);
         bool                updateModelMatrix(Matrix4f const &model);
-        bool                updateLights(std::list<Light*> &lights);
+        bool                updateLights(std::list<std::shared_ptr<Light>> &lights);
 
         ID3D12Resource      *getNative();
 

@@ -50,13 +50,13 @@ D3D12RenderWindow::~D3D12RenderWindow()
 bool D3D12RenderWindow::init()
 {
 	return (
-		initSwapChain()
-		&& initRtvDescriptorHeap()
-		&& initRtv()
+        initSwapChain()
+        && initRtvDescriptorHeap()
+        && initRtv()
         && initDsvDescriptorHeap()
         && initDsv()
         && initCommandList()
-	);
+    );
 }
 
 bool D3D12RenderWindow::render()
